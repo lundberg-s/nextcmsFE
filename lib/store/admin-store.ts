@@ -8,8 +8,8 @@ interface AdminState {
   selectedBlock: Block | null;
   pages: Page[];
   selectedPage: Page | null;
-  fetchBlocks: () => Promise<void>;
-  fetchPages: () => Promise<void>;
+  getBlocks: () => Promise<void>;
+  getPages: () => Promise<void>;
   addBlock: (block: Omit<Block, "id"> & { pageId: string }) => Promise<void>;
   updateBlock: (id: string, block: Partial<Omit<Block, "id">>) => Promise<void>;
   removeBlock: (id: string) => Promise<void>;
@@ -29,23 +29,33 @@ export const useAdminStore = create<AdminState>((set, get) => ({
   selectedPage: null,
 
   // Fetch blocks from API
-  fetchBlocks: async () => {
+  getBlocks: async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/blocks/`);
       const data = await response.json();
       set({ blocks: data });
+  
+      // Update pages with blocks
+      set((state) => ({
+        pages: state.pages.map((page) => ({
+          ...page,
+          blocks: data.filter((block: { pageId: string; }) => block.pageId === page.id),
+        })),
+      }));
     } catch (error) {
       console.error("Error fetching blocks:", error);
     }
   },
 
   // Fetch pages from API
-  fetchPages: async () => {
+  getPages: async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/pages/`);
       const data = await response.json();
-      console.log('fetch data', data);
       set({ pages: data });
+
+      // Fetch blocks after fetching pages
+      await get().getBlocks();
     } catch (error) {
       console.error("Error fetching pages:", error);
     }
@@ -53,21 +63,27 @@ export const useAdminStore = create<AdminState>((set, get) => ({
 
   // Add a new block
   addBlock: async (block) => {
-    try {
+    try { 
       const response = await fetch(`${API_BASE_URL}/blocks/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: nanoid(), ...block }),
+        body: JSON.stringify(block),
       });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
       const newBlock = await response.json();
-
-      // Update local state
-      set((state) => ({
-        blocks: [...state.blocks, newBlock],
-        pages: state.pages.map((page) =>
-          page.id === block.pageId ? { ...page, blocks: [...page.blocks, newBlock.id] } : page
-        ),
-      }));
+      set((state) => {
+        const updatedPages = state.pages.map((page) =>
+          page.id === block.pageId ? { ...page, blocks: [...page.blocks, newBlock] } : page
+        );
+        return {
+          blocks: [...state.blocks, newBlock],
+          pages: updatedPages,
+        };
+      });
     } catch (error) {
       console.error("Error adding block:", error);
     }
@@ -82,10 +98,25 @@ export const useAdminStore = create<AdminState>((set, get) => ({
         body: JSON.stringify(block),
       });
       const updatedBlock = await response.json();
-
-      set((state) => ({
-        blocks: state.blocks.map((b) => (b.id === id ? { ...b, ...updatedBlock } : b)),
-      }));
+  
+      set((state) => {
+        // Update the blocks array
+        const updatedBlocks = state.blocks.map((b) => (b.id === id ? updatedBlock : b));
+  
+        // Update the blocks within the pages
+        const updatedPages = state.pages.map((page) => ({
+          ...page,
+          blocks: page.blocks.map((b) => (b.id === id ? updatedBlock : b)),
+        }));
+  
+        return {
+          blocks: updatedBlocks,
+          pages: updatedPages,
+        };
+      });
+  
+      console.log("Block updated in local state:", get().blocks);
+      console.log("Block updated in pages:", get().pages);
     } catch (error) {
       console.error("Error updating block:", error);
     }

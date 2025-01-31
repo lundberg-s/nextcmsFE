@@ -5,24 +5,22 @@ import { useEffect, useState } from "react";
 import { useAdminStore } from "@/lib/store/admin-store";
 import { nanoid } from "nanoid";
 import { mockBlocks } from "@/lib/mock-data";
-import { AdminHeader } from "./components/AdminHeader";
+import { AdminActions } from "./components/AdminActions";
 import { BlockList } from "./components/BlockList";
 import { AddBlockModal } from "./components/AddBlockModal";
 import { DeleteConfirmationModal } from "./components/DeleteConfirmationModal";
 import { EditBlockModal } from "./components/EditBlockModal";
 import { PageList } from "./components/PageList";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { BlockRenderer } from "@/components/blocks/BlockRenderer";
 
 export default function AdminPage() {
   const {
-    blocks,
-    setBlocks,
     addBlock,
+    removeBlock,
     selectedBlock,
     setSelectedBlock,
-    removeBlock,
     pages,
-    setPages,
     selectedPage,
     setSelectedPage,
   } = useAdminStore();
@@ -54,6 +52,7 @@ export default function AdminPage() {
         settings: {},
         pageId: selectedPage.id,
       };
+      console.log('calling addBlock');
       addBlock(newBlock);
       setSelectedPage({
         ...selectedPage,
@@ -83,29 +82,34 @@ export default function AdminPage() {
     }
   };
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-200 w-full">
       <div className="container mx-auto px-4 py-8">
-        <AdminHeader onAddBlockClick={() => setOpen(true)} />
-        <PageList pages={pages} />
+        {/* <PageList pages={pages} /> */}
         <Tabs
           defaultValue={selectedPage?.id || pages[0]?.id}
           onValueChange={(value) =>
             setSelectedPage(pages.find((page) => page.id === value) || null)
           }
         >
-          <TabsList>
-            {pages.map((page) => (
-              <TabsTrigger key={page.id} value={page.id} onClick={() => setSelectedPage(page)}>
-                {page.title}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+          {/* <PageList pages={pages} /> */}
+          <div className="flex justify-between items-center">
+            <TabsList>
+              {pages.map((page) => (
+                <TabsTrigger
+                  key={page.id}
+                  value={page.id}
+                  onClick={() => setSelectedPage(page)}
+                >
+                  {page.title}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+            <AdminActions pages={pages} onAddBlockClick={() => setOpen(true)} />
+          </div>
           {pages.map((page) => (
             <TabsContent key={page.id} value={page.id}>
               <BlockList
-                blocks={blocks.filter((block) =>
-                  page.blocks.includes(block.id)
-                )}
+                blocks={page.blocks}
                 onEditBlock={setSelectedBlock}
                 onDeleteBlock={handleDeleteBlock}
                 confirmDeleteBlock={confirmDeleteBlock}
@@ -121,7 +125,7 @@ export default function AdminPage() {
         setSelectedType={setSelectedType}
         onAddBlock={handleAddBlock}
       />
-      <EditBlockModal block={selectedBlock}/>
+      <EditBlockModal block={selectedBlock} />
       {deleteBlockId && (
         <DeleteConfirmationModal
           deleteBlockId={deleteBlockId}

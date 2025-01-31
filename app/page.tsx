@@ -9,17 +9,16 @@ import DesktopNavbar from "@/components/navigation/DesktopNavbar";
 import Link from "next/link";
 
 export default function Home() {
-  const { blocks, pages, setSelectedPage, fetchPages, fetchBlocks } = useAdminStore();
+  const { pages, setSelectedPage, getPages, getBlocks } = useAdminStore();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetchPages();
-      await fetchBlocks();
+      await getPages();
       setIsLoading(false);
     };
     fetchData();
-  }, [fetchPages, fetchBlocks]);
+  }, [getPages, getBlocks]);
 
   const homePage = pages.find((page) => page.slug === "home") as { blocks: Block[]; title: string } | undefined;
 

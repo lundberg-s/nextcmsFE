@@ -23,29 +23,10 @@ interface PageListProps {
 export function PageList({ pages }: PageListProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const { setSelectedPage } = useAdminStore();
+  const { setSelectedPage, selectedPage } = useAdminStore();
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Pages</h2>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" /> Add Page
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Add New Page</DialogTitle>
-              <DialogDescription>
-                Create a new page by filling out the form below.
-              </DialogDescription>
-            </DialogHeader>
-            <PageForm onClose={() => setOpen(false)} />
-          </DialogContent>
-        </Dialog>
-      </div>
+    <div className="space-y-4 absolute left-0">
       <div className="grid grid-cols-1 gap-4">
         {pages.map((page) => (
           <div key={page.id} className="flex items-center justify-between rounded-md border p-4">

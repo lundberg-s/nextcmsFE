@@ -9,8 +9,8 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('admin');
+  const [password, setPassword] = useState('admin');
   const router = useRouter();
   const setUser = useUserStore((state) => state.setUser);
 

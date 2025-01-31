@@ -9,7 +9,7 @@ export default function AdminLayout({
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto px-4 py-8">
+      <div className="container-fluid">
         {children}
       </div>
     </div>

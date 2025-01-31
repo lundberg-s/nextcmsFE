@@ -1,12 +1,6 @@
 import Link from "next/link";
 import { useAdminStore } from "@/lib/store/admin-store";
 
-const navItems = [
-  { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
-  { name: "Contact", path: "/contact" },
-];
-
 export default function DesktopNavbar() {
   const { pages } = useAdminStore();
 

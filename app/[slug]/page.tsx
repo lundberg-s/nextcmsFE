@@ -21,19 +21,18 @@ export default function Page({ params }: { params: { slug: string } }) {
       const blocksForPage = blocks.filter((block) => foundPage.blocks.includes(block.id));
       setPageBlocks(blocksForPage);
     } else {
-      // Redirect to a 404 page if the slug is not found
       router.push('/404');
     }
   }, [params.slug, pages, blocks, router, setSelectedPage]);
 
   if (!page) {
-    return <div>Loading...</div>; // Show a loading state while fetching the page
+    return <div>Loading...</div>;
   }
 
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
-        {pageBlocks.map((block) => (
+        {page.blocks.map((block) => (
           <BlockRenderer key={block.id} block={block} />
         ))}
       </div>

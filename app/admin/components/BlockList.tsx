@@ -40,10 +40,10 @@ export function BlockList({
 }: BlockListProps) {
   return (
     <div className="space-y-8">
-      {blocks.map((block) => (
-        <div key={block.id} className="relative group">
+      {blocks.map((block, index) => (
+        <div key={index} className="relative group">
           <BlockRenderer block={block} />
-          <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+          <div className="absolute top-4 right-4 flex gap-2">
             <Button
               size="sm"
               onClick={() => onEditBlock(block)}
