@@ -1,15 +1,15 @@
 'use client';
 
 import { Block } from '@/types/blocks';
-import { Hero } from './Hero';
-import { Features } from './Features';
+import { Hero } from '../../cms/blocks/Hero';
+import { Features } from '../../cms/blocks/Features';
 import { useAdminStore } from '@/lib/store/admin-store';
 
-interface BlockRendererProps {
+interface BlockProviderProps {
   block: Block;
 }
 
-export function BlockRenderer({ block }: BlockRendererProps) {
+export function BlockProvider({ block }: BlockProviderProps) {
   const { setSelectedBlock } = useAdminStore();
 
   const components: { [key: string]: React.ComponentType<{ block: Block; onEdit: () => void }> } = {

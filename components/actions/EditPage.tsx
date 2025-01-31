@@ -3,14 +3,14 @@
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import { Page } from '@/types/page';
-import { AddPageModal } from './AddPageModal';
+import { AddPageModal } from '@/components/modals/AddPageModal';
 
-interface AdminActionsProps {
+interface EditPageProps {
   onAddBlockClick: () => void;
   pages: Page[];
 }
 
-export function AdminActions({ onAddBlockClick, pages }: AdminActionsProps) {
+export function EditPage({ onAddBlockClick, pages }: EditPageProps) {
   return (
     <div className="flex justify-end items-center gap-2">
       <Button onClick={onAddBlockClick}>

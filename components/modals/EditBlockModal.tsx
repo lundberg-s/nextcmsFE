@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { BlockForm } from "@/components/blocks/BlockForm";
+import { AddBlockForm } from "@/components/forms/AddBlockForm";
 
 interface EditBlockModalProps {
   block: Block | null;
@@ -26,7 +26,7 @@ export function EditBlockModal({ block }: EditBlockModalProps) {
             Make changes to your block here.
           </DialogDescription>
         </DialogHeader>
-        <BlockForm block={block} />
+        <AddBlockForm block={block} />
       </DialogContent>
     </Dialog>
   );

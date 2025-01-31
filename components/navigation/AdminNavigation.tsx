@@ -4,7 +4,7 @@ import { useUserStore } from '@/lib/store/user-store';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 
-export function Navbar() {
+export function AdminNavigation() {
   const { user, logout } = useUserStore();
   const router = useRouter();
 

@@ -1,48 +1,29 @@
 "use client";
 import { Block } from "@/types/blocks";
-import { BlockRenderer } from "@/components/blocks/BlockRenderer";
-import { EditBlockModal } from "./EditBlockModal";
+import { BlockProvider } from "@/utils/BlockProvider";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { BlockForm } from "@/components/blocks/BlockForm";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogTrigger,
-  AlertDialogFooter,
+  AlertDialog,
 } from "@/components/ui/alert-dialog";
 
-interface BlockListProps {
+interface EditBlockListProps {
   blocks: Block[];
   onEditBlock: (block: any) => void;
   onDeleteBlock: (id: string) => void;
   confirmDeleteBlock: () => void;
 }
 
-export function BlockList({
+export function EditBlockList({
   blocks,
   onEditBlock,
   onDeleteBlock,
-  confirmDeleteBlock,
-}: BlockListProps) {
+}: EditBlockListProps) {
   return (
     <div className="space-y-8">
       {blocks.map((block, index) => (
         <div key={index} className="relative group">
-          <BlockRenderer block={block} />
+          <BlockProvider block={block} />
           <div className="absolute top-4 right-4 flex gap-2">
             <Button
               size="sm"

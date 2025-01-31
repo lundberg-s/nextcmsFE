@@ -7,11 +7,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 
-interface BlockFormProps {
+interface AddBlockFormProps {
   block: Block | null;
 }
 
-export function BlockForm({ block }: BlockFormProps) {
+export function AddBlockForm({ block }: AddBlockFormProps) {
   const { updateBlock, setSelectedBlock } = useAdminStore();
   const { register, handleSubmit, reset, setValue } = useForm<Block>({
     defaultValues: {

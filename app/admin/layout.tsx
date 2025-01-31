@@ -1,5 +1,4 @@
-import { Navbar } from '@/components/Navbar';
-import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuLink } from '@/components/ui/navigation-menu';
+import { AdminNavigation } from '@/components/navigation/AdminNavigation';
 
 export default function AdminLayout({
   children,
@@ -8,7 +7,7 @@ export default function AdminLayout({
 }) {
   return (
     <div>
-      <Navbar />
+      <AdminNavigation />
       <div className="container-fluid">
         {children}
       </div>

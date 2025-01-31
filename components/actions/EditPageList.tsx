@@ -1,32 +1,20 @@
-// components/PageList.tsx
+// components/EditPageList.tsx
 'use client';
 import { Page } from '@/types/page';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import { Plus } from 'lucide-react';
-import { PageForm } from './PageForm';
-import { useState } from 'react';
 import { useAdminStore } from '@/lib/store/admin-store';
 
-interface PageListProps {
+interface EditPageListProps {
   pages: Page[];
 }
 
-export function PageList({ pages }: PageListProps) {
-  const [open, setOpen] = useState(false);
+export function EditPageList({ pages }: EditPageListProps) {
   const router = useRouter();
   const { setSelectedPage, selectedPage } = useAdminStore();
 
   return (
-    <div className="space-y-4 absolute left-0">
+    <div className="space-y-4">
       <div className="grid grid-cols-1 gap-4">
         {pages.map((page) => (
           <div key={page.id} className="flex items-center justify-between rounded-md border p-4">

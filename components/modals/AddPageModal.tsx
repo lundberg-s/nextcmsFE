@@ -12,9 +12,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Plus } from 'lucide-react';
-import { PageForm } from './PageForm';
+import { AddPageForm } from '@/components/forms/AddPageForm';
 import { useState } from 'react';
-import { useAdminStore } from '@/lib/store/admin-store';
 
 interface AddPageModalProps {
   pages: Page[];
@@ -22,8 +21,6 @@ interface AddPageModalProps {
 
 export function AddPageModal({ pages }: AddPageModalProps) {
   const [open, setOpen] = useState(false);
-  const router = useRouter();
-  const { setSelectedPage } = useAdminStore();
 
   return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -39,7 +36,7 @@ export function AddPageModal({ pages }: AddPageModalProps) {
                 Create a new page by filling out the form below.
               </DialogDescription>
             </DialogHeader>
-            <PageForm onClose={() => setOpen(false)} />
+            <AddPageForm onClose={() => setOpen(false)} />
           </DialogContent>
         </Dialog>
   );

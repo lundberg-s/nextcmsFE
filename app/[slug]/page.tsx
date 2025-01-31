@@ -3,8 +3,10 @@
 
 import { useEffect, useState } from 'react';
 import { useAdminStore } from '@/lib/store/admin-store';
-import { BlockRenderer } from '@/components/blocks/BlockRenderer';
+import { BlockProvider } from '@/utils/BlockProvider';
 import { useRouter } from 'next/navigation';
+import { Block } from '@/types/blocks';
+import type { Page } from '@/types/page';
 
 export default function Page({ params }: { params: { slug: string } }) {
   const { pages, blocks, setSelectedPage } = useAdminStore();
@@ -14,7 +16,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   useEffect(() => {
     const foundPage = pages.find((p) => p.slug === params.slug);
-    setPage(foundPage);
+    setPage(foundPage || null);
 
     if (foundPage) {
       setSelectedPage(foundPage);
@@ -33,7 +35,7 @@ export default function Page({ params }: { params: { slug: string } }) {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
         {page.blocks.map((block) => (
-          <BlockRenderer key={block.id} block={block} />
+          <BlockProvider key={block.id} block={block} />
         ))}
       </div>
     </div>

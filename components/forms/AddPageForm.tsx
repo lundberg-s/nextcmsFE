@@ -1,15 +1,16 @@
-// components/PageForm.tsx
+// components/AddPageForm.tsx
 'use client';
 import { useAdminStore } from '@/lib/store/admin-store';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
+import { Page } from '@/types/page';
 
-interface PageFormProps {
+interface AddPageFormProps {
   onClose: () => void;
 }
 
-export function PageForm({ onClose }: PageFormProps) {
+export function AddPageForm({ onClose }: AddPageFormProps) {
   const { addPage } = useAdminStore();
   const { register, handleSubmit, reset } = useForm<Omit<Page, 'id' | 'blocks'>>({
     defaultValues: {
