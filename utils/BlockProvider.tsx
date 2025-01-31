@@ -1,8 +1,8 @@
 'use client';
 
 import { Block } from '@/types/blocks';
-import { Hero } from '../../cms/blocks/Hero';
-import { Features } from '../../cms/blocks/Features';
+import { Hero } from '@/components/blocks/Hero';
+import { Features } from '@/components/blocks/Features';
 import { useAdminStore } from '@/lib/store/admin-store';
 
 interface BlockProviderProps {

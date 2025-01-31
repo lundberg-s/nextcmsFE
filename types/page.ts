@@ -4,5 +4,5 @@ export interface Page {
   id: string;
   title: string;
   slug: string;
-  blocks: string[];
+  blocks: Block[];
 }

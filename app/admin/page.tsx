@@ -3,7 +3,7 @@
 
 import { useEffect } from "react";
 import { useAdminStore } from "@/lib/store/admin-store";
-import { PageManager } from "../../components/PageManager";
+import { PageManager } from "@/components/pages/admin/PageManager";
 
 export default function AdminPage() {
   const { getPages } = useAdminStore();

@@ -7,18 +7,18 @@ import {
   AlertDialog,
 } from "@/components/ui/alert-dialog";
 
-interface EditBlockListProps {
+interface BlockRendererProps {
   blocks: Block[];
-  onEditBlock: (block: any) => void;
+  onEditBlock: (block: Block) => void;
   onDeleteBlock: (id: string) => void;
   confirmDeleteBlock: () => void;
 }
 
-export function EditBlockList({
+export function BlockRenderer({
   blocks,
   onEditBlock,
   onDeleteBlock,
-}: EditBlockListProps) {
+}: BlockRendererProps) {
   return (
     <div className="space-y-8">
       {blocks.map((block, index) => (

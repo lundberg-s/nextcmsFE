@@ -5,12 +5,12 @@ import { Plus } from 'lucide-react';
 import { Page } from '@/types/page';
 import { AddPageModal } from '@/components/modals/AddPageModal';
 
-interface EditPageProps {
+interface EditPageOptionsProps {
   onAddBlockClick: () => void;
   pages: Page[];
 }
 
-export function EditPage({ onAddBlockClick, pages }: EditPageProps) {
+export function EditPageOptions({ onAddBlockClick, pages }: EditPageOptionsProps) {
   return (
     <div className="flex justify-end items-center gap-2">
       <Button onClick={onAddBlockClick}>
