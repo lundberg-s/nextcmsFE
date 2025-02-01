@@ -5,13 +5,11 @@ import { useEffect, useState } from 'react';
 import { useAdminStore } from '@/lib/store/admin-store';
 import { BlockProvider } from '@/utils/BlockProvider';
 import { useRouter } from 'next/navigation';
-import { Block } from '@/types/blocks';
 import type { Page } from '@/types/page';
 
 export default function Page({ params }: { params: { slug: string } }) {
   const { pages, blocks, setSelectedPage } = useAdminStore();
   const [page, setPage] = useState<Page | null>(null);
-  const [pageBlocks, setPageBlocks] = useState<Block[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -20,8 +18,6 @@ export default function Page({ params }: { params: { slug: string } }) {
 
     if (foundPage) {
       setSelectedPage(foundPage);
-      const blocksForPage = blocks.filter((block) => foundPage.blocks.includes(block.id));
-      setPageBlocks(blocksForPage);
     } else {
       router.push('/404');
     }

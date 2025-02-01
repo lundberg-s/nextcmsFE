@@ -30,6 +30,9 @@ export function ComponentForm({
   };
 
   const renderProps = () => {
+
+
+    
     switch (component.type) {
       case "button":
         return (
@@ -136,6 +139,36 @@ export function ComponentForm({
               />
             </div>
           </>
+        );
+      case "backgroundColor":
+        return (
+          <div className="space-y-2">
+            <Input
+              value={component.props.color || ""}
+              onChange={(e) => handlePropChange("color", e.target.value)}
+              placeholder="Background color"
+            />
+          </div>
+        );
+      case "backgroundImage":
+        return (
+          <div className="space-y-2">
+            <Input
+              value={component.props.url || ""}
+              onChange={(e) => handlePropChange("url", e.target.value)}
+              placeholder="Background image URL"
+            />
+          </div>
+        );
+      case "textColor":
+        return (
+          <div className="space-y-2">
+            <Input
+              value={component.props.color || ""}
+              onChange={(e) => handlePropChange("color", e.target.value)}
+              placeholder="Text color"
+            />
+          </div>
         );
       default:
         return null;

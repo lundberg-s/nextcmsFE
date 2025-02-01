@@ -5,38 +5,43 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
-import { ComponentType } from "@/types/blocks";
+import { ComponentKind, ComponentType } from "@/types/blocks";
 import { Plus } from "lucide-react";
 
 interface ComponentPreviewProps {
-  onSelect: (type: ComponentType) => void;
+  onSelect: (type: ComponentType, kind: string) => void;
 }
 
-const components: { type: ComponentType; label: string; preview: React.ReactNode }[] = [
+const components: { type: ComponentType; label: string; preview: React.ReactNode; kind: ComponentKind }[] = [
   {
     type: "button",
     label: "Button",
     preview: <Button size="sm">Button</Button>,
+    kind: "component",
   },
   {
     type: "input",
     label: "InputField",
     preview: <Input placeholder="Input field" className="w-32" />,
+    kind: "component",
   },
   {
     type: "textarea",
     label: "TextArea",
     preview: <Textarea placeholder="Text area" className="w-32 h-16" />,
+    kind: "component",
   },
   {
     type: "separator",
     label: "Separator",
     preview: <Separator className="w-32" />,
+    kind: "component",
   },
   {
     type: "badge",
     label: "Badge",
     preview: <Badge>Badge</Badge>,
+    kind: "component",
   },
   {
     type: "card",
@@ -46,6 +51,7 @@ const components: { type: ComponentType; label: string; preview: React.ReactNode
         Card
       </Card>
     ),
+    kind: "component",
   },
 ];
 
@@ -70,12 +76,12 @@ export function ComponentLibrary({ onSelect }: ComponentPreviewProps) {
             <div
               key={component.type}
               className="group relative p-8 rounded-lg border hover:border-primary transition-colors flex flex-col justify-center items-center cursor-pointer"
-              onClick={() => onSelect(component.type)}
+              onClick={() => onSelect(component.type, component.kind)}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
-                  onSelect(component.type);
+                  onSelect(component.type, component.kind);
                 }
               }}
             >

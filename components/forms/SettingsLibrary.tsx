@@ -1,28 +1,32 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
+import { ComponentKind } from "@/types/blocks";
 import { Plus } from "lucide-react";
 
 type SettingType = "backgroundColor" | "backgroundImage" | "textColor";
 
 interface SettingsLibraryProps {
-  onSelect: (type: SettingType) => void;
+  onSelect: (type: SettingType, kind: ComponentKind) => void;
 }
 
-const settings: { type: SettingType; label: string; description: string }[] = [
+const settings: { type: SettingType; label: string; description: string, kind: ComponentKind }[] = [
   {
     type: "backgroundColor",
     label: "Background Color",
     description: "Set the background color using hex or color name",
+    kind: "setting",
   },
   {
     type: "backgroundImage",
     label: "Background Image",
     description: "Add an image URL for the background",
+    kind: "setting",
   },
   {
     type: "textColor",
     label: "Text Color",
     description: "Set the color for text elements",
+    kind: "setting",
   },
 ];
 
@@ -47,12 +51,12 @@ export function SettingsLibrary({ onSelect }: SettingsLibraryProps) {
             <div
               key={setting.type}
               className="group relative p-4 rounded-lg border hover:border-primary transition-colors cursor-pointer"
-              onClick={() => onSelect(setting.type)}
+              onClick={() => onSelect(setting.type, setting.kind)}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
-                  onSelect(setting.type);
+                  onSelect(setting.type, setting.kind);
                 }
               }}
             >

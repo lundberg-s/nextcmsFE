@@ -1,6 +1,8 @@
 // components/PageList.tsx
 "use client";
 import { Page } from "@/types/page";
+import { Settings } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,17 +16,25 @@ import { Plus } from "lucide-react";
 import { AddPageForm } from "@/components/forms/AddPageForm";
 import { useState } from "react";
 
+interface EditPageModalProps {
+  selectedPage: Page | null;
+}
 
-export function AddPageModal() {
+export function EditPageModal({ selectedPage }: EditPageModalProps) {
   const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" /> Add Page
+      <div className="flex items-center gap-0.5">
+        <Button className="no-right-radius w-32 cursor-default">
+          {selectedPage?.title}
         </Button>
-      </DialogTrigger>
+        <DialogTrigger asChild>
+          <Button onClick={() => setOpen(true)} className="no-left-radius px-2">
+            <Settings className="h-4 w-4" />
+          </Button>
+        </DialogTrigger>
+      </div>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Add New Page</DialogTitle>

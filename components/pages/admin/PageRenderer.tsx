@@ -1,37 +1,21 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from '@/components/ui/button';
-import { Page } from "@/types/page";
-import { Settings } from 'lucide-react';
-import { Block } from "@/types/blocks";
-import { BlockRenderer } from "./Blockrenderer";
-import { EditPageOptions } from "@/components/actions/EditPageOptions";
+import { useAdminStore } from "@/lib/store/admin-store";
+import { BlockRenderer } from "./BlockRenderer";
+import { AddBlockModal } from "@/components/modals/AddBlockModal";
+import { AddPageModal } from "@/components/modals/AddPageModal";
+import { EditPageModal } from "@/components/modals/EditPageModal";
 
-interface PageRendererProps {
-  pages: Page[];
-  blocks: Block[];
-  selectedPage: Page | null;
-  setSelectedPage: (page: Page | null) => void;
-  setOpen: (open: boolean) => void;
-  setSelectedBlock: (block: any) => void;
-  handleDeleteBlock: (id: string) => void;
-  confirmDeleteBlock: () => void;
-}
+export function PageRenderer({}) {
+  const { pages, selectedPage, setSelectedPage } = useAdminStore();
 
-export function PageRenderer({
-  pages,
-  selectedPage,
-  setSelectedPage,
-  setSelectedBlock,
-  setOpen,
-  handleDeleteBlock,
-  confirmDeleteBlock,
-}: PageRendererProps) {
   return (
     <div className="">
       <Tabs
-        defaultValue={selectedPage?.id || pages[0]?.id}
+        defaultValue={
+          pages.find((page) => page.slug === "home")?.id || undefined
+        }
         onValueChange={(value) =>
           setSelectedPage(pages.find((page) => page.id === value) || null)
         }
@@ -44,29 +28,17 @@ export function PageRenderer({
               </TabsTrigger>
             ))}
           </TabsList>
-          <div className="flex items-center gap-2">
-          <EditPageOptions pages={pages} onAddBlockClick={() => setOpen(true)} />
-          <div className="flex items-center gap-0.5">
-            <Button className="no-right-radius w-32 cursor-default">{selectedPage?.title}</Button>
-            <Button
-              onClick={() => setOpen(true)}
-               className="no-left-radius px-2"
-            >
-             <Settings className="h-4 w-4" />
-            </Button>
-          </div>
+
+          <TabsList className="flex items-center gap-2">
+            <AddPageModal/>
+            <AddBlockModal selectedPage={selectedPage} />
+            <EditPageModal selectedPage={selectedPage} />
+          </TabsList>
         </div>
-        </div>
+
         {pages.map((page) => (
           <TabsContent key={page.id} value={page.id}>
-            <TabsContent key={page.id} value={page.id}>
-              <BlockRenderer
-                blocks={page.blocks}
-                onEditBlock={setSelectedBlock}
-                onDeleteBlock={handleDeleteBlock}
-                confirmDeleteBlock={confirmDeleteBlock}
-              />
-            </TabsContent>
+            <BlockRenderer blocks={page.blocks} />
           </TabsContent>
         ))}
       </Tabs>

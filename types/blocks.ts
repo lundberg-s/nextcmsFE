@@ -31,8 +31,11 @@ export interface Block {
 export interface BlockComponent {
   id: string;
   type: ComponentType;
-  props: Record<string, any>;
+  kind: ComponentKind;
+  value: string;
 }
+
+export type ComponentKind = "setting" | "component";
 
 export type ComponentType = 
   | "button"
@@ -40,4 +43,7 @@ export type ComponentType =
   | "textarea"
   | "separator"
   | "badge"
-  | "card";
+  | "card"
+  | "backgroundColor"
+  | "backgroundImage"
+  | "textColor";
