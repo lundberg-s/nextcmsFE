@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { ComponentLibrary } from "./ComponentLibrary";
-import { ComponentForm } from "./ComponentForm";
+import { SettingsForm } from "./SettingsForm";
 import { generateId } from "@/utils/GenerateId";
 import { SettingsLibrary } from "./SettingsLibrary";
 
@@ -17,28 +17,10 @@ interface AddBlockFormProps {
 export function AddBlockForm({ block }: AddBlockFormProps) {
   const { updateBlock, setSelectedBlock } = useAdminStore();
   const { register, handleSubmit, reset, setValue, watch } = useForm<Block>({
-    defaultValues: {
-      id: "",
-      type: "hero",
-      content: {
-        title: "",
-        description: "",
-        cta: {
-          text: "",
-          link: "",
-        },
-        items: [],
-      },
-      settings: {
-        backgroundColor: "",
-        backgroundImage: "",
-        textColor: "",
-      },
-      pageId: "",
-    },
+    defaultValues: {},
   });
 
-  const items = watch("content.items");
+  const settings = watch("settings");
 
   useEffect(() => {
     if (block) {
@@ -54,24 +36,25 @@ export function AddBlockForm({ block }: AddBlockFormProps) {
   };
 
   const handleAddComponent = (type: ComponentType) => {
-    const newComponent: BlockComponent = {
-      id: generateId(),
-      type,
-      props: {},
+    const newComponent = {
+      [type]: "",
     };
-    
-    setValue("content.items", [...(items || []), newComponent]);
+
+    setValue("settings", {
+      ...watch("settings"),
+      ...newComponent,
+    });
   };
 
-  const handleUpdateComponent = (index: number, component: BlockComponent) => {
-    const newItems = [...(items || [])];
-    newItems[index] = component;
-    setValue("content.items", newItems);
+  const handleUpdateComponent = (type: ComponentType, value: string) => {
+    setValue(`settings.${type}`, value);
   };
 
-  const handleRemoveComponent = (index: number) => {
-    const newItems = (items || []).filter((_, i) => i !== index);
-    setValue("content.items", newItems);
+  const handleRemoveComponent = (type: string) => {
+    const currentSettings: Record<string, string> = watch("settings") || {};
+    const newSettings = { ...currentSettings };
+    delete newSettings[type as keyof typeof newSettings];
+    setValue("settings", newSettings);
   };
 
   return (
@@ -101,42 +84,24 @@ export function AddBlockForm({ block }: AddBlockFormProps) {
           </label>
           <Input id="ctaLink" type="text" {...register("content.cta.link")} />
         </div>
-        <div>
-          <label htmlFor="backgroundColor" className="block text-sm font-medium">
-            Background Color
-          </label>
-          <Input
-            id="backgroundColor"
-            type="text"
-            {...register("settings.backgroundColor")}
-          />
-        </div>
-        <div>
-          <label htmlFor="backgroundImage" className="block text-sm font-medium">
-            Background Image
-          </label>
-          <Input
-            id="backgroundImage"
-            type="text"
-            {...register("settings.backgroundImage")}
-          />
-        </div>
         <div className="space-y-4">
-          {items?.map((component, index) => (
-            <ComponentForm
-              key={component.id}
-              component={component}
-              onChange={(updated) => handleUpdateComponent(index, updated)}
-              onRemove={() => handleRemoveComponent(index)}
-            />
-          ))}
+          {settings &&
+            Object.entries(settings).map(([type, value]) => (
+              <SettingsForm
+                key={type}
+                type={type}
+                value={value as string}
+                kind="setting"
+                onChange={handleUpdateComponent}
+                onRemove={() => handleRemoveComponent(type)}
+              />
+            ))}
         </div>
       </div>
 
       <div className="space-y-4">
         <ComponentLibrary onSelect={handleAddComponent} />
         <SettingsLibrary onSelect={handleAddComponent} />
-        
       </div>
 
       <div className="flex justify-end gap-2">

@@ -19,20 +19,11 @@ export function ComponentForm({
   onChange,
   onRemove,
 }: ComponentFormProps) {
-  const handlePropChange = (key: string, value: string) => {
-    onChange({
-      ...component,
-      props: {
-        ...component.props,
-        [key]: value,
-      },
-    });
+  const handlePropChange = (type: string, value: string) => {
+    onChange(type, value);
   };
 
-  const renderProps = () => {
-
-
-    
+  const renderProps = () => { 
     switch (component.type) {
       case "button":
         return (
