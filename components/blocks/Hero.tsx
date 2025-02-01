@@ -16,6 +16,13 @@ export function Hero({ block, onEdit }: HeroProps) {
       className={`min-h-[600px] flex items-center justify-center ${
         settings?.backgroundColor || 'bg-background'
       } ${settings?.textColor || ''}`}
+      style={{
+        ...(settings?.backgroundImage && {
+          backgroundImage: `url(${settings?.backgroundImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }),
+      }}
     >
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">

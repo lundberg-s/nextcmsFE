@@ -21,8 +21,23 @@ export interface Block {
   };
   settings?: {
     backgroundColor?: string;
+    backgroundImage?: string;
     textColor?: string;
     layout?: 'left' | 'right' | 'center';
   };
   pageId: string;
 }
+
+export interface BlockComponent {
+  id: string;
+  type: ComponentType;
+  props: Record<string, any>;
+}
+
+export type ComponentType = 
+  | "button"
+  | "input"
+  | "textarea"
+  | "separator"
+  | "badge"
+  | "card";
