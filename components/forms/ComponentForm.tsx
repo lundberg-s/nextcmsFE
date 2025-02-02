@@ -1,36 +1,54 @@
-import { BlockComponent, ComponentKind } from "@/types/blocks";
+import { BlockComponent, ComponentKind, ComponentType } from "@/types/blocks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { Trash2 } from "lucide-react";
 import { ConfirmationModal } from "../modals/ConfirmationModal";
 
 interface ComponentFormProps {
-  component: BlockComponent;
-  type: string;
+  type: ComponentType;
   value: string;
   kind: ComponentKind;
-  onChange: (type: string, value: string) => void;
-  onRemove: () => void;
+  onChange: (type: ComponentType, value: string, kind: ComponentKind) => void;
+  onRemove: (type: ComponentType, kind: ComponentKind) => void;
 }
 
 export function ComponentForm({
-  component,
+  kind,
   type,
   value,
   onChange,
   onRemove,
 }: ComponentFormProps) {
   const handlePropChange = (value: string) => {
-    onChange(type, value);
+    onChange(type, value, kind);
   };
 
   const renderProps = () => { 
     switch (type) {
+      case "title":
+        return (
+          <div className="space-y-2">
+            <Label>Title</Label>
+            <Input
+              value={value || ""}
+              onChange={(e) => handlePropChange(e.target.value)}
+              placeholder="Title"
+            />
+          </div>
+        );
+      case "description":
+        return (
+          <div className="space-y-2">
+            <Label>Description</Label>
+            <Textarea
+              value={value || ""}
+              onChange={(e) => handlePropChange(e.target.value)}
+              placeholder="Description"
+            />
+          </div>
+        );
       case "button":
         return (
           <>
@@ -137,36 +155,6 @@ export function ComponentForm({
             </div>
           </>
         );
-      case "backgroundColor":
-        return (
-          <div className="space-y-2">
-            <Input
-              value={value || ""}
-              onChange={(e) => handlePropChange(e.target.value)}
-              placeholder="Background color"
-            />
-          </div>
-        );
-      case "backgroundImage":
-        return (
-          <div className="space-y-2">
-            <Input
-              value={value || ""}
-              onChange={(e) => handlePropChange(e.target.value)}
-              placeholder="Background image URL"
-            />
-          </div>
-        );
-      case "textColor":
-        return (
-          <div className="space-y-2">
-            <Input
-              value={value || ""}
-              onChange={(e) => handlePropChange(e.target.value)}
-              placeholder="Text color"
-            />
-          </div>
-        );
       default:
         return null;
     }
@@ -178,7 +166,7 @@ export function ComponentForm({
       <div className="absolute right-10 -mt-2">
 
         <ConfirmationModal
-          onConfirm={onRemove}
+         onConfirm={() => onRemove(type, kind)}
           title="Are you sure you want to delete this component?"
           description="This action cannot be undone."
           confirmText="Delete"

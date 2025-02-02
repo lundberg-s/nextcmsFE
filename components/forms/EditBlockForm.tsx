@@ -1,4 +1,9 @@
-import { Block, BlockComponent, ComponentType } from "@/types/blocks";
+import {
+  Block,
+  BlockComponent,
+  ComponentKind,
+  ComponentType,
+} from "@/types/blocks";
 import { useAdminStore } from "@/lib/store/admin-store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +15,7 @@ import { SettingsForm } from "./SettingsForm";
 import { generateId } from "@/utils/GenerateId";
 import { AddSettingModal } from "../modals/AddSettingModal";
 import { on } from "node:events";
+import { ComponentForm } from "./ComponentForm";
 
 interface EditBlockFormProps {
   block: Block | null;
@@ -39,34 +45,58 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
     }
   };
 
- 
+  const handleAddComponent = (type: ComponentType, kind: ComponentKind) => {
+    if (kind === "component") {
+      const newComponent = {
+        [type]: "",
+      };
 
-  const handleAddComponent = (type: ComponentType) => {
-    const newComponent = {
-      [type]: "",
-    };
+      setValue("content", {
+        ...watch("content"),
+        ...newComponent,
+      });
+    } else {
+      const newSetting = {
+        [type]: "",
+      };
 
-    setValue("settings", {
-      ...watch("settings"),
-      ...newComponent,
-    });
+      setValue("settings", {
+        ...watch("settings"),
+        ...newSetting,
+      });
+    }
   };
 
-  const handleUpdateComponent = (type: ComponentType, value: string) => {
-    setValue(`settings.${type}`, value);
+  const handleUpdateComponent = (
+    type: ComponentType,
+    value: string,
+    kind: ComponentKind
+  ) => {
+    if (kind === "component") {
+      setValue(`content.${type}`, value);
+    } else {
+      setValue(`settings.${type}`, value);
+    }
   };
 
-  const handleRemoveComponent = (type: string) => {
-    const currentSettings: Record<string, string> = watch("settings") || {};
-    const newSettings = { ...currentSettings };
-    delete newSettings[type as keyof typeof newSettings];
-    setValue("settings", newSettings);
+  const handleRemoveComponent = (type: ComponentType, kind: ComponentKind) => {
+    if (kind === "component") {
+      const currentContent = watch("content") || {};
+      const newContent = { ...currentContent };
+      delete newContent[type as keyof typeof newContent];
+      setValue("content", newContent);
+    } else {
+      const currentSettings: Record<string, string> = watch("settings") || {};
+      const newSettings = { ...currentSettings };
+      delete newSettings[type as keyof typeof newSettings];
+      setValue("settings", newSettings);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="space-y-4">
-        <div className="border rounded-lg p-4">
+        {/* <div className="border rounded-lg p-4">
           <label htmlFor="title" className="block text-sm font-medium">
             Title
           </label>
@@ -77,8 +107,8 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
             Description
           </label>
           <Textarea id="description" {...register("content.description")} />
-        </div>
-        <div className="border rounded-lg p-4">
+        </div> */}
+        {/* <div className="border rounded-lg p-4">
           <label htmlFor="ctaText" className="block text-sm font-medium">
             CTA Text
           </label>
@@ -89,18 +119,29 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
             CTA Link
           </label>
           <Input id="ctaLink" type="text" {...register("content.cta.link")} />
+        </div> */}
+        <div className="space-y-4">
+          {content &&
+            Object.entries(content).map(([type, value]) => (
+              <ComponentForm
+                key={type}
+                type={type as ComponentType}
+                value={value as string}
+                kind="component"
+                onChange={handleUpdateComponent}
+                onRemove={handleRemoveComponent}/>
+            ))}
         </div>
         <div className="space-y-4">
           {settings &&
             Object.entries(settings).map(([type, value]) => (
               <SettingsForm
                 key={type}
-                type={type}
+                type={type as ComponentType}
                 value={value as string}
                 kind="setting"
                 onChange={handleUpdateComponent}
-                onRemove={() => handleRemoveComponent(type)}
-              />
+                onRemove={handleRemoveComponent}             />
             ))}
         </div>
       </div>
@@ -111,11 +152,7 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
       </div>
 
       <div className="flex justify-end gap-2">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={onClose}
-        >
+        <Button type="button" variant="outline" onClick={onClose}>
           Cancel
         </Button>
         <Button type="submit">Save</Button>

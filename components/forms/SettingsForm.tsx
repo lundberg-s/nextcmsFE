@@ -1,16 +1,17 @@
-import { ComponentKind } from "@/types/blocks";
+import { BlockComponent, ComponentKind } from "@/types/blocks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Trash2 } from "lucide-react";
 import { ConfirmationModal } from "../modals/ConfirmationModal";
+import { ComponentType } from "@/types/blocks";
 
 interface SettingsFormProps {
-  type: string;
+  type: ComponentType;
   value: string;
   kind: ComponentKind;
-  onChange: (type: string, value: string) => void;
-  onRemove: () => void;
+  onChange: (type: ComponentType, value: string, kind: ComponentKind) => void;
+  onRemove: (type: ComponentType, kind: ComponentKind) => void;
 }
 
 export function SettingsForm({
@@ -21,7 +22,7 @@ export function SettingsForm({
   onRemove,
 }: SettingsFormProps) {
   const handlePropChange = (value: string) => {
-    onChange(type, value);
+    onChange(type, value, kind);
   };
 
   const renderProps = () => {
@@ -78,9 +79,8 @@ export function SettingsForm({
   return (
     <div className="border rounded-lg p-4">
       <div className="absolute right-10 -mt-2">
-
         <ConfirmationModal
-          onConfirm={onRemove}
+          onConfirm={() => onRemove(type, kind)}
           title="Are you sure you want to delete this setting?"
           description="This action cannot be undone."
           confirmText="Delete"

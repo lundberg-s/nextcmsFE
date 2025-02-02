@@ -7,17 +7,20 @@ export interface Block {
     title?: string;
     subtitle?: string;
     description?: string;
-    image?: string;
-    cta?: {
-      text: string;
-      link: string;
-    };
-    items?: Array<{
-      id: string;
+    button?: string;
+    input?: string;
+    textarea?: string;
+    separator?: string;
+    desc?: string;
+    badge?: string;
+    card?: {
       title: string;
+      subtitle: string;
       description: string;
-      image?: string;
-    }>;
+      image: string;
+    };
+
+    layout?: string;
   };
   settings?: {
     backgroundColor?: string;
@@ -38,12 +41,16 @@ export interface BlockComponent {
 export type ComponentKind = "setting" | "component";
 
 export type ComponentType = 
+  | "title"
+  | "description"
   | "button"
   | "input"
   | "textarea"
   | "separator"
+  | "desc"
   | "badge"
   | "card"
+  | "layout"
   | "backgroundColor"
   | "backgroundImage"
   | "textColor";
