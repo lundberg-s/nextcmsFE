@@ -41,8 +41,6 @@ export function AddBlockModal({ selectedPage }: AddBlockModalProps) {
         content: {
           title: "Testdata",
           description: "",
-          cta: { text: "", link: "" },
-          items: [],
         },
         settings: {},
         pageId: selectedPage?.id,

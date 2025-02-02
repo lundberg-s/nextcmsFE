@@ -1,4 +1,4 @@
-import { BlockComponent } from "@/types/blocks";
+import { BlockComponent, ComponentKind } from "@/types/blocks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,40 +7,46 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Trash2 } from "lucide-react";
+import { ConfirmationModal } from "../modals/ConfirmationModal";
 
 interface ComponentFormProps {
   component: BlockComponent;
-  onChange: (component: BlockComponent) => void;
+  type: string;
+  value: string;
+  kind: ComponentKind;
+  onChange: (type: string, value: string) => void;
   onRemove: () => void;
 }
 
 export function ComponentForm({
   component,
+  type,
+  value,
   onChange,
   onRemove,
 }: ComponentFormProps) {
-  const handlePropChange = (type: string, value: string) => {
+  const handlePropChange = (value: string) => {
     onChange(type, value);
   };
 
   const renderProps = () => { 
-    switch (component.type) {
+    switch (type) {
       case "button":
         return (
           <>
             <div className="space-y-2">
               <Label>Text</Label>
               <Input
-                value={component.props.text || ""}
-                onChange={(e) => handlePropChange("text", e.target.value)}
+                value={value || ""}
+                onChange={(e) => handlePropChange(e.target.value)}
                 placeholder="Button text"
               />
             </div>
             <div className="space-y-2">
               <Label>Variant</Label>
               <Input
-                value={component.props.variant || ""}
-                onChange={(e) => handlePropChange("variant", e.target.value)}
+                value={value || ""}
+                onChange={(e) => handlePropChange(e.target.value)}
                 placeholder="default, outline, etc."
               />
             </div>
@@ -52,28 +58,28 @@ export function ComponentForm({
             <div className="space-y-2">
               <Label>Placeholder</Label>
               <Input
-                value={component.props.placeholder || ""}
-                onChange={(e) => handlePropChange("placeholder", e.target.value)}
+                value={value || ""}
+                onChange={(e) => handlePropChange(e.target.value)}
                 placeholder="Input placeholder"
               />
             </div>
             <div className="space-y-2">
               <Label>Type</Label>
               <Input
-                value={component.props.type || ""}
-                onChange={(e) => handlePropChange("type", e.target.value)}
+                value={value || ""}
+                onChange={(e) => handlePropChange(e.target.value)}
                 placeholder="text, email, etc."
               />
             </div>
           </>
         );
-      case "textarea":
+      case "desc":
         return (
           <div className="space-y-2">
             <Label>Placeholder</Label>
             <Input
-              value={component.props.placeholder || ""}
-              onChange={(e) => handlePropChange("placeholder", e.target.value)}
+              value={value || ""}
+              onChange={(e) => handlePropChange(e.target.value)}
               placeholder="Textarea placeholder"
             />
           </div>
@@ -83,8 +89,8 @@ export function ComponentForm({
           <div className="space-y-2">
             <Label>Orientation</Label>
             <Input
-              value={component.props.orientation || ""}
-              onChange={(e) => handlePropChange("orientation", e.target.value)}
+              value={value || ""}
+              onChange={(e) => handlePropChange(e.target.value)}
               placeholder="horizontal or vertical"
             />
           </div>
@@ -95,16 +101,16 @@ export function ComponentForm({
             <div className="space-y-2">
               <Label>Text</Label>
               <Input
-                value={component.props.text || ""}
-                onChange={(e) => handlePropChange("text", e.target.value)}
+                value={value || ""}
+                onChange={(e) => handlePropChange(e.target.value)}
                 placeholder="Badge text"
               />
             </div>
             <div className="space-y-2">
               <Label>Variant</Label>
               <Input
-                value={component.props.variant || ""}
-                onChange={(e) => handlePropChange("variant", e.target.value)}
+                value={value || ""}
+                onChange={(e) => handlePropChange(e.target.value)}
                 placeholder="default, secondary, etc."
               />
             </div>
@@ -116,16 +122,16 @@ export function ComponentForm({
             <div className="space-y-2">
               <Label>Title</Label>
               <Input
-                value={component.props.title || ""}
-                onChange={(e) => handlePropChange("title", e.target.value)}
+                value={value || ""}
+                onChange={(e) => handlePropChange(e.target.value)}
                 placeholder="Card title"
               />
             </div>
             <div className="space-y-2">
               <Label>Content</Label>
               <Textarea
-                value={component.props.content || ""}
-                onChange={(e) => handlePropChange("content", e.target.value)}
+                value={value || ""}
+                onChange={(e) => handlePropChange(e.target.value)}
                 placeholder="Card content"
               />
             </div>
@@ -135,8 +141,8 @@ export function ComponentForm({
         return (
           <div className="space-y-2">
             <Input
-              value={component.props.color || ""}
-              onChange={(e) => handlePropChange("color", e.target.value)}
+              value={value || ""}
+              onChange={(e) => handlePropChange(e.target.value)}
               placeholder="Background color"
             />
           </div>
@@ -145,8 +151,8 @@ export function ComponentForm({
         return (
           <div className="space-y-2">
             <Input
-              value={component.props.url || ""}
-              onChange={(e) => handlePropChange("url", e.target.value)}
+              value={value || ""}
+              onChange={(e) => handlePropChange(e.target.value)}
               placeholder="Background image URL"
             />
           </div>
@@ -155,8 +161,8 @@ export function ComponentForm({
         return (
           <div className="space-y-2">
             <Input
-              value={component.props.color || ""}
-              onChange={(e) => handlePropChange("color", e.target.value)}
+              value={value || ""}
+              onChange={(e) => handlePropChange(e.target.value)}
               placeholder="Text color"
             />
           </div>
@@ -166,18 +172,23 @@ export function ComponentForm({
     }
   };
 
+
   return (
-    <div className="border rounded-lg p-4 space-y-4">
-      <div className="flex items-center justify-between">
-        <h4 className="font-medium capitalize">{component.type}</h4>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onRemove}
-          className="text-destructive"
-        >
-          <Trash2 className="w-4 h-4" />
-        </Button>
+    <div className="border rounded-lg p-4">
+      <div className="absolute right-10 -mt-2">
+
+        <ConfirmationModal
+          onConfirm={onRemove}
+          title="Are you sure you want to delete this component?"
+          description="This action cannot be undone."
+          confirmText="Delete"
+          cancelText="Cancel"
+          triggerElement={
+            <Button variant="ghost" size="sm">
+              <Trash2 className="w-4 h-4" />
+            </Button>
+          }
+        />
       </div>
       {renderProps()}
     </div>

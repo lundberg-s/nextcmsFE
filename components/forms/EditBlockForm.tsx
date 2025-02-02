@@ -23,6 +23,7 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
   });
 
   const settings = watch("settings");
+  const content = watch("content");
 
   useEffect(() => {
     if (block) {
@@ -37,6 +38,8 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
       onClose();
     }
   };
+
+ 
 
   const handleAddComponent = (type: ComponentType) => {
     const newComponent = {
