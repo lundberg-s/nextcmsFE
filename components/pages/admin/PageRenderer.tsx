@@ -6,6 +6,7 @@ import { BlockRenderer } from "./BlockRenderer";
 import { AddBlockModal } from "@/components/modals/AddBlockModal";
 import { AddPageModal } from "@/components/modals/AddPageModal";
 import { EditPageModal } from "@/components/modals/EditPageModal";
+import { PagePreview } from "./PagePreview";
 
 export function PageRenderer({}) {
   const { pages, selectedPage, setSelectedPage } = useAdminStore();
@@ -32,6 +33,7 @@ export function PageRenderer({}) {
           <TabsList className="flex items-center gap-2">
             <AddPageModal/>
             <AddBlockModal selectedPage={selectedPage} />
+            <PagePreview selectedPage={selectedPage} />
             <EditPageModal selectedPage={selectedPage} />
           </TabsList>
         </div>

@@ -5,16 +5,18 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-import { ComponentLibrary } from "./ComponentLibrary";
+import { AddComponentModal } from "../modals/AddComponentModal";
 import { SettingsForm } from "./SettingsForm";
 import { generateId } from "@/utils/GenerateId";
-import { SettingsLibrary } from "./SettingsLibrary";
+import { AddSettingModal } from "../modals/AddSettingModal";
+import { on } from "node:events";
 
-interface AddBlockFormProps {
+interface EditBlockFormProps {
   block: Block | null;
+  onClose: () => void;
 }
 
-export function AddBlockForm({ block }: AddBlockFormProps) {
+export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
   const { updateBlock, setSelectedBlock } = useAdminStore();
   const { register, handleSubmit, reset, setValue, watch } = useForm<Block>({
     defaultValues: {},
@@ -32,6 +34,7 @@ export function AddBlockForm({ block }: AddBlockFormProps) {
     if (block) {
       updateBlock(block.id, data);
       setSelectedBlock(null);
+      onClose();
     }
   };
 
@@ -60,25 +63,25 @@ export function AddBlockForm({ block }: AddBlockFormProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="space-y-4">
-        <div>
+        <div className="border rounded-lg p-4">
           <label htmlFor="title" className="block text-sm font-medium">
             Title
           </label>
           <Input id="title" type="text" {...register("content.title")} />
         </div>
-        <div>
+        <div className="border rounded-lg p-4">
           <label htmlFor="description" className="block text-sm font-medium">
             Description
           </label>
           <Textarea id="description" {...register("content.description")} />
         </div>
-        <div>
+        <div className="border rounded-lg p-4">
           <label htmlFor="ctaText" className="block text-sm font-medium">
             CTA Text
           </label>
           <Input id="ctaText" type="text" {...register("content.cta.text")} />
         </div>
-        <div>
+        <div className="border rounded-lg p-4">
           <label htmlFor="ctaLink" className="block text-sm font-medium">
             CTA Link
           </label>
@@ -100,15 +103,15 @@ export function AddBlockForm({ block }: AddBlockFormProps) {
       </div>
 
       <div className="space-y-4">
-        <ComponentLibrary onSelect={handleAddComponent} />
-        <SettingsLibrary onSelect={handleAddComponent} />
+        <AddComponentModal onSelect={handleAddComponent} />
+        <AddSettingModal onSelect={handleAddComponent} />
       </div>
 
       <div className="flex justify-end gap-2">
         <Button
           type="button"
           variant="outline"
-          onClick={() => setSelectedBlock(null)}
+          onClick={onClose}
         >
           Cancel
         </Button>

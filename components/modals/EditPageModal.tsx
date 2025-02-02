@@ -15,6 +15,7 @@ import {
 import { Plus } from "lucide-react";
 import { AddPageForm } from "@/components/forms/AddPageForm";
 import { useState } from "react";
+import { EditPageForm } from "../forms/EditPageForm";
 
 interface EditPageModalProps {
   selectedPage: Page | null;
@@ -37,12 +38,12 @@ export function EditPageModal({ selectedPage }: EditPageModalProps) {
       </div>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add New Page</DialogTitle>
+          <DialogTitle>Edit this page</DialogTitle>
           <DialogDescription>
-            Create a new page by filling out the form below.
+            Make changes to your page here.
           </DialogDescription>
         </DialogHeader>
-        <AddPageForm onClose={() => setOpen(false)} />
+        <EditPageForm page={selectedPage} onClose={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import { Plus } from "lucide-react";
+import { Block, BlockType } from "@/types/blocks";
 import { Button } from "@/components/ui/button";
 import { Page } from "@/types/page";
 import {
@@ -31,12 +32,11 @@ const blockTypes = ["hero", "features"] as const;
 export function AddBlockModal({ selectedPage }: AddBlockModalProps) {
   const { addBlock } = useAdminStore();
   const [open, setOpen] = useState(false);
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<BlockType | null>(null);
 
   const handleAddBlock = () => {
     if (selectedType && selectedPage?.id) {
-      const newBlock = {
-        id: nanoid(),
+      const newBlock: Omit<Block, "id"> & { pageId: string } = {
         type: selectedType,
         content: {
           title: "Testdata",

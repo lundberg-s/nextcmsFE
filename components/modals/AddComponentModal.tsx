@@ -55,7 +55,7 @@ const components: { type: ComponentType; label: string; preview: React.ReactNode
   },
 ];
 
-export function ComponentLibrary({ onSelect }: ComponentPreviewProps) {
+export function AddComponentModal({ onSelect }: ComponentPreviewProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>

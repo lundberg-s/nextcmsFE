@@ -14,7 +14,7 @@ import { Plus } from "lucide-react";
 
 type SettingType = "backgroundColor" | "backgroundImage" | "textColor";
 
-interface SettingsLibraryProps {
+interface AddSettingModalProps {
   onSelect: (type: SettingType, kind: ComponentKind) => void;
 }
 
@@ -44,7 +44,7 @@ const settings: {
   },
 ];
 
-export function SettingsLibrary({ onSelect }: SettingsLibraryProps) {
+export function AddSettingModal({ onSelect }: AddSettingModalProps) {
   const [open, setOpen] = useState(false);
 
   const handleClick = (type: SettingType, kind: ComponentKind) => {

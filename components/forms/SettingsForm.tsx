@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Trash2 } from "lucide-react";
+import { ConfirmationModal } from "../modals/ConfirmationModal";
 
 interface SettingsFormProps {
   type: string;
@@ -77,14 +78,19 @@ export function SettingsForm({
   return (
     <div className="border rounded-lg p-4">
       <div className="absolute right-10 -mt-2">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onRemove}
-          className="text-destructive"
-        >
-          <Trash2 className="w-4 h-4" />
-        </Button>
+
+        <ConfirmationModal
+          onConfirm={onRemove}
+          title="Are you sure you want to delete this setting?"
+          description="This action cannot be undone."
+          confirmText="Delete"
+          cancelText="Cancel"
+          triggerElement={
+            <Button variant="ghost" size="sm">
+              <Trash2 className="w-4 h-4" />
+            </Button>
+          }
+        />
       </div>
       {renderProps()}
     </div>
