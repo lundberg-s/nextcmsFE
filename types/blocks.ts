@@ -1,4 +1,9 @@
-export type BlockType = 'hero' | 'features' | 'testimonials' | 'cta' | 'content';
+export type BlockType =
+  | "hero"
+  | "features"
+  | "testimonials"
+  | "cta"
+  | "content";
 
 export interface Block {
   id: string;
@@ -26,7 +31,7 @@ export interface Block {
     backgroundColor?: string;
     backgroundImage?: string;
     textColor?: string;
-    layout?: 'left' | 'right' | 'center';
+    layout?: "left" | "right" | "center";
   };
   pageId: string;
 }
@@ -36,11 +41,30 @@ export interface BlockComponent {
   type: ComponentType;
   kind: ComponentKind;
   value: string;
+  title?: string;
+  description?: string;
+  subtitle?: string;
+  button_text: string;
+  button_variant: string;
+  input_text: string;
+  input?: string;
+  textarea?: string;
+  separator?: string;
+  desc?: string;
+  badge?: string;
+  card?: {
+    title: string;
+    subtitle: string;
+    description: string;
+    image: string;
+  };
+
+  layout?: string;
 }
 
 export type ComponentKind = "setting" | "component";
 
-export type ComponentType = 
+export type ComponentType =
   | "title"
   | "description"
   | "button"

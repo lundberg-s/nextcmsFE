@@ -38,10 +38,7 @@ export function AddBlockModal({ selectedPage }: AddBlockModalProps) {
     if (selectedType && selectedPage?.id) {
       const newBlock: Omit<Block, "id"> & { pageId: string } = {
         type: selectedType,
-        content: {
-          title: "Testdata",
-          description: "",
-        },
+        content: {},
         settings: {},
         pageId: selectedPage?.id,
       };

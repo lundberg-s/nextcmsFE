@@ -2,39 +2,50 @@ import { BlockComponent, ComponentKind, ComponentType } from "@/types/blocks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Trash2 } from "lucide-react";
 import { ConfirmationModal } from "../modals/ConfirmationModal";
 
 interface ComponentFormProps {
   type: ComponentType;
-  value: string;
+  component: Partial<BlockComponent>;
   kind: ComponentKind;
-  onChange: (type: ComponentType, value: string, kind: ComponentKind) => void;
+  onChange: (
+    type: ComponentType,
+    component: Partial<BlockComponent>,
+    kind: ComponentKind
+  ) => void;
   onRemove: (type: ComponentType, kind: ComponentKind) => void;
 }
 
 export function ComponentForm({
-  kind,
   type,
-  value,
+  component,
+  kind,
   onChange,
   onRemove,
 }: ComponentFormProps) {
-  const handlePropChange = (value: string) => {
-    onChange(type, value, kind);
+  const handleComponentChange = (key: string, value: string) => {
+    onChange(type, { ...component, [key]: value }, kind);
   };
 
-  const renderProps = () => { 
+  const renderProps = () => {
     switch (type) {
       case "title":
         return (
           <div className="space-y-2">
             <Label>Title</Label>
             <Input
-              value={value || ""}
-              onChange={(e) => handlePropChange(e.target.value)}
-              placeholder="Title"
+              value={component?.title || ""}
+              onChange={(e) => handleComponentChange("title", e.target.value)}
+              placeholder="Enter title"
             />
           </div>
         );
@@ -43,62 +54,89 @@ export function ComponentForm({
           <div className="space-y-2">
             <Label>Description</Label>
             <Textarea
-              value={value || ""}
-              onChange={(e) => handlePropChange(e.target.value)}
-              placeholder="Description"
+              value={component?.content || ""}
+              onChange={(e) => handleComponentChange("content", e.target.value)}
+              placeholder="Enter description"
             />
           </div>
         );
       case "button":
         return (
-          <>
+          <div className="space-y-4">
             <div className="space-y-2">
-              <Label>Text</Label>
+              <Label>Button Text</Label>
               <Input
-                value={value || ""}
-                onChange={(e) => handlePropChange(e.target.value)}
-                placeholder="Button text"
+                value={component?.text || ""}
+                onChange={(e) => handleComponentChange("text", e.target.value)}
+                placeholder="Enter button text"
               />
             </div>
             <div className="space-y-2">
-              <Label>Variant</Label>
-              <Input
-                value={value || ""}
-                onChange={(e) => handlePropChange(e.target.value)}
-                placeholder="default, outline, etc."
-              />
+              <Label>Button Variant</Label>
+              <Select
+                value={component?.variant || "default"}
+                onValueChange={(value) =>
+                  handleComponentChange("variant", value)
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select variant" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="default">Default</SelectItem>
+                  <SelectItem value="secondary">Secondary</SelectItem>
+                  <SelectItem value="outline">Outline</SelectItem>
+                  <SelectItem value="ghost">Ghost</SelectItem>
+                  <SelectItem value="destructive">Destructive</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-          </>
+          </div>
         );
       case "input":
         return (
-          <>
+          <div className="space-y-4">
             <div className="space-y-2">
               <Label>Placeholder</Label>
               <Input
-                value={value || ""}
-                onChange={(e) => handlePropChange(e.target.value)}
-                placeholder="Input placeholder"
+                value={component?.placeholder || ""}
+                onChange={(e) =>
+                  handleComponentChange("placeholder", e.target.value)
+                }
+                placeholder="Enter placeholder text"
               />
             </div>
             <div className="space-y-2">
-              <Label>Type</Label>
-              <Input
-                value={value || ""}
-                onChange={(e) => handlePropChange(e.target.value)}
-                placeholder="text, email, etc."
-              />
+              <Label>Input Type</Label>
+              <Select
+                value={component?.type || "text"}
+                onValueChange={(value) => handleComponentChange("type", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select input type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="text">Text</SelectItem>
+                  <SelectItem value="email">Email</SelectItem>
+                  <SelectItem value="password">Password</SelectItem>
+                  <SelectItem value="number">Number</SelectItem>
+                  <SelectItem value="tel">Telephone</SelectItem>
+                  <SelectItem value="url">URL</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-          </>
+          </div>
         );
       case "desc":
         return (
           <div className="space-y-2">
             <Label>Placeholder</Label>
             <Input
-              value={value || ""}
-              onChange={(e) => handlePropChange(e.target.value)}
-              placeholder="Textarea placeholder"
+              value={component?.placeholder || ""}
+              onChange={(e) =>
+                handleComponentChange("placeholder", e.target.value)
+              }
+              placeholder="Enter textarea placeholder"
             />
           </div>
         );
@@ -106,67 +144,87 @@ export function ComponentForm({
         return (
           <div className="space-y-2">
             <Label>Orientation</Label>
-            <Input
-              value={value || ""}
-              onChange={(e) => handlePropChange(e.target.value)}
-              placeholder="horizontal or vertical"
-            />
+            <Select
+              value={component?.orientation || "horizontal"}
+              onValueChange={(value) =>
+                handleComponentChange("orientation", value)
+              }
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select orientation" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="horizontal">Horizontal</SelectItem>
+                <SelectItem value="vertical">Vertical</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         );
       case "badge":
         return (
-          <>
+          <div className="space-y-4">
             <div className="space-y-2">
-              <Label>Text</Label>
+              <Label>Badge Text</Label>
               <Input
-                value={value || ""}
-                onChange={(e) => handlePropChange(e.target.value)}
-                placeholder="Badge text"
+                value={component?.text || ""}
+                onChange={(e) => handleComponentChange("text", e.target.value)}
+                placeholder="Enter badge text"
               />
             </div>
             <div className="space-y-2">
-              <Label>Variant</Label>
-              <Input
-                value={value || ""}
-                onChange={(e) => handlePropChange(e.target.value)}
-                placeholder="default, secondary, etc."
-              />
+              <Label>Badge Variant</Label>
+              <Select
+                value={component?.variant || "default"}
+                onValueChange={(value) =>
+                  handleComponentChange("variant", value)
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select variant" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="default">Default</SelectItem>
+                  <SelectItem value="secondary">Secondary</SelectItem>
+                  <SelectItem value="outline">Outline</SelectItem>
+                  <SelectItem value="destructive">Destructive</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-          </>
+          </div>
         );
       case "card":
         return (
-          <>
+          <div className="space-y-4">
             <div className="space-y-2">
-              <Label>Title</Label>
+              <Label>Card Title</Label>
               <Input
-                value={value || ""}
-                onChange={(e) => handlePropChange(e.target.value)}
-                placeholder="Card title"
+                value={component?.title || ""}
+                onChange={(e) => handleComponentChange("title", e.target.value)}
+                placeholder="Enter card title"
               />
             </div>
             <div className="space-y-2">
-              <Label>Content</Label>
+              <Label>Card Content</Label>
               <Textarea
-                value={value || ""}
-                onChange={(e) => handlePropChange(e.target.value)}
-                placeholder="Card content"
+                value={component?.content || ""}
+                onChange={(e) =>
+                  handleComponentChange("content", e.target.value)
+                }
+                placeholder="Enter card content"
               />
             </div>
-          </>
+          </div>
         );
       default:
         return null;
     }
   };
 
-
   return (
-    <div className="border rounded-lg p-4">
-      <div className="absolute right-10 -mt-2">
-
+    <div className="border rounded-lg p-4 relative">
+      <div className="absolute right-4 top-4">
         <ConfirmationModal
-         onConfirm={() => onRemove(type, kind)}
+          onConfirm={() => onRemove(type, kind)}
           title="Are you sure you want to delete this component?"
           description="This action cannot be undone."
           confirmText="Delete"
