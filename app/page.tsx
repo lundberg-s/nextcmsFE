@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useAdminStore } from "@/lib/store/admin-store";
 import { BlockProvider } from "@/utils/BlockProvider";
 import { Block } from "@/types/blocks";
+import { Page } from "@/types/page";
 
 export default function Home() {
   const { pages, setSelectedPage, getPages, getBlocks } = useAdminStore();
@@ -15,9 +16,17 @@ export default function Home() {
       setIsLoading(false);
     };
     fetchData();
+
   }, [getPages, getBlocks]);
 
   const homePage = pages.find((page) => page.slug === "home") as { blocks: Block[]; title: string } | undefined;
+
+  useEffect(() => {
+    if (!isLoading && pages.length > 0) {
+      setSelectedPage(pages[0]);
+    }
+  }, [isLoading, pages, setSelectedPage]);
+
 
   return (
     <main>
