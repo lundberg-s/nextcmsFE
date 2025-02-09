@@ -3,15 +3,15 @@
 import { Page } from "@/types/page";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useAdminStore } from "@/lib/store/admin-store";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 
-interface PagePreviewProps {
-  selectedPage: Page | null;
-}
 
-export function PagePreview({ selectedPage }: PagePreviewProps) {
+export function PagePreview() {
   const [open, setOpen] = useState(false);
+  const { selectedPage } = useAdminStore();
+
 
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen && !selectedPage) return;

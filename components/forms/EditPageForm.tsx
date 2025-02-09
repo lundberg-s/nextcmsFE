@@ -35,8 +35,6 @@ export function EditPageForm({ page, onClose }: EditPageFormProps) {
   const onDelete = () => {
     if (page) {
       removePage(page.id);
-      console.log("page", page);
-      console.log("page.id", page.id);
       setSelectedPage(null);
       onClose();
     }
@@ -73,10 +71,10 @@ export function EditPageForm({ page, onClose }: EditPageFormProps) {
           }
         />
         <div className="flex gap-4">
-        <Button type="button" variant="outline" onClick={onClose}>
-          Cancel
-        </Button>
-        <Button type="submit">Save</Button>
+          <Button type="button" variant="outline" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button type="submit">Save</Button>
         </div>
       </div>
     </form>

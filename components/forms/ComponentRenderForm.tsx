@@ -115,8 +115,8 @@ export function ComponentRenderForm({
                         <Image
                           src={image ? image : "https://plus.unsplash.com/premium_photo-1681488408867-66ffd3c8339d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3Dhttps://plus.unsplash.com/premium_photo-1661515407273-76b61fcebbcd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
                           alt={`Slide ${index + 1}`}
-                          layout="fill"
-                          objectFit="cover"
+                          fill
+                       
                           className="rounded-lg min-h-[200px] max-h-[300px]"
                         />
                       </Card>

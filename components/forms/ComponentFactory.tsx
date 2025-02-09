@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { PlusCircle, Trash2 } from "lucide-react";
 import { ConfirmationModal } from "../modals/ConfirmationModal";
 
-interface ComponentFormProps {
+interface ComponentFactoryProps {
   type: ComponentType;
   component: Partial<BlockComponent>;
   kind: ComponentKind;
@@ -25,13 +25,13 @@ interface ComponentFormProps {
   onRemove: (type: ComponentType, kind: ComponentKind) => void;
 }
 
-export function ComponentForm({
+export function ComponentFactory({
   type,
   component,
   kind,
   onChange,
   onRemove,
-}: ComponentFormProps) {
+}: ComponentFactoryProps) {
   const handleComponentChange = (key: string, value: string | string[]) => {
     onChange(type, { ...component, [key]: value }, kind);
   };

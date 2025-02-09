@@ -12,17 +12,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Plus } from "lucide-react";
-import { AddPageForm } from "@/components/forms/AddPageForm";
+import { useAdminStore } from "@/lib/store/admin-store";
 import { useState } from "react";
 import { EditPageForm } from "../forms/EditPageForm";
 
-interface EditPageModalProps {
-  selectedPage: Page | null;
-}
-
-export function EditPageModal({ selectedPage }: EditPageModalProps) {
+export function EditPageModal() {
   const [open, setOpen] = useState(false);
+  const { selectedPage } = useAdminStore();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -39,9 +35,7 @@ export function EditPageModal({ selectedPage }: EditPageModalProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Edit this page</DialogTitle>
-          <DialogDescription>
-            Make changes to your page here.
-          </DialogDescription>
+          <DialogDescription>Make changes to your page here.</DialogDescription>
         </DialogHeader>
         <EditPageForm page={selectedPage} onClose={() => setOpen(false)} />
       </DialogContent>

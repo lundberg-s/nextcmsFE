@@ -17,8 +17,10 @@ export default function AdminPage() {
   }, [getPages]);
 
   return (
-    <ScrollArea className="h-screen w-full rounded-md border p-4">
-      <PageManager />
+    <ScrollArea className="w-full rounded-md border p-4">
+      <div className="min-h-screen bg-gray-200 w-full">
+        <PageManager />
+      </div>
     </ScrollArea>
   );
 }

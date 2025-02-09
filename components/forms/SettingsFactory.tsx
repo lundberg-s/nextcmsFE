@@ -1,12 +1,12 @@
-import { BlockComponent, ComponentKind } from "@/types/blocks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Trash2 } from "lucide-react";
-import { ConfirmationModal } from "../modals/ConfirmationModal";
-import { ComponentType } from "@/types/blocks";
 
-interface SettingsFormProps {
+import { ConfirmationModal } from "../modals/ConfirmationModal";
+import { ComponentKind, ComponentType } from "@/types/blocks";
+
+interface SettingsFactoryProps {
   type: ComponentType;
   value: string;
   kind: ComponentKind;
@@ -14,13 +14,13 @@ interface SettingsFormProps {
   onRemove: (type: ComponentType, kind: ComponentKind) => void;
 }
 
-export function SettingsForm({
+export function SettingsFactory({
   type,
   value,
   kind,
   onChange,
   onRemove,
-}: SettingsFormProps) {
+}: SettingsFactoryProps) {
   const handlePropChange = (value: string) => {
     onChange(type, value, kind);
   };

@@ -23,14 +23,10 @@ import {
 } from "@/components/ui/command";
 import { useAdminStore } from "@/lib/store/admin-store";
 
-interface AddBlockModalProps {
-  selectedPage: Page | null;
-}
-
 const blockTypes = ["hero", "features"] as const;
 
-export function AddBlockModal({ selectedPage }: AddBlockModalProps) {
-  const { addBlock } = useAdminStore();
+export function AddBlockModal() {
+  const { addBlock, selectedPage } = useAdminStore();
   const [open, setOpen] = useState(false);
   const [selectedType, setSelectedType] = useState<BlockType | null>(null);
 

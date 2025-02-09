@@ -14,7 +14,6 @@ import { Plus } from "lucide-react";
 import { AddPageForm } from "@/components/forms/AddPageForm";
 import { useState } from "react";
 
-
 export function AddPageModal() {
   const [open, setOpen] = useState(false);
 
