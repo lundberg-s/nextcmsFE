@@ -17,6 +17,7 @@ import { Plus } from "lucide-react";
 import { on } from "node:events";
 import { set } from "date-fns";
 import { useState } from "react";
+import { Carousel } from "../ui/carousel";
 
 interface ComponentPreviewProps {
   onSelect: (type: ComponentType, kind: ComponentKind) => void;
@@ -80,6 +81,16 @@ const components: {
     ),
     kind: "component",
   },
+   {
+    type: "carousel",
+    label: "Carousel",
+    preview: (
+      <Carousel className="w-32 h-24 flex items-center justify-center text-sm">
+        Carousel
+      </Carousel>
+    ),
+    kind: "component",
+   }
 ];
 
 export function AddComponentModal({ onSelect }: ComponentPreviewProps) {

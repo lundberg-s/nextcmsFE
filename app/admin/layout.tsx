@@ -1,16 +1,20 @@
-import { AdminNavigation } from '@/components/navigation/AdminNavigation';
+"use client";
 
+import { AppSidebar } from "@/components/app-sidebar.tsx";
+import { AdminNavigation } from "@/components/navigation/AdminNavigation";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div>
-      <AdminNavigation />
-      <div className="container-fluid">
-        {children}
-      </div>
-    </div>
+    <SidebarProvider
+    >
+      {/* <AdminNavigation /> */}
+      {children}
+
+      <AppSidebar />
+    </SidebarProvider>
   );
 }

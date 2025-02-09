@@ -77,4 +77,5 @@ export type ComponentType =
   | "layout"
   | "backgroundColor"
   | "backgroundImage"
-  | "textColor";
+  | "textColor"
+  | "carousel";

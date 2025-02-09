@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Trash2 } from "lucide-react";
+import { PlusCircle, Trash2 } from "lucide-react";
 import { ConfirmationModal } from "../modals/ConfirmationModal";
 
 interface ComponentFormProps {
@@ -32,7 +32,7 @@ export function ComponentForm({
   onChange,
   onRemove,
 }: ComponentFormProps) {
-  const handleComponentChange = (key: string, value: string) => {
+  const handleComponentChange = (key: string, value: string | string[]) => {
     onChange(type, { ...component, [key]: value }, kind);
   };
 
@@ -43,7 +43,7 @@ export function ComponentForm({
           <div className="space-y-2">
             <Label>Title</Label>
             <Input
-              value={component?.title || ""}
+              value={component.title || ""}
               onChange={(e) => handleComponentChange("title", e.target.value)}
               placeholder="Enter title"
             />
@@ -54,7 +54,7 @@ export function ComponentForm({
           <div className="space-y-2">
             <Label>Description</Label>
             <Textarea
-              value={component?.content || ""}
+              value={component.content || ""}
               onChange={(e) => handleComponentChange("content", e.target.value)}
               placeholder="Enter description"
             />
@@ -66,7 +66,7 @@ export function ComponentForm({
             <div className="space-y-2">
               <Label>Button Text</Label>
               <Input
-                value={component?.text || ""}
+                value={component.text || ""}
                 onChange={(e) => handleComponentChange("text", e.target.value)}
                 placeholder="Enter button text"
               />
@@ -74,7 +74,7 @@ export function ComponentForm({
             <div className="space-y-2">
               <Label>Button Variant</Label>
               <Select
-                value={component?.variant || "default"}
+                value={component.variant || "default"}
                 onValueChange={(value) =>
                   handleComponentChange("variant", value)
                 }
@@ -99,7 +99,7 @@ export function ComponentForm({
             <div className="space-y-2">
               <Label>Placeholder</Label>
               <Input
-                value={component?.placeholder || ""}
+                value={component.placeholder || ""}
                 onChange={(e) =>
                   handleComponentChange("placeholder", e.target.value)
                 }
@@ -109,7 +109,7 @@ export function ComponentForm({
             <div className="space-y-2">
               <Label>Input Type</Label>
               <Select
-                value={component?.type || "text"}
+                value={component.type || "text"}
                 onValueChange={(value) => handleComponentChange("type", value)}
               >
                 <SelectTrigger>
@@ -132,7 +132,7 @@ export function ComponentForm({
           <div className="space-y-2">
             <Label>Placeholder</Label>
             <Input
-              value={component?.placeholder || ""}
+              value={component.placeholder || ""}
               onChange={(e) =>
                 handleComponentChange("placeholder", e.target.value)
               }
@@ -145,7 +145,7 @@ export function ComponentForm({
           <div className="space-y-2">
             <Label>Orientation</Label>
             <Select
-              value={component?.orientation || "horizontal"}
+              value={component.orientation || "horizontal"}
               onValueChange={(value) =>
                 handleComponentChange("orientation", value)
               }
@@ -166,7 +166,7 @@ export function ComponentForm({
             <div className="space-y-2">
               <Label>Badge Text</Label>
               <Input
-                value={component?.text || ""}
+                value={component.text || ""}
                 onChange={(e) => handleComponentChange("text", e.target.value)}
                 placeholder="Enter badge text"
               />
@@ -174,7 +174,7 @@ export function ComponentForm({
             <div className="space-y-2">
               <Label>Badge Variant</Label>
               <Select
-                value={component?.variant || "default"}
+                value={component.variant || "default"}
                 onValueChange={(value) =>
                   handleComponentChange("variant", value)
                 }
@@ -215,16 +215,50 @@ export function ComponentForm({
             </div>
           </div>
         );
+      case "carousel":
+        const urls = component.urls && component.urls.length > 0 ? component.urls : [""];
+
+        const inputs = urls.map((url, i) => (
+          <div key={i} className="space-y-2">
+            <Label>Image URL {i + 1}</Label>
+            <Input
+              value={url || ""}
+              onChange={(e) => {
+                const newUrls = [...urls];
+                newUrls[i] = e.target.value;
+                handleComponentChange("urls", newUrls);
+              }}
+              placeholder="https://example.com/image.jpg"
+            />
+          </div>
+        ));
+        
+        return (
+          <div className="space-y-4">
+            {inputs}
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              onClick={() => handleComponentChange("urls", [...urls, ""])}
+            >
+              <PlusCircle className="mr-2 h-4 w-4" />
+              Add Image URL
+            </Button>
+          </div>
+        );
+
       default:
         return null;
     }
   };
 
   return (
-    <div className="border rounded-lg p-4 relative">
-      <div className="absolute right-4 top-4">
+    <div className="border rounded-lg p-4">
+      <div className="absolute right-10 -mt-2">
+
         <ConfirmationModal
-          onConfirm={() => onRemove(type, kind)}
+         onConfirm={() => onRemove(type, kind)}
           title="Are you sure you want to delete this component?"
           description="This action cannot be undone."
           confirmText="Delete"

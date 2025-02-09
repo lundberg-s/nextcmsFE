@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { Block } from '@/types/blocks';
-import { Button } from '@/components/ui/button';
+import { Block, BlockComponent, ComponentType } from "@/types/blocks";
+import { ComponentRenderForm } from "../forms/ComponentRenderForm";
 
 interface HeroProps {
   block: Block;
@@ -14,22 +14,25 @@ export function Hero({ block, onEdit }: HeroProps) {
   return (
     <div
       className={`min-h-[600px] flex items-center justify-center ${
-        settings?.backgroundColor || 'bg-background'
-      } ${settings?.textColor || ''}`}
+        settings?.backgroundColor || "bg-background"
+      } ${settings?.textColor || ""}`}
       style={{
         ...(settings?.backgroundImage && {
           backgroundImage: `url(${settings?.backgroundImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }),
       }}
     >
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl font-bold mb-6 text-black">{content.title?.title}</h1>
-          {/* <p className="text-xl mb-8 text-black">{content.description}</p> */}
-        </div>
-      </div>
+      {content &&
+        Object.entries(content).map(([type, value]) => (
+          <ComponentRenderForm
+            key={type}
+            type={type as ComponentType}
+            component={value as BlockComponent}
+            kind="component"
+          />
+        ))}
     </div>
   );
 }
