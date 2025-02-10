@@ -12,8 +12,8 @@ import { useAdminStore } from "@/lib/store/admin-store";
 import { AddSettingModal } from "../modals/AddSettingModal";
 import { AddComponentModal } from "../modals/AddComponentModal";
 
-import { ComponentFactory } from "./ComponentFactory";
-import { SettingsFactory } from "./SettingsFactory";
+import { ComponentFactory } from "../factories/ComponentFactory";
+import { SettingsFactory } from "../factories/SettingsFactory";
 
 interface EditBlockFormProps {
   block: Block | null;
@@ -72,14 +72,17 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
 
   const handleUpdateComponent = (
     type: ComponentType,
-
-    value: string,
+    component: Partial<BlockComponent>,
     kind: ComponentKind
   ) => {
     if (kind === "component") {
-      setValue(`content.${type}`, value);
+      setValue("content", {
+        ...watch("content"),
+        [type]: component
+      });
     }
   };
+
 
   const handleUpdateSetting = (
     type: ComponentType,
@@ -87,7 +90,10 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
     kind: ComponentKind
   ) => {
     if (kind === "setting") {
-      setValue(`settings.${type}`, value);
+      setValue("settings", {
+        ...watch("settings"),
+        [type]: value
+      });
     }
   };
 
@@ -115,6 +121,7 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
       className="space-y-6 flex flex-col justify-between"
     >
       <div className="space-y-4">
+
         <div className="space-y-4">
           {content &&
             Object.entries(content).map(([type, value]) => (

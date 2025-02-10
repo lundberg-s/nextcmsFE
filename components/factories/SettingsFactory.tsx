@@ -1,10 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Trash2 } from "lucide-react";
 
 import { ConfirmationModal } from "../modals/ConfirmationModal";
 import { ComponentKind, ComponentType } from "@/types/blocks";
+
+import BackgroundColor from "./settings/BackgroundColor";
+import BackgroundImage from "./settings/BackgroundImage";
+import ContainerLayout from "./settings/ContainerLayout";
+import TextColor from "./settings/TextColor";
 
 interface SettingsFactoryProps {
   type: ComponentType;
@@ -28,49 +31,13 @@ export function SettingsFactory({
   const renderProps = () => {
     switch (type) {
       case "backgroundColor":
-        return (
-          <div className="space-y-2">
-            <Label>Background Color</Label>
-            <Input
-              value={value || ""}
-              onChange={(e) => handlePropChange(e.target.value)}
-              placeholder="Background color"
-            />
-          </div>
-        );
+        return <BackgroundColor value={value} onChange={handlePropChange} />;
       case "backgroundImage":
-        return (
-          <div className="space-y-2">
-            <Label>Background Image</Label>
-            <Input
-              value={value || ""}
-              onChange={(e) => handlePropChange(e.target.value)}
-              placeholder="Background image"
-            />
-          </div>
-        );
+        return <BackgroundImage value={value} onChange={handlePropChange} />;
       case "textColor":
-        return (
-          <div className="space-y-2">
-            <Label>Text Color</Label>
-            <Input
-              value={value || ""}
-              onChange={(e) => handlePropChange(e.target.value)}
-              placeholder="Text color"
-            />
-          </div>
-        );
+        return <TextColor value={value} onChange={handlePropChange} />;
       case "layout":
-        return (
-          <div className="space-y-2">
-            <Label>Layout</Label>
-            <Input
-              value={value || ""}
-              onChange={(e) => handlePropChange(e.target.value)}
-              placeholder="left, right, center"
-            />
-          </div>
-        );
+        return <ContainerLayout value={value} onChange={handlePropChange} />;
       default:
         return null;
     }
