@@ -1,25 +1,39 @@
 "use client";
+import { useState } from "react";
 import { Block } from "@/types/blocks";
 import { BlockProvider } from "@/utils/BlockProvider";
-import { EditBlockModal } from "@/components/modals/EditBlockModal";
-import { DeleteBlockModal } from "@/components/modals/DeleteBlockModal";
-import { BlockSettings } from "@/components/wrappers/BlockSettings";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { BlockItem } from "./BlockItem"; // A new component for each draggable block
+
 interface BlockListProps {
   blocks: Block[];
 }
 
-export function BlockList({ blocks }: BlockListProps) {
+export function BlockList({ blocks: initialBlocks }: BlockListProps) {
+  const [blocks, setBlocks] = useState<Block[]>(initialBlocks);   
+
   return (
     <div className="space-y-8">
-      {blocks.map((block, index) => (
-        <div key={index} className="relative group">
-          <BlockProvider block={block} />
-            <BlockSettings>
-              <EditBlockModal block={block} />
-              <DeleteBlockModal block={block} />
-            </BlockSettings>
-        </div>
-      ))}
+      <DndContext
+        collisionDetection={closestCenter}
+        onDragEnd={(event) => {
+          const { active, over } = event;
+          if (!over || active.id === over.id) return;
+
+          setBlocks((prevBlocks) => {
+            const oldIndex = prevBlocks.findIndex((block) => block.id === active.id);
+            const newIndex = prevBlocks.findIndex((block) => block.id === over.id);
+            return arrayMove(prevBlocks, oldIndex, newIndex);
+          });
+        }}
+      >
+        <SortableContext items={blocks} strategy={verticalListSortingStrategy}>
+          {blocks.map((block) => (
+            <BlockItem key={block.id} block={block} />
+          ))}
+        </SortableContext>
+      </DndContext>
     </div>
   );
 }

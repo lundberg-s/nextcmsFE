@@ -1,8 +1,6 @@
 import { BlockComponent, ComponentKind, ComponentType } from "@/types/blocks";
-import { Button } from "@/components/ui/button";
-import { ConfirmationModal } from "../modals/ConfirmationModal";
-import { CMS } from "./components";
-import { Trash2 } from "lucide-react";
+import { CMS } from ".";
+import FactoryWrapper from "../wrappers/FactoryWrapper";
 
 interface ComponentFactoryProps {
   type: ComponentType;
@@ -50,23 +48,8 @@ export function ComponentFactory({
   };
 
   return (
-    <div className="border rounded-lg p-4">
-      <div className="absolute right-10 -mt-2">
-
-        <ConfirmationModal
-          onConfirm={() => onRemove(type, kind)}
-          title="Are you sure you want to delete this component?"
-          description="This action cannot be undone."
-          confirmText="Delete"
-          cancelText="Cancel"
-          triggerElement={
-            <Button variant="ghost" size="sm">
-              <Trash2 className="w-4 h-4" />
-            </Button>
-          }
-        />
-      </div>
+    <FactoryWrapper onRemove={onRemove} type={type} kind={kind}>
       {renderProps()}
-    </div>
+    </FactoryWrapper>
   );
 }

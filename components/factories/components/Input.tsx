@@ -1,7 +1,7 @@
-import SettingsWrapper from '@/components/wrappers/SettingsWrapper';
-import { BlockComponent } from '@/types/blocks';
-import { Label } from '@/components/ui/label';
-import { Input as InputField } from '@/components/ui/input';
+import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
+import { BlockComponent } from "@/types/blocks";
+import { Label } from "@/components/ui/label";
+import { Input as InputField } from "@/components/ui/input";
 
 interface InputComponentProps {
   component: Partial<BlockComponent>;
@@ -18,6 +18,5 @@ export function Input({ component, onChange }: InputComponentProps) {
         placeholder="Enter placeholder text"
       />
     </SettingsWrapper>
-  )
+  );
 }
-

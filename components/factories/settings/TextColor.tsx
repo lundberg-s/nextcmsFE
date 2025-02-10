@@ -8,10 +8,11 @@ interface TextColorComponentProps {
   onChange: (value: string) => void;
 }
 
-const TextColor: React.FC<TextColorComponentProps> = ({
+export function TextColor({
   value,
   onChange,
-}) => {
+}: TextColorComponentProps) {
+
   return (
     <SettingsWrapper>
       <Label>Text Color</Label>
@@ -23,5 +24,3 @@ const TextColor: React.FC<TextColorComponentProps> = ({
     </SettingsWrapper>
   );
 };
-
-export default TextColor;

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { EditBlockForm } from "@/components/forms/EditBlockForm";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useSidebarContentStore } from "@/lib/store/sidebar-store";
+import { Settings } from "lucide-react";
 
 interface EditBlockModalProps {
   block: Block | null;
@@ -29,8 +30,8 @@ export function EditBlockModal({ block }: EditBlockModalProps) {
 
   return (
     <>
-      <Button size="sm" onClick={handleClick}>
-        Edit
+      <Button variant="ghost" size="sm" onClick={handleClick}>
+        <Settings className="w-4 h-4" />
       </Button>
     </>
   );

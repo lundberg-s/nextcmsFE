@@ -14,6 +14,7 @@ import {
   AlertDialogFooter,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Trash2 } from "lucide-react";
 import { Block } from "@/types/blocks";
 
 interface DeleteBlockModalProps {
@@ -35,8 +36,8 @@ export function DeleteBlockModal({
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive" size="sm">
-          Delete
+      <Button variant="ghost" size="sm">
+      <Trash2 className="w-4 h-4" />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

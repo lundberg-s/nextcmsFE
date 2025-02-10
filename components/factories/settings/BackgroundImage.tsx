@@ -8,10 +8,10 @@ interface BackgroundImageComponentProps {
   onChange: (value: string) => void;
 }
 
-const BackgroundImage: React.FC<BackgroundImageComponentProps> = ({
+export function BackgroundImage({
   value,
   onChange,
-}) => {
+}: BackgroundImageComponentProps) {
   return (
     <SettingsWrapper>
       <Label>Background Image</Label>
@@ -22,6 +22,6 @@ const BackgroundImage: React.FC<BackgroundImageComponentProps> = ({
       />
     </SettingsWrapper>
   );
-};
+}
 
 export default BackgroundImage;

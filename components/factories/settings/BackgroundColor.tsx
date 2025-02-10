@@ -8,10 +8,10 @@ interface BackgroundColorComponentProps {
   onChange: (value: string) => void;
 }
 
-const BackgroundColor: React.FC<BackgroundColorComponentProps> = ({
+export function BackgroundColor({
   value,
   onChange,
-}) => {
+}: BackgroundColorComponentProps) {
   return (
     <SettingsWrapper>
       <Label>Background Color</Label>
@@ -22,6 +22,4 @@ const BackgroundColor: React.FC<BackgroundColorComponentProps> = ({
       />
     </SettingsWrapper>
   );
-};
-
-export default BackgroundColor;
+}

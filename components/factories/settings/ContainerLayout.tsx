@@ -8,10 +8,11 @@ interface ContainerLayoutComponentProps {
   onChange: (value: string) => void;
 }
 
-const ContainerLayout: React.FC<ContainerLayoutComponentProps> = ({
+export function ContainerLayout({
   value,
   onChange,
-}) => {
+}: ContainerLayoutComponentProps) {
+
   return (
     <SettingsWrapper>
       <Label>Layout</Label>
@@ -23,5 +24,3 @@ const ContainerLayout: React.FC<ContainerLayoutComponentProps> = ({
     </SettingsWrapper>
   );
 };
-
-export default ContainerLayout;
