@@ -1,4 +1,5 @@
 import { useCms } from "@/hooks/useCms";
+import { useCmsContext } from "@/lib/context/CmsContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Trash2 } from "lucide-react";
@@ -14,7 +15,8 @@ interface EditPageFormProps {
 }
 
 export function EditPageForm({ page, onClose }: EditPageFormProps) {
-  const { updatePage, removePage, setSelectedPage } = useCms();
+  const { updatePage, removePage } = useCms();
+  const { setSelectedPage } = useCmsContext();
   const { register, handleSubmit, reset, setValue, watch } = useForm<Page>({
     defaultValues: {},
   });

@@ -6,8 +6,6 @@ import { useState } from "react";
 
 export function useCms() {
   const queryClient = useQueryClient();
-  const [selectedBlock, setSelectedBlock] = useState<Block | null>(null);
-  const [selectedPage, setSelectedPage] = useState<Page | null>(null);
 
   // Queries
   const {
@@ -31,51 +29,79 @@ export function useCms() {
   // Block Mutations
   const addBlockMutation = useMutation({
     mutationFn: api.blocks.create,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["blocks"] });
-      queryClient.invalidateQueries({ queryKey: ["pages"] });
+    onSuccess: (newBlock) => {
+      queryClient.setQueryData(["blocks"], (old: Block[] = []) => [...old, newBlock]);
+      queryClient.setQueryData(["pages"], (oldPages: Page[] = []) =>
+        oldPages.map((page) =>
+          page.id === newBlock.pageId
+            ? { ...page, blocks: [...page.blocks, newBlock] }
+            : page
+        )
+      );
     },
   });
 
   const updateBlockMutation = useMutation({
     mutationFn: ({ id, block }: { id: string; block: Partial<Omit<Block, "id">> }) =>
       api.blocks.update(id, block),
-    onSuccess: () => {
-      console.log("Block Updated");
-      queryClient.invalidateQueries({ queryKey: ["blocks"] });
-      queryClient.invalidateQueries({ queryKey: ["pages"] });
+    onSuccess: (updatedBlock) => {
+      queryClient.setQueryData(["blocks"], (old: Block[] = []) =>
+        old.map((block) => (block.id === updatedBlock.id ? updatedBlock : block))
+      );
+      queryClient.setQueryData(["pages"], (oldPages: Page[] = []) =>
+        oldPages.map((page) => ({
+          ...page,
+          blocks: page.blocks.map((block) =>
+            block.id === updatedBlock.id ? updatedBlock : block
+          ),
+        }))
+      );
     },
   });
 
   const removeBlockMutation = useMutation({
     mutationFn: api.blocks.delete,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["blocks"] });
-      queryClient.invalidateQueries({ queryKey: ["pages"] });
+    onSuccess: (_, deletedId) => {
+      queryClient.setQueryData(["blocks"], (old: Block[] = []) =>
+        old.filter((block) => block.id !== deletedId)
+      );
+      queryClient.setQueryData(["pages"], (oldPages: Page[] = []) =>
+        oldPages.map((page) => ({
+          ...page,
+          blocks: page.blocks.filter((block) => block.id !== deletedId),
+        }))
+      );
     },
   });
 
   // Page Mutations
   const addPageMutation = useMutation({
     mutationFn: api.pages.create,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["pages"] });
+    onSuccess: (newPage) => {
+      queryClient.setQueryData(["pages"], (old: Page[] = []) => [...old, newPage]);
     },
   });
 
   const updatePageMutation = useMutation({
     mutationFn: ({ id, page }: { id: string; page: Partial<Omit<Page, "id" | "blocks">> }) =>
       api.pages.update(id, page),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["pages"] });
+    onSuccess: (updatedPage) => {
+      queryClient.setQueryData(["pages"], (old: Page[] = []) =>
+        old.map((page) => (page.id === updatedPage.id ? { ...page, ...updatedPage } : page))
+      );
     },
   });
 
   const removePageMutation = useMutation({
     mutationFn: api.pages.delete,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["pages"] });
-      queryClient.invalidateQueries({ queryKey: ["blocks"] });
+    onSuccess: (_, deletedId) => {
+      queryClient.setQueryData(["pages"], (old: Page[] = []) =>
+        old.filter((page) => page.id !== deletedId)
+      );
+      // Remove associated blocks
+      queryClient.setQueryData(["blocks"], (oldBlocks: Block[] = []) =>
+        oldBlocks.filter((block) => block.pageId !== deletedId)
+      );
     },
   });
 
@@ -83,8 +109,6 @@ export function useCms() {
     // Data
     blocks,
     pages,
-    selectedBlock,
-    selectedPage,
     
     // Loading States
     isLoadingBlocks,
@@ -104,10 +128,5 @@ export function useCms() {
       updatePageMutation.mutate({ id, page }),
     removePage: removePageMutation.mutate,
     
-    // Selections
-    setSelectedBlock,
-    setSelectedPage,
   };
 }
-
-export default useCms

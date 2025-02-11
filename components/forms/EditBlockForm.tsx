@@ -4,15 +4,20 @@ import {
   ComponentKind,
   ComponentType,
 } from "@/types/blocks";
+import { useAdminStore } from "@/lib/store/admin-store";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-import { useCms } from "@/hooks/useCms";
-
-import { AddSettingModal } from "../modals/AddSettingModal";
 import { AddComponentModal } from "../modals/AddComponentModal";
-
-import { ComponentFactory } from "../factories/ComponentFactory";
-import { SettingsFactory } from "../factories/SettingsFactory";
+import { SettingsFactory } from "./../factories/SettingsFactory";
+import { useCms } from "@/hooks/useCms";
+import { useCmsContext } from "@/lib/context/CmsContext";
+import { generateId } from "@/utils/GenerateId";
+import { AddSettingModal } from "../modals/AddSettingModal";
+import { on } from "node:events";
+import { ComponentFactory } from "./../factories/ComponentFactory";
 
 interface EditBlockFormProps {
   block: Block | null;
@@ -20,50 +25,52 @@ interface EditBlockFormProps {
 }
 
 export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
-  const { updateBlock, setSelectedBlock } = useCms();
+  const { updateBlock } = useCms();
+  const { setSelectedBlock } = useCmsContext();
+  const { register, handleSubmit, reset, setValue, watch } = useForm<Block>({
+    defaultValues: {},
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const settings = watch("settings");
+  const content = watch("content");
+
+  useEffect(() => {
     if (block) {
-      updateBlock(block.id, block);
+      reset(block);
+    }
+  }, [block, reset]);
+
+  const onSubmit = (data: Block) => {
+    if (block) {
+      updateBlock(block.id, data);
       setSelectedBlock(null);
       onClose();
     }
   };
 
   const handleAddComponent = (type: ComponentType, kind: ComponentKind) => {
-    if (kind === "component" && block) {
+    if (kind === "component") {
       const newComponent: Partial<BlockComponent> = {
         type,
         kind,
       };
 
-      const updatedContent = {
-        ...block.content,
+      setValue("content", {
+        ...watch("content"),
         [type]: newComponent,
-      };
-
-      setSelectedBlock({
-        ...block,
-        content: updatedContent,
       });
     }
   };
 
   const handleAddSetting = (type: ComponentType, kind: ComponentKind) => {
-    if (kind === "setting" && block) {
+    if (kind === "setting") {
       const newSetting = {
         [type]: "",
       };
 
-      const updatedSettings = {
-        ...block.settings,
+      setValue("settings", {
+        ...watch("settings"),
         ...newSetting,
-      };
-
-      setSelectedBlock({
-        ...block,
-        settings: updatedSettings,
       });
     }
   };
@@ -73,85 +80,64 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
     component: Partial<BlockComponent>,
     kind: ComponentKind
   ) => {
-    if (kind === "component" && block) {
-      const updatedContent = {
-        ...block.content,
-        [type]: component,
-      };
-
-      setSelectedBlock({
-        ...block,
-        content: updatedContent,
+    if (kind === "component") {
+      setValue("content", {
+        ...watch("content"),
+        [type]: component
       });
     }
   };
+
 
   const handleUpdateSetting = (
     type: ComponentType,
     value: string,
     kind: ComponentKind
   ) => {
-    if (kind === "setting" && block) {
-      const updatedSettings = {
-        ...block.settings,
-        [type]: value,
-      };
-
-      setSelectedBlock({
-        ...block,
-        settings: updatedSettings,
+    if (kind === "setting") {
+      setValue("settings", {
+        ...watch("settings"),
+        [type]: value
       });
     }
   };
 
   const handleRemoveComponent = (type: ComponentType, kind: ComponentKind) => {
-    if (kind === "component" && block) {
-      const newContent = { ...block.content };
-      delete newContent[type];
-
-      setSelectedBlock({
-        ...block,
-        content: newContent,
-      });
+    if (kind === "component") {
+      const currentContent = watch("content") || {};
+      const newContent = { ...currentContent };
+      delete newContent[type as keyof typeof newContent];
+      setValue("content", newContent);
     }
   };
 
   const handleRemoveSetting = (type: ComponentType, kind: ComponentKind) => {
-    if (kind === "setting" && block) {
-      const newSettings = { ...block.settings };
-      delete newSettings[type];
-
-      setSelectedBlock({
-        ...block,
-        settings: newSettings,
-      });
+    if (kind === "setting") {
+      const currentSettings: Record<string, string> = watch("settings") || {};
+      const newSettings = { ...currentSettings };
+      delete newSettings[type as keyof typeof newSettings];
+      setValue("settings", newSettings);
     }
   };
 
-  if (!block) return null;
-
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-6 flex flex-col justify-between"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="space-y-4">
         <div className="space-y-4">
-          {block.content &&
-            Object.entries(block.content).map(([type, value]) => (
+          {content &&
+            Object.entries(content).map(([type, value]) => (
               <ComponentFactory
                 key={type}
                 type={type as ComponentType}
                 component={value as BlockComponent}
                 kind="component"
                 onChange={handleUpdateComponent}
-                onRemove={handleRemoveComponent}
-              />
+                onRemove={handleRemoveComponent}/>
             ))}
         </div>
         <div className="space-y-4">
-          {block.settings &&
-            Object.entries(block.settings).map(([type, value]) => (
+          {settings &&
+            Object.entries(settings).map(([type, value]) => (
               <SettingsFactory
                 key={type}
                 type={type as ComponentType}
@@ -165,8 +151,8 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
       </div>
 
       <div className="space-y-4">
-        <AddComponentModal onSelect={handleAddComponent} />
-        <AddSettingModal onSelect={handleAddSetting} />
+      <AddComponentModal onSelect={handleAddComponent} />
+      <AddSettingModal onSelect={handleAddSetting} />
       </div>
 
       <div className="flex justify-end gap-2">

@@ -1,11 +1,12 @@
 import React from 'react'
 import SettingsWrapper from '@/components/wrappers/SettingsWrapper'
+import { BlockComponent } from "@/types/blocks";
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 
 interface DescriptionComponentProps {
-  component: any;
-  onChange: (field: string, value: string) => void;
+  component: Partial<BlockComponent>;
+  onChange: (key: string, value: string | string[]) => void;
 }
 
 
@@ -14,7 +15,7 @@ export function Description({ component, onChange }: DescriptionComponentProps) 
     <SettingsWrapper>
         <Label>Description</Label>
         <Textarea
-            value={component.description || ""}
+            value={component?.content || ""}
             onChange={(e) => onChange("content", e.target.value)}
             placeholder="Enter description"
         />

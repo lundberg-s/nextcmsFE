@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 
 interface SeparatorComponentProps {
   component: Partial<BlockComponent>;
-  onChange: (field: string, value: string) => void;
+  onChange: (key: string, value: string) => void;
 }
 
 export function Separator({ component, onChange }: SeparatorComponentProps) {

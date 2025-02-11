@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea'
 
 interface CardComponentProps {
   component: any;
-  onChange: (field: string, value: string) => void;
+  onChange: (key: string, value: string) => void;
 }
 export function Card({ component, onChange }: CardComponentProps) {
   return (

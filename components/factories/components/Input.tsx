@@ -5,7 +5,7 @@ import { Input as InputField } from "@/components/ui/input";
 
 interface InputComponentProps {
   component: Partial<BlockComponent>;
-  onChange: (field: string, value: string) => void;
+  onChange: (key: string, value: string) => void;
 }
 
 export function Input({ component, onChange }: InputComponentProps) {

@@ -9,7 +9,7 @@ import React from "react";
 
 interface ButtonComponentProps {
   component: any;
-  onChange: (field: string, value: string) => void;
+  onChange: (key: string, value: string) => void;
 }
 
 export function Button({ component, onChange }: ButtonComponentProps) {

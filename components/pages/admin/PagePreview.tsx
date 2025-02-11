@@ -1,6 +1,6 @@
 "use client";
 
-import { useCms } from "@/hooks/useCms";
+import { useCmsContext } from "@/lib/context/CmsContext"
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -9,7 +9,7 @@ import { X } from "lucide-react";
 
 export function PagePreview() {
   const [open, setOpen] = useState(false);
-  const { selectedPage } = useCms();
+  const { selectedPage } = useCmsContext();
 
 
   const handleOpenChange = (isOpen: boolean) => {

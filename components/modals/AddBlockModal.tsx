@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 import { Plus } from "lucide-react";
 import { Block, BlockType } from "@/types/blocks";
 import { Button } from "@/components/ui/button";
-import { Page } from "@/types/page";
+import { useCmsContext } from "@/lib/context/CmsContext"
 import {
   Dialog,
   DialogContent,
@@ -26,9 +26,11 @@ import { useCms } from "@/hooks/useCms";
 const blockTypes = ["hero", "features"] as const;
 
 export function AddBlockModal() {
-  const { addBlock, selectedPage } = useCms();
+  const { addBlock, blocks } = useCms();
+  const { selectedPage } = useCmsContext();
   const [open, setOpen] = useState(false);
   const [selectedType, setSelectedType] = useState<BlockType | null>(null);
+
 
   const handleAddBlock = () => {
     if (selectedType && selectedPage?.id) {
@@ -83,7 +85,6 @@ export function AddBlockModal() {
             <Button
               variant="default"
               onClick={handleAddBlock}
-              disabled={!selectedType}
             >
               Add
             </Button>

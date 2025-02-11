@@ -4,11 +4,13 @@
 import { useEffect, useState } from "react";
 import { useCms } from "@/hooks/useCms";
 import { BlockProvider } from "@/utils/BlockProvider";
+import { useCmsContext } from "@/lib/context/CmsContext";
 import { useRouter } from "next/navigation";
 import type { Page } from "@/types/page";
 
 export default function Page({ params }: { params: { slug: string } }) {
-  const { pages, blocks, setSelectedPage } = useCms();
+  const { pages, blocks } = useCms();
+  const { setSelectedPage } = useCmsContext();
   const [page, setPage] = useState<Page | null>(null);
   const router = useRouter();
 

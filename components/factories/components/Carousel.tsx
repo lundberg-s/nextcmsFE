@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 interface CarouselComponentProps {
   component: any;
-  onChange: (field: string, value: string | string[]) => void;
+  onChange: (key: string, value: string | string[]) => void;
 }
 
 export function Carousel({ component, onChange }: CarouselComponentProps) {

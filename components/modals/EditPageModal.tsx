@@ -12,13 +12,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useCms } from "@/hooks/useCms";
+import { useCmsContext } from "@/lib/context/CmsContext"
 import { useState } from "react";
 import { EditPageForm } from "../forms/EditPageForm";
 
 export function EditPageModal() {
   const [open, setOpen] = useState(false);
-  const { selectedPage } = useCms();
+  const { selectedPage } = useCmsContext();
+  
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

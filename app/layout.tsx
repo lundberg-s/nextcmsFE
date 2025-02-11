@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavigationWrapper from "@/components/navigation/NavigationWrapper";
 import QueryProvider from "@/utils/QueryProvider";
+import { CmsProvider } from "@/lib/context/CmsContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +21,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <QueryProvider>
+        <CmsProvider>
           <NavigationWrapper />
           {children}
+        </CmsProvider>
         </QueryProvider>
       </body>
     </html>
