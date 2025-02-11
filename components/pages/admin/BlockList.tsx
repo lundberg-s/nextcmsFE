@@ -1,17 +1,20 @@
 "use client";
 import { useState } from "react";
 import { Block } from "@/types/blocks";
-import { BlockProvider } from "@/utils/BlockProvider";
+import { BlockItem } from "./BlockItem";
 import { DndContext, closestCenter } from "@dnd-kit/core";
-import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import { BlockItem } from "./BlockItem"; // A new component for each draggable block
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
 interface BlockListProps {
   blocks: Block[];
 }
 
 export function BlockList({ blocks: initialBlocks }: BlockListProps) {
-  const [blocks, setBlocks] = useState<Block[]>(initialBlocks);   
+  const [blocks, setBlocks] = useState<Block[]>(initialBlocks);
 
   return (
     <div className="space-y-8">
@@ -22,8 +25,12 @@ export function BlockList({ blocks: initialBlocks }: BlockListProps) {
           if (!over || active.id === over.id) return;
 
           setBlocks((prevBlocks) => {
-            const oldIndex = prevBlocks.findIndex((block) => block.id === active.id);
-            const newIndex = prevBlocks.findIndex((block) => block.id === over.id);
+            const oldIndex = prevBlocks.findIndex(
+              (block) => block.id === active.id
+            );
+            const newIndex = prevBlocks.findIndex(
+              (block) => block.id === over.id
+            );
             return arrayMove(prevBlocks, oldIndex, newIndex);
           });
         }}

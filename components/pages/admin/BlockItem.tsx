@@ -23,8 +23,8 @@ export function BlockItem({ block }: { block: Block }) {
     >
       <BlockProvider block={block} />
       <BlockSettings>
-        <DragHandle attributes={attributes} listeners={listeners} />
         <EditBlockModal block={block} />
+        <DragHandle attributes={attributes} listeners={listeners} />
         <DeleteBlockModal block={block} />
       </BlockSettings>
     </div>

@@ -1,11 +1,10 @@
-"use client";
-
 import Link from "next/link";
 import { useAdminStore } from "@/lib/store/admin-store";
 import { Button } from "@/components/ui/button";
+import { useCms } from "@/hooks/useCms";
 
 export default function PageNavigation() {
-  const { pages } = useAdminStore();
+  const { pages } = useCms();
 
   return (
     <div className="absolute w-full">

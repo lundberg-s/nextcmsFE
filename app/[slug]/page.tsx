@@ -1,14 +1,15 @@
 // app/[slug]/page.tsx
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useAdminStore } from '@/lib/store/admin-store';
-import { BlockProvider } from '@/utils/BlockProvider';
-import { useRouter } from 'next/navigation';
-import type { Page } from '@/types/page';
+import { useEffect, useState } from "react";
+import { useAdminStore } from "@/lib/store/admin-store";
+import { useCms } from "@/hooks/useCms";
+import { BlockProvider } from "@/utils/BlockProvider";
+import { useRouter } from "next/navigation";
+import type { Page } from "@/types/page";
 
 export default function Page({ params }: { params: { slug: string } }) {
-  const { pages, blocks, setSelectedPage } = useAdminStore();
+  const { pages, blocks, setSelectedPage } = useCms();
   const [page, setPage] = useState<Page | null>(null);
   const router = useRouter();
 
@@ -19,7 +20,7 @@ export default function Page({ params }: { params: { slug: string } }) {
     if (foundPage) {
       setSelectedPage(foundPage);
     } else {
-      router.push('/404');
+      router.push("/404");
     }
   }, [params.slug, pages, blocks, router, setSelectedPage]);
 

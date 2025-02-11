@@ -1,47 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useAdminStore } from "@/lib/store/admin-store";
 import { BlockProvider } from "@/utils/BlockProvider";
-import { Block } from "@/types/blocks";
-import { Page } from "@/types/page";
+import { useCms } from "@/hooks/useCms";
 
 export default function Home() {
-  const { pages, setSelectedPage, getPages, getBlocks } = useAdminStore();
-  const [isLoading, setIsLoading] = useState(true);
+  const { pages, blocks, isLoadingPages, isLoadingBlocks } = useCms();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await getPages();
-      setIsLoading(false);
-    };
-    fetchData();
+  if (isLoadingBlocks || isLoadingPages) {
+    return <div>Loading...</div>;
+  }
 
-  }, [getPages, getBlocks]);
+  const homePage = pages?.find((page) => page.slug === "home");
 
-  const homePage = pages.find((page) => page.slug === "home") as { blocks: Block[]; title: string } | undefined;
+  if (!homePage) {
+    return <div>Home page not found</div>;
+  }
 
-  useEffect(() => {
-    if (!isLoading && pages.length > 0) {
-      setSelectedPage(pages[0]);
-    }
-  }, [isLoading, pages, setSelectedPage]);
-
+  const homePageBlocks = blocks.filter((block) => block.pageId === homePage.id);
 
   return (
     <main>
-      {isLoading ? (
-        <div>Loading...</div> 
-      ) : homePage ? (
-          <div>
-            {homePage.blocks.map((block: Block, index: number) => (
-              <BlockProvider key={index} block={block} />
-            ))}
-          </div>
-
-      ) : (
-        <p>No home page found. Please create one.</p>
-      )}
+      <div>
+        {homePageBlocks.map((block) => (
+          <BlockProvider key={block.id} block={block} />
+        ))}
+      </div>
     </main>
   );
 }
