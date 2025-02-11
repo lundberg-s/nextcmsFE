@@ -1,6 +1,6 @@
 "use client";
 
-import { useAdminStore } from "@/lib/store/admin-store";
+import { useCms } from "@/hooks/useCms";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import {
@@ -25,7 +25,7 @@ export function DeleteBlockModal({
   block,
 }: DeleteBlockModalProps) {
   const [open, setOpen] = useState(false);
-  const { removeBlock } = useAdminStore();
+  const { removeBlock } = useCms();
 
   const confirmDeleteBlock = () => {
     if (block) {

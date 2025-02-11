@@ -12,13 +12,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useAdminStore } from "@/lib/store/admin-store";
+import { useCms } from "@/hooks/useCms";
 import { useState } from "react";
 import { EditPageForm } from "../forms/EditPageForm";
 
 export function EditPageModal() {
   const [open, setOpen] = useState(false);
-  const { selectedPage } = useAdminStore();
+  const { selectedPage } = useCms();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

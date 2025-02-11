@@ -3,14 +3,14 @@
 import { Block } from '@/types/blocks';
 import { Hero } from '@/components/blocks/Hero';
 import { Features } from '@/components/blocks/Features';
-import { useAdminStore } from '@/lib/store/admin-store';
+import { useCms } from "@/hooks/useCms";
 
 interface BlockProviderProps {
   block: Block;
 }
 
 export function BlockProvider({ block }: BlockProviderProps) {
-  const { setSelectedBlock } = useAdminStore();
+  const { setSelectedBlock } = useCms();
 
   const components: { [key: string]: React.ComponentType<{ block: Block; onEdit: () => void }> } = {
     hero: Hero,

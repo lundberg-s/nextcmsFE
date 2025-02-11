@@ -5,7 +5,6 @@ import FactoryWrapper from "../wrappers/FactoryWrapper";
 interface ComponentFactoryProps {
   type: ComponentType;
   component: Partial<BlockComponent>;
-
   kind: ComponentKind;
   onChange: (
     type: ComponentType,
@@ -48,7 +47,7 @@ export function ComponentFactory({
   };
 
   return (
-    <FactoryWrapper onRemove={onRemove} type={type} kind={kind}>
+    <FactoryWrapper onRemove={() => onRemove(type, kind)} type={type} kind={kind}>
       {renderProps()}
     </FactoryWrapper>
   );

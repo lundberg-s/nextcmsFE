@@ -4,7 +4,7 @@ import { BlockComponent } from "@/types/blocks";
 
 interface TitleProps {
   component: Partial<BlockComponent>;
-  onChange: (field: string, value: string) => void;
+  onChange: (key: string, value: string | string[]) => void;
 }
 
 export function Title({ component, onChange }: TitleProps) {

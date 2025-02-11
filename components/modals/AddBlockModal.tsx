@@ -21,12 +21,12 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { useAdminStore } from "@/lib/store/admin-store";
+import { useCms } from "@/hooks/useCms";
 
 const blockTypes = ["hero", "features"] as const;
 
 export function AddBlockModal() {
-  const { addBlock, selectedPage } = useAdminStore();
+  const { addBlock, selectedPage } = useCms();
   const [open, setOpen] = useState(false);
   const [selectedType, setSelectedType] = useState<BlockType | null>(null);
 

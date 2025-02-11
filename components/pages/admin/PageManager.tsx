@@ -1,7 +1,7 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useAdminStore } from "@/lib/store/admin-store";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { useCms } from "@/hooks/useCms";
 import { BlockList } from "./BlockList";
 import { AddBlockModal } from "@/components/modals/AddBlockModal";
 import { AddPageModal } from "@/components/modals/AddPageModal";
@@ -12,7 +12,7 @@ import { PageSettings } from "@/components/wrappers/PageSettings";
 import { CMSPageHeader } from "@/components/wrappers/CMSPageHeader";
 
 export function PageManager({}) {
-  const { pages, selectedPage, setSelectedPage } = useAdminStore();
+  const { pages, selectedPage, setSelectedPage } = useCms();
 
   return (
     <div className="container mx-auto px-4 py-8">

@@ -1,16 +1,15 @@
 "use client";
 
-import { Page } from "@/types/page";
+import { useCms } from "@/hooks/useCms";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useAdminStore } from "@/lib/store/admin-store";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 
 
 export function PagePreview() {
   const [open, setOpen] = useState(false);
-  const { selectedPage } = useAdminStore();
+  const { selectedPage } = useCms();
 
 
   const handleOpenChange = (isOpen: boolean) => {

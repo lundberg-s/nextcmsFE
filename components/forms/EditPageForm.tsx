@@ -1,4 +1,4 @@
-import { useAdminStore } from "@/lib/store/admin-store";
+import { useCms } from "@/hooks/useCms";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Trash2 } from "lucide-react";
@@ -14,7 +14,7 @@ interface EditPageFormProps {
 }
 
 export function EditPageForm({ page, onClose }: EditPageFormProps) {
-  const { updatePage, removePage, setSelectedPage } = useAdminStore();
+  const { updatePage, removePage, setSelectedPage } = useCms();
   const { register, handleSubmit, reset, setValue, watch } = useForm<Page>({
     defaultValues: {},
   });

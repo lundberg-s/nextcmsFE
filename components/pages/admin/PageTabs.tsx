@@ -1,8 +1,8 @@
-import { useAdminStore } from "@/lib/store/admin-store";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useCms } from "@/hooks/useCms";
+import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function PageTabs() {
-    const { pages } = useAdminStore();
+    const { pages } = useCms();
 
   return (
     <TabsList>
