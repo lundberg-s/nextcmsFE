@@ -10,7 +10,6 @@ export function PagePreview() {
   const [open, setOpen] = useState(false);
   const { selectedPage } = useCmsContext();
 
-  console.log("selectedPage", selectedPage);
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen && !selectedPage) return;
     setOpen(isOpen);

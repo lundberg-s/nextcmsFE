@@ -15,8 +15,7 @@ interface BlockListProps {
 }
 
 export function BlockList({ blocks }: BlockListProps) {
-  const { updateBlockOrder } = useCms();
-
+  const { updateBlockIndex } = useCms();
 
   return (
     <div className="space-y-8">
@@ -26,13 +25,19 @@ export function BlockList({ blocks }: BlockListProps) {
           const { active, over } = event;
           if (!over || active.id === over.id) return;
 
-          const oldIndex = blocks.findIndex(
-            (block) => block.id === active.id
+          const oldIndex = blocks.findIndex((block) => block.id === active.id);
+          const newIndex = blocks.findIndex((block) => block.id === over.id);
+
+          if (oldIndex === -1 || newIndex === -1) return;
+
+          const updatedBlocks = arrayMove(blocks, oldIndex, newIndex).map(
+            (block, index) => ({
+              ...block,
+              drag_index: index,
+            })
           );
-          const newIndex = blocks.findIndex(
-            (block) => block.id === over.id
-          );
-          updateBlockOrder(arrayMove(blocks, oldIndex, newIndex));
+
+          updateBlockIndex(updatedBlocks);
         }}
       >
         <SortableContext items={blocks} strategy={verticalListSortingStrategy}>

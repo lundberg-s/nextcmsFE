@@ -15,6 +15,10 @@ export function useCms() {
   } = useQuery({
     queryKey: ["blocks"],
     queryFn: api.blocks.getAll,
+    staleTime: Infinity,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
   });
 
   const {
@@ -24,13 +28,20 @@ export function useCms() {
   } = useQuery({
     queryKey: ["pages"],
     queryFn: api.pages.getAll,
+    staleTime: Infinity,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
   });
 
   // Block Mutations
   const addBlockMutation = useMutation({
     mutationFn: api.blocks.create,
     onSuccess: (newBlock) => {
-      queryClient.setQueryData(["blocks"], (old: Block[] = []) => [...old, newBlock]);
+      queryClient.setQueryData(["blocks"], (old: Block[] = []) => [
+        ...old,
+        newBlock,
+      ]);
       queryClient.setQueryData(["pages"], (oldPages: Page[] = []) =>
         oldPages.map((page) =>
           page.id === newBlock.pageId
@@ -42,11 +53,18 @@ export function useCms() {
   });
 
   const updateBlockMutation = useMutation({
-    mutationFn: ({ id, block }: { id: string; block: Partial<Omit<Block, "id">> }) =>
-      api.blocks.update(id, block),
+    mutationFn: ({
+      id,
+      block,
+    }: {
+      id: string;
+      block: Partial<Omit<Block, "id">>;
+    }) => api.blocks.update(id, block),
     onSuccess: (updatedBlock) => {
       queryClient.setQueryData(["blocks"], (old: Block[] = []) =>
-        old.map((block) => (block.id === updatedBlock.id ? updatedBlock : block))
+        old.map((block) =>
+          block.id === updatedBlock.id ? updatedBlock : block
+        )
       );
       queryClient.setQueryData(["pages"], (oldPages: Page[] = []) =>
         oldPages.map((page) => ({
@@ -74,30 +92,52 @@ export function useCms() {
     },
   });
 
-  const updateBlockOrder = (updatedBlocks: Block[]) => {
+  const updateBlockIndexMutation = useMutation({
+    mutationFn: (updatedBlocks: Block[]) =>
+      api.blocks.updateOrder(updatedBlocks),
+  });
+
+  const updateBlockIndex = (updatedBlocks: Block[]) => {
+    const newIndexList = updatedBlocks.map((block, index) => ({
+      ...block,
+      drag_index: index + 1,
+    }));
+
+    // Update local cache
     queryClient.setQueryData(["pages"], (oldPages: Page[] = []) =>
       oldPages.map((page) => ({
         ...page,
-        blocks: updatedBlocks.filter((block) => block.pageId === page.id),
+        blocks: newIndexList.filter((block) => block.pageId === page.id),
       }))
-      );
-  };
+    );
 
+    updateBlockIndexMutation.mutate(newIndexList);
+  };
 
   // Page Mutations
   const addPageMutation = useMutation({
     mutationFn: api.pages.create,
     onSuccess: (newPage) => {
-      queryClient.setQueryData(["pages"], (old: Page[] = []) => [...old, newPage]);
+      queryClient.setQueryData(["pages"], (old: Page[] = []) => [
+        ...old,
+        newPage,
+      ]);
     },
   });
 
   const updatePageMutation = useMutation({
-    mutationFn: ({ id, page }: { id: string; page: Partial<Omit<Page, "id" | "blocks">> }) =>
-      api.pages.update(id, page),
+    mutationFn: ({
+      id,
+      page,
+    }: {
+      id: string;
+      page: Partial<Omit<Page, "id" | "blocks">>;
+    }) => api.pages.update(id, page),
     onSuccess: (updatedPage) => {
       queryClient.setQueryData(["pages"], (old: Page[] = []) =>
-        old.map((page) => (page.id === updatedPage.id ? { ...page, ...updatedPage } : page))
+        old.map((page) =>
+          page.id === updatedPage.id ? { ...page, ...updatedPage } : page
+        )
       );
     },
   });
@@ -119,15 +159,15 @@ export function useCms() {
     // Data
     blocks,
     pages,
-    
+
     // Loading States
     isLoadingBlocks,
     isLoadingPages,
-    
+
     // Errors
     blocksError,
     pagesError,
-    
+
     // Mutations
     addBlock: addBlockMutation.mutate,
     updateBlock: (id: string, block: Partial<Omit<Block, "id">>) =>
@@ -137,7 +177,6 @@ export function useCms() {
     updatePage: (id: string, page: Partial<Omit<Page, "id" | "blocks">>) =>
       updatePageMutation.mutate({ id, page }),
     removePage: removePageMutation.mutate,
-    
-    updateBlockOrder
+    updateBlockIndex,
   };
 }
