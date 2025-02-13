@@ -2,7 +2,7 @@
 
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { useCms } from "@/hooks/useCms";
-import { useCmsContext } from "@/lib/context/CmsContext"
+import { useCmsContext } from "@/lib/context/CmsContext";
 import { BlockList } from "./BlockList";
 import { AddBlockModal } from "@/components/modals/AddBlockModal";
 import { AddPageModal } from "@/components/modals/AddPageModal";
@@ -20,37 +20,36 @@ export function PageManager({}) {
   const { setSelectedPage } = useCmsContext();
 
   useEffect(() => {
-    console.log('pages updated', pages)
-  }, [pages])
+    setSelectedPage(pages.find((page) => page.slug === "home") || null);
+  }, [pages, setSelectedPage]);
 
   return (
     <div className="w-[90%] mx-auto px-4 py-8">
       <ScrollArea className="w-full h-full">
-      <Tabs
-        defaultValue={
-          pages.find((page) => page.slug === "home")?.id || undefined
-        }
-        onValueChange={(value) =>
-          setSelectedPage(pages.find((page) => page.id === value) || null)
-        }
-      >
-        <CMSPageHeader>
-          <PageTabs />
-          <PageSettings>
-            <AddPageModal />
-            <AddBlockModal />
-            <PagePreview />
-            <EditPageModal />
-          </PageSettings>
-        </CMSPageHeader>
+        <Tabs
+          defaultValue={
+            pages.find((page) => page.slug === "home")?.id || undefined
+          }
+          onValueChange={(value) =>
+            setSelectedPage(pages.find((page) => page.id === value) || null)
+          }
+        >
+          <CMSPageHeader>
+            <PageTabs />
+            <PageSettings>
+              <AddPageModal />
+              <AddBlockModal />
+              <PagePreview />
+              <EditPageModal />
+            </PageSettings>
+          </CMSPageHeader>
 
-        {pages.map((page) => (
-          <TabsContent key={page.id} value={page.id}>
-            <BlockList blocks={page.blocks} />
-          </TabsContent>
-        ))}
-      </Tabs>
-
+          {pages.map((page) => (
+            <TabsContent key={page.id} value={page.id}>
+              <BlockList blocks={page.blocks} />
+            </TabsContent>
+          ))}
+        </Tabs>
       </ScrollArea>
     </div>
   );
