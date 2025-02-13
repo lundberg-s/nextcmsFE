@@ -1,17 +1,16 @@
 "use client";
 
-import { useCmsContext } from "@/lib/context/CmsContext"
+import { useCmsContext } from "@/lib/context/CmsContext";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 
-
 export function PagePreview() {
   const [open, setOpen] = useState(false);
   const { selectedPage } = useCmsContext();
 
-
+  console.log("selectedPage", selectedPage);
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen && !selectedPage) return;
     setOpen(isOpen);
@@ -29,15 +28,16 @@ export function PagePreview() {
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm" />
           <Dialog.Content className="fixed inset-0 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl shadow-lg w-full max-w-4xl h-[80vh] flex flex-col overflow-hidden">
-              <div className="flex justify-between items-center p-4 border-b">
-                <h2 className="text-lg font-semibold">Page Preview</h2>
-                <Dialog.Close asChild>
-                  <Button variant="ghost" size="icon">
-                    <X className="w-5 h-5" />
-                  </Button>
-                </Dialog.Close>
-              </div>
+            <Dialog.Title className="sr-only">Preview</Dialog.Title>
+            <Dialog.Description className="sr-only">
+              {selectedPage.title}
+            </Dialog.Description>
+            <div className="bg-white shadow-lg w-full max-w-screen h-[80vh] flex flex-col overflow-hidden">
+              <Dialog.Close asChild>
+                <Button className="relative top-0" variant="ghost" size="icon">
+                  <X className="w-5 h-5" />
+                </Button>
+              </Dialog.Close>
               <iframe
                 key={selectedPage.slug}
                 src={`/${selectedPage.slug}`}

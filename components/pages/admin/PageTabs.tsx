@@ -6,9 +6,6 @@ export function PageTabs() {
     const { pages } = useCms();
     const { setSelectedPage, selectedPage } = useCmsContext();
 
-
-    console.log('selectedPage', selectedPage)
-
   return (
     <TabsList>
     {pages.map((page) => (

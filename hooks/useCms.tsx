@@ -74,6 +74,16 @@ export function useCms() {
     },
   });
 
+  const updateBlockOrder = (updatedBlocks: Block[]) => {
+    queryClient.setQueryData(["pages"], (oldPages: Page[] = []) =>
+      oldPages.map((page) => ({
+        ...page,
+        blocks: updatedBlocks.filter((block) => block.pageId === page.id),
+      }))
+      );
+  };
+
+
   // Page Mutations
   const addPageMutation = useMutation({
     mutationFn: api.pages.create,
@@ -128,5 +138,6 @@ export function useCms() {
       updatePageMutation.mutate({ id, page }),
     removePage: removePageMutation.mutate,
     
+    updateBlockOrder
   };
 }

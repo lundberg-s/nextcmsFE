@@ -12,6 +12,8 @@ import { PageTabs } from "./PageTabs";
 import { PageSettings } from "@/components/wrappers/PageSettings";
 import { CMSPageHeader } from "@/components/wrappers/CMSPageHeader";
 import { useEffect } from "react";
+import { Scroll } from "lucide-react";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 export function PageManager({}) {
   const { pages, blocks } = useCms();
@@ -22,7 +24,8 @@ export function PageManager({}) {
   }, [pages])
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="w-[90%] mx-auto px-4 py-8">
+      <ScrollArea className="w-full h-full">
       <Tabs
         defaultValue={
           pages.find((page) => page.slug === "home")?.id || undefined
@@ -47,6 +50,8 @@ export function PageManager({}) {
           </TabsContent>
         ))}
       </Tabs>
+
+      </ScrollArea>
     </div>
   );
 }

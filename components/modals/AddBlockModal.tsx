@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { nanoid } from "nanoid";
 import { Plus } from "lucide-react";
 import { Block, BlockType } from "@/types/blocks";
 import { Button } from "@/components/ui/button";
