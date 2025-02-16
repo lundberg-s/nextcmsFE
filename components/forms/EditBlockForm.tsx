@@ -4,10 +4,7 @@ import {
   ComponentKind,
   ComponentType,
 } from "@/types/blocks";
-import { useAdminStore } from "@/lib/store/admin-store";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { AddComponentModal } from "../modals/AddComponentModal";
@@ -27,7 +24,7 @@ interface EditBlockFormProps {
 export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
   const { updateBlock } = useCms();
   const { setSelectedBlock } = useCmsContext();
-  const { register, handleSubmit, reset, setValue, watch } = useForm<Block>({
+  const { handleSubmit, reset, setValue, watch } = useForm<Block>({
     defaultValues: {},
   });
 
@@ -83,11 +80,10 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
     if (kind === "component") {
       setValue("content", {
         ...watch("content"),
-        [type]: component
+        [type]: component,
       });
     }
   };
-
 
   const handleUpdateSetting = (
     type: ComponentType,
@@ -97,7 +93,7 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
     if (kind === "setting") {
       setValue("settings", {
         ...watch("settings"),
-        [type]: value
+        [type]: value,
       });
     }
   };
@@ -121,8 +117,11 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">  
       <div className="space-y-4">
+        <AddComponentModal onSelect={handleAddComponent} />
+        <AddSettingModal onSelect={handleAddSetting} />
+      </div>
         <div className="space-y-4">
           {content &&
             Object.entries(content).map(([type, value]) => (
@@ -132,7 +131,8 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
                 component={value as BlockComponent}
                 kind="component"
                 onChange={handleUpdateComponent}
-                onRemove={handleRemoveComponent}/>
+                onRemove={handleRemoveComponent}
+              />
             ))}
         </div>
         <div className="space-y-4">
@@ -148,18 +148,14 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
               />
             ))}
         </div>
-      </div>
-
-      <div className="space-y-4">
-      <AddComponentModal onSelect={handleAddComponent} />
-      <AddSettingModal onSelect={handleAddSetting} />
-      </div>
 
       <div className="flex justify-end gap-2">
         <Button type="button" variant="outline" onClick={onClose}>
           Cancel
         </Button>
-        <Button type="submit">Save</Button>
+        <Button type="submit" variant="default">
+          Save
+        </Button>
       </div>
     </form>
   );

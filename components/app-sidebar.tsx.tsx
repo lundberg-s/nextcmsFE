@@ -3,6 +3,7 @@ import { useSidebarContentStore } from "@/lib/store/sidebar-store";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -30,7 +31,6 @@ export function AppSidebar({
         <Sidebar side="right">
           <SidebarContent>
             <SidebarGroup>
-              <SidebarGroupLabel>Application</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
                   {content}
@@ -38,6 +38,7 @@ export function AppSidebar({
               </SidebarGroupContent>
             </SidebarGroup>
           </SidebarContent>
+          <SidebarFooter><p>Hej</p></SidebarFooter>
         </Sidebar>
     )
   }

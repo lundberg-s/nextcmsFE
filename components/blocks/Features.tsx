@@ -5,10 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface FeaturesProps {
   block: Block;
-  onEdit: () => void;
 }
 
-export function Features({ block, onEdit }: FeaturesProps) {
+export function Features({ block }: FeaturesProps) {
   const { content, settings } = block;
 
   return (

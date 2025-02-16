@@ -3,25 +3,23 @@
 import { Block } from '@/types/blocks';
 import { Hero } from '@/components/blocks/Hero';
 import { Features } from '@/components/blocks/Features';
-import { useCms } from "@/hooks/useCms";
 
 interface BlockProviderProps {
   block: Block;
 }
 
 export function BlockProvider({ block }: BlockProviderProps) {
-  const { setSelectedBlock } = useCms();
 
-  const components: { [key: string]: React.ComponentType<{ block: Block; onEdit: () => void }> } = {
+  const components: { [key: string]: React.ComponentType<{ block: Block; }> } = {
     hero: Hero,
     features: Features,
   };
 
-  const Component = components[block.type];
+  const BlockComponent = components[block.type];
   
-  if (!Component) {
+  if (!BlockComponent) {
     return null;
   }
 
-  return <Component block={block} onEdit={() => setSelectedBlock(block)} />;
+  return <BlockComponent block={block} />;
 }

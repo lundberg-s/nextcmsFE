@@ -5,10 +5,9 @@ import { ComponentRenderForm } from "../forms/ComponentRenderForm";
 
 interface HeroProps {
   block: Block;
-  onEdit: () => void;
 }
 
-export function Hero({ block, onEdit }: HeroProps) {
+export function Hero({ block }: HeroProps) {
   const { content, settings } = block;
 
   return (

@@ -9,6 +9,7 @@ export interface Block {
   id: string;
   type: BlockType;
   content: {
+    items: any;
     title?: string;
     subtitle?: string;
     description?: string;
