@@ -102,16 +102,20 @@ export function useCms() {
       ...block,
       drag_index: index + 1,
     }));
-
-    // Update local cache
+  
     queryClient.setQueryData(["pages"], (oldPages: Page[] = []) =>
       oldPages.map((page) => ({
         ...page,
-        blocks: newIndexList.filter((block) => block.pageId === page.id),
+        blocks: page.blocks.map((block) =>
+          newIndexList.find((b) => b.id === block.id) || block
+        ),
       }))
     );
-
-    updateBlockIndexMutation.mutate(newIndexList);
+  
+    updateBlockIndexMutation.mutate(newIndexList, {
+      onError: (_, __, context) => queryClient.setQueryData(["pages"], context),
+      onSettled: () => queryClient.invalidateQueries({ queryKey: ["pages"] }),
+    });
   };
 
   // Page Mutations

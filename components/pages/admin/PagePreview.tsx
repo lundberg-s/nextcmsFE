@@ -31,9 +31,9 @@ export function PagePreview() {
             <Dialog.Description className="sr-only">
               {selectedPage.title}
             </Dialog.Description>
-            <div className="bg-white shadow-lg w-full max-w-screen h-[80vh] flex flex-col overflow-hidden">
+            <div className="shadow-lg w-full max-w-screen h-[80vh] flex flex-col overflow-hidden">
               <Dialog.Close asChild>
-                <Button className="relative top-0" variant="ghost" size="icon">
+                <Button className="absolute bottom-4 left-1/2" variant="destructive" size="lg">
                   <X className="w-5 h-5" />
                 </Button>
               </Dialog.Close>

@@ -33,7 +33,7 @@ export function BlockList({ blocks }: BlockListProps) {
           const updatedBlocks = arrayMove(blocks, oldIndex, newIndex).map(
             (block, index) => ({
               ...block,
-              drag_index: index,
+              drag_index: index + 1,
             })
           );
 

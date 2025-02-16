@@ -4,9 +4,9 @@ import { BlockProvider } from "@/utils/BlockProvider";
 import { useCms } from "@/hooks/useCms";
 
 export default function Home() {
-  const { pages, blocks, isLoadingPages, isLoadingBlocks } = useCms();
+  const { pages, isLoadingPages } = useCms();
 
-  if (isLoadingBlocks || isLoadingPages) {
+  if (isLoadingPages) {
     return <div>Loading...</div>;
   }
 
@@ -16,12 +16,10 @@ export default function Home() {
     return <div>Home page not found</div>;
   }
 
-  const homePageBlocks = blocks.filter((block) => block.pageId === homePage.id);
-
   return (
     <main>
       <div>
-        {homePageBlocks.map((block) => (
+        {homePage?.blocks.map((block) => (
           <BlockProvider key={block.id} block={block} />
         ))}
       </div>
