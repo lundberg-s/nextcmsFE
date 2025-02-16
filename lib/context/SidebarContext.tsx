@@ -31,7 +31,7 @@ export const SidebarProvider: React.FC<{ children: ReactNode }> = ({ children })
 };
 
 
-export const useSidebar = (): SidebarContextType => {
+export const useSidebarAssets = (): SidebarContextType => {
     const context = useContext(SidebarContext);
   
     if (!context) {
