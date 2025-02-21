@@ -15,7 +15,7 @@ interface BlockListProps {
 }
 
 export function BlockList({ blocks }: BlockListProps) {
-  const { updateBlockIndex } = useCms();
+  const { updateIndex } = useCms();
 
   return (
     <div className="space-y-8">
@@ -37,7 +37,7 @@ export function BlockList({ blocks }: BlockListProps) {
             })
           );
 
-          updateBlockIndex(updatedBlocks);
+          updateIndex.mutate(updatedBlocks);
         }}
       >
         <SortableContext items={blocks} strategy={verticalListSortingStrategy}>
