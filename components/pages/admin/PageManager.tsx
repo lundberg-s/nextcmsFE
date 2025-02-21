@@ -16,7 +16,7 @@ import { Scroll } from "lucide-react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 export function PageManager({}) {
-  const { pages, blocks } = useCms();
+  const { pages } = useCms();
   const { setSelectedPage } = useCmsContext();
 
   useEffect(() => {

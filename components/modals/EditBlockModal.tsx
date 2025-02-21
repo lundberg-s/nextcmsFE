@@ -27,26 +27,42 @@ export function EditBlockModal({ block }: EditBlockModalProps) {
     setOpen(false);
   };
 
+  const setContent = () => {
+    toggleSidebar();
+    setBody(
+      <EditBlockForm
+        block={block}
+        onSubmit={handleSubmit}
+        onCancel={handleCancel}
+      />
+    );
+    setFooter(
+      <div className="flex justify-evenly gap-2">
+        <Button
+          className="w-full"
+          type="button"
+          variant="outline"
+          onClick={handleCancel}
+        >
+          Cancel
+        </Button>
+        <Button
+          className="w-full"
+          type="submit"
+          variant="default"
+          form="edit-block-form"
+        >
+          Save
+        </Button>
+      </div>
+    );
+  };
+
   const handleClick = () => {
     if (open) {
-      setBody(
-        <EditBlockForm
-          block={block}
-          onSubmit={handleSubmit}
-          onCancel={handleCancel}
-        />
-      );
-      setFooter(<ButtonGroup handleCancel={handleCancel} />);
+      setContent();
     } else {
-      toggleSidebar();
-      setBody(
-        <EditBlockForm
-          block={block}
-          onSubmit={handleSubmit}
-          onCancel={handleCancel}
-        />
-      );
-      setFooter(<ButtonGroup handleCancel={handleCancel} />);
+      setContent();
     }
   };
 
@@ -59,27 +75,3 @@ export function EditBlockModal({ block }: EditBlockModalProps) {
   );
 }
 
-interface ButtonGroupProps {
-  handleCancel: () => void;
-}
-
-const ButtonGroup = ({ handleCancel }: ButtonGroupProps) => (
-  <div className="flex justify-evenly gap-2">
-    <Button
-      className="w-full"
-      type="button"
-      variant="outline"
-      onClick={handleCancel}
-    >
-      Cancel
-    </Button>
-    <Button
-      className="w-full"
-      type="submit"
-      variant="default"
-      form="edit-block-form"
-    >
-      Save
-    </Button>
-  </div>
-);
