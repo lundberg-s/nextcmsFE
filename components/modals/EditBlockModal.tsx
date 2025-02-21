@@ -14,7 +14,7 @@ interface EditBlockModalProps {
 
 export function EditBlockModal({ block }: EditBlockModalProps) {
   const { toggleSidebar, setOpen, open } = useSidebar();
-  const { setSelectedBlock } = useCmsContext();
+  const { selectedBlock, setSelectedBlock } = useCmsContext();
   const { setBody, setFooter, clear } = useSidebarContent();
 
   const handleSubmit = (data: Block) => {
@@ -28,7 +28,6 @@ export function EditBlockModal({ block }: EditBlockModalProps) {
   };
 
   const setContent = () => {
-    toggleSidebar();
     setBody(
       <EditBlockForm
         block={block}
@@ -59,10 +58,16 @@ export function EditBlockModal({ block }: EditBlockModalProps) {
   };
 
   const handleClick = () => {
-    if (open) {
-      setContent();
+    setSelectedBlock(block);
+
+    if (open && selectedBlock?.id === block?.id) {
+      setOpen(false);
+      clear();
     } else {
       setContent();
+      if (!open) {
+        toggleSidebar();
+      }
     }
   };
 
@@ -74,4 +79,3 @@ export function EditBlockModal({ block }: EditBlockModalProps) {
     </>
   );
 }
-
