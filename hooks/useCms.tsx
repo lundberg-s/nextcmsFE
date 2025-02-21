@@ -33,6 +33,11 @@ export function useCms() {
     refetchOnReconnect: false,
   });
 
+
+  const getBlockById = (id: string) => {
+    return blocks.find((block) => block.id === id);
+  };
+
   // Block Mutations
   const addBlockMutation = useMutation({
     mutationFn: api.blocks.create,
@@ -118,14 +123,19 @@ export function useCms() {
     blocksError,
     pagesError,
 
+    getBlockById,
+
     // Mutations
     addBlock: addBlockMutation.mutate,
     updateBlock: (id: string, block: Partial<Omit<Block, "id">>) =>
       updateBlockMutation.mutate({ id, block }),
+
     removeBlock: removeBlockMutation.mutate,
     addPage: addPageMutation.mutate,
+
     updatePage: (id: string, page: Partial<Omit<Page, "id" | "blocks">>) =>
       updatePageMutation.mutate({ id, page }),
+    
     removePage: removePageMutation.mutate,
     updateIndex: updateBlockIndexMutation,
   };
