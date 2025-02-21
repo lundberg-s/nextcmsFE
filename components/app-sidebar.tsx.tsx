@@ -1,44 +1,26 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
-import { useSidebarContentStore } from "@/lib/store/sidebar-store";
+import { useSidebarContent } from "@/lib/context/SidebarContext";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 
-interface AppSidebarProps {
-  defaultOpen?: boolean;
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  children?: React.ReactNode;
-}
+export function AppSidebar() {
+  const { body, footer } = useSidebarContent();
 
-export function AppSidebar({ 
-    defaultOpen,
-    open,
-    onOpenChange 
-  }: Omit<AppSidebarProps, 'children'>) {
-    const content = useSidebarContentStore((state: { content: any; }) => state.content)
-  
-    return (
-        <Sidebar side="right">
-          <SidebarContent>
-            <SidebarGroup>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {content}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          </SidebarContent>
-          <SidebarFooter><p>Hej</p></SidebarFooter>
-        </Sidebar>
-    )
-  }
+  return (
+    <Sidebar side="right">
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>{body}</SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+      <SidebarFooter>{footer}</SidebarFooter>
+    </Sidebar>
+  );
+}

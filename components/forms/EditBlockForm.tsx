@@ -18,10 +18,11 @@ import { ComponentFactory } from "./../factories/ComponentFactory";
 
 interface EditBlockFormProps {
   block: Block | null;
-  onClose: () => void;
+  onSubmit: (data: Block) => void;
+  onCancel: () => void;
 }
 
-export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
+export function EditBlockForm({ block, onSubmit, onCancel }: EditBlockFormProps) {
   const { updateBlock } = useCms();
   const { setSelectedBlock } = useCmsContext();
   const { handleSubmit, reset, setValue, watch } = useForm<Block>({
@@ -37,11 +38,10 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
     }
   }, [block, reset]);
 
-  const onSubmit = (data: Block) => {
+  const handleFormSubmit = (data: Block) => {
     if (block) {
       updateBlock(block.id, data);
-      setSelectedBlock(null);
-      onClose();
+      onSubmit(data);
     }
   };
 
@@ -117,7 +117,7 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">  
+    <form id="edit-block-form" onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
       <div className="space-y-4">
         <AddComponentModal onSelect={handleAddComponent} />
         <AddSettingModal onSelect={handleAddSetting} />
@@ -148,15 +148,6 @@ export function EditBlockForm({ block, onClose }: EditBlockFormProps) {
               />
             ))}
         </div>
-
-      <div className="flex justify-end gap-2">
-        <Button type="button" variant="outline" onClick={onClose}>
-          Cancel
-        </Button>
-        <Button type="submit" variant="default">
-          Save
-        </Button>
-      </div>
     </form>
   );
 }

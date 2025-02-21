@@ -1,37 +1,29 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface SidebarContextType {
-  content: ReactNode | null;
+  body: ReactNode | null;
+  setBody: React.Dispatch<React.SetStateAction<ReactNode | null>>;
   footer: ReactNode | null;
-  setSidebar: (params: { content?: ReactNode; footer?: ReactNode }) => void;
+  setFooter: React.Dispatch<React.SetStateAction<ReactNode | null>>;
   clear: () => void;
 }
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
-export const SidebarProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [content, setContent] = useState<ReactNode | null>(null);
+export const SidebarContentProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [body, setBody] = useState<ReactNode | null>(null);
   const [footer, setFooter] = useState<ReactNode | null>(null);
 
-  const setSidebar = ({ content, footer }: { content?: ReactNode; footer?: ReactNode }) => {
-    if (content !== undefined) setContent(content);
-    if (footer !== undefined) setFooter(footer);
-  };
-
-  const clear = () => {
-    setContent(null);
-    setFooter(null);
-  };
 
   return (
-    <SidebarContext.Provider value={{ content, footer, setSidebar, clear }}>
+    <SidebarContext.Provider value={{ body, setBody, footer, setFooter, clear: () => { setBody(null); setFooter(null); } }}>
       {children}
     </SidebarContext.Provider>
   );
 };
 
 
-export const useSidebarAssets = (): SidebarContextType => {
+export const useSidebarContent = (): SidebarContextType => {
     const context = useContext(SidebarContext);
   
     if (!context) {

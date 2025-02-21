@@ -4,7 +4,8 @@ import { Block } from "@/types/blocks";
 import { Button } from "@/components/ui/button";
 import { EditBlockForm } from "@/components/forms/EditBlockForm";
 import { useSidebar } from "@/components/ui/sidebar";
-import { useSidebarContentStore } from "@/lib/store/sidebar-store";
+import { useSidebarContent } from "@/lib/context/SidebarContext";
+import { useCmsContext } from "@/lib/context/CmsContext";
 import { Settings } from "lucide-react";
 
 interface EditBlockModalProps {
@@ -13,18 +14,39 @@ interface EditBlockModalProps {
 
 export function EditBlockModal({ block }: EditBlockModalProps) {
   const { toggleSidebar, setOpen, open } = useSidebar();
-  const setContent = useSidebarContentStore((state) => state.setContent);
+  const { setSelectedBlock } = useCmsContext();
+  const { setBody, setFooter, clear } = useSidebarContent();
+
+  const handleSubmit = (data: Block) => {
+    setSelectedBlock(null);
+    setOpen(false);
+  };
+
+  const handleCancel = () => {
+    setSelectedBlock(null);
+    setOpen(false);
+  };
 
   const handleClick = () => {
     if (open) {
-      setContent(
-        <EditBlockForm block={block} onClose={() => setOpen(false)} />
+      setBody(
+        <EditBlockForm
+          block={block}
+          onSubmit={handleSubmit}
+          onCancel={handleCancel}
+        />
       );
+      setFooter(<ButtonGroup handleCancel={handleCancel} />);
     } else {
       toggleSidebar();
-      setContent(
-        <EditBlockForm block={block} onClose={() => setOpen(false)} />
+      setBody(
+        <EditBlockForm
+          block={block}
+          onSubmit={handleSubmit}
+          onCancel={handleCancel}
+        />
       );
+      setFooter(<ButtonGroup handleCancel={handleCancel} />);
     }
   };
 
@@ -36,3 +58,28 @@ export function EditBlockModal({ block }: EditBlockModalProps) {
     </>
   );
 }
+
+interface ButtonGroupProps {
+  handleCancel: () => void;
+}
+
+const ButtonGroup = ({ handleCancel }: ButtonGroupProps) => (
+  <div className="flex justify-evenly gap-2">
+    <Button
+      className="w-full"
+      type="button"
+      variant="outline"
+      onClick={handleCancel}
+    >
+      Cancel
+    </Button>
+    <Button
+      className="w-full"
+      type="submit"
+      variant="default"
+      form="edit-block-form"
+    >
+      Save
+    </Button>
+  </div>
+);

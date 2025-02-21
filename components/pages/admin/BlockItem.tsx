@@ -4,7 +4,6 @@ import { BlockProvider } from "@/utils/BlockProvider";
 import { BlockSettings } from "@/components/wrappers/BlockSettings";
 import { EditBlockModal } from "@/components/modals/EditBlockModal";
 import { DeleteBlockModal } from "@/components/modals/DeleteBlockModal";
-import { Block } from "@/types/blocks";
 import { DragHandle } from "@/components/ui/drag-handle";
 import { useCms } from "@/hooks/useCms";
 
@@ -26,7 +25,7 @@ export function BlockItem({ blockId }: { blockId: string }) {
       {block && (
         <>
           <BlockProvider block={block} />
-          
+
           <BlockSettings>
             <EditBlockModal block={block} />
             <DragHandle attributes={attributes} listeners={listeners} />
