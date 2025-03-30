@@ -1,7 +1,7 @@
 "use client";
 
-import { BlockProvider } from "@/utils/BlockProvider";
-import { useCms } from "@/hooks/useCms";
+import { BlockProvider } from "@/lib/providers/BlockProvider";
+import { useCms } from "@/lib/hooks/useCms";
 
 export default function Home() {
   const { pages, isLoadingPages } = useCms();

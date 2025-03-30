@@ -1,5 +1,5 @@
 import React from "react";
-import { BlockComponent } from "@/types/blocks";
+import { BlockComponent } from "@/lib/types/blocks";
 import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,6 +13,9 @@ export function BackgroundColor({
   value,
   onChange,
 }: BackgroundColorComponentProps) {
+
+  const colors = ["red", "green", "blue", "yellow", "purple", "orange", "pink", "black", "white"];
+
   return (
     <SettingsWrapper>
       <Label>Background Color</Label>
@@ -21,6 +24,23 @@ export function BackgroundColor({
         onChange={(e) => onChange(e.target.value)}
         placeholder="Background color"
       />
+      <div className="flex justify-evenly">
+        {colors.map((color) => (
+          <button
+            type="button"
+            key={color}
+            onClick={() => onChange(color)}
+            style={{
+              backgroundColor: color,
+              width: 20,
+              height: 20,
+              borderRadius: 10,
+              margin: 5,
+              border: "none",
+            }}
+          />
+        ))}
+      </div>
     </SettingsWrapper>
   );
 }

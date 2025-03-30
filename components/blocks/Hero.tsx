@@ -1,6 +1,6 @@
 "use client";
 
-import { Block, BlockComponent, ComponentType } from "@/types/blocks";
+import { Block, BlockComponent, ComponentType } from "@/lib/types/blocks";
 import { ComponentRenderForm } from "../forms/ComponentRenderForm";
 
 interface HeroProps {
@@ -10,18 +10,23 @@ interface HeroProps {
 export function Hero({ block }: HeroProps) {
   const { content, settings } = block;
 
+  const colours = {
+    backgroundColor: settings?.backgroundColor || "bg-background",
+    textColor: settings?.textColor || "",
+  };
+
+  const backgroundImage = settings?.backgroundImage
+    ? {
+        backgroundImage: `url(${settings?.backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }
+    : {};
+
   return (
     <div
-      className={`min-h-[600px] flex items-center justify-center ${
-        settings?.backgroundColor || "bg-background"
-      } ${settings?.textColor || ""}`}
-      style={{
-        ...(settings?.backgroundImage && {
-          backgroundImage: `url(${settings?.backgroundImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }),
-      }}
+      className={`min-h-[600px] flex items-center justify-center`}
+      style={{ ...colours, ...backgroundImage }}
     >
       {content &&
         Object.entries(content).map(([type, value]) => (

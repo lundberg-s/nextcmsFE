@@ -1,4 +1,4 @@
-import { BlockComponent, ComponentKind, ComponentType } from "@/types/blocks";
+import { BlockComponent, ComponentKind, ComponentType } from "@/lib/types/blocks";
 import { CMS } from ".";
 import FactoryWrapper from "../wrappers/FactoryWrapper";
 

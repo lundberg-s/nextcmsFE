@@ -1,4 +1,4 @@
-import { BlockComponent, ComponentKind, ComponentType } from "@/types/blocks";
+import { BlockComponent, ComponentKind, ComponentType } from "@/lib/types/blocks";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";

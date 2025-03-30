@@ -1,6 +1,6 @@
 "use client";
 
-import { useCms } from "@/hooks/useCms";
+import { useCms } from "@/lib/hooks/useCms";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import {
@@ -15,7 +15,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Trash2 } from "lucide-react";
-import { Block } from "@/types/blocks";
+import { Block } from "@/lib/types/blocks";
 
 interface DeleteBlockModalProps {
   block: Block;

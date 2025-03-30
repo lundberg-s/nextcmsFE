@@ -9,7 +9,7 @@ import {
   DialogDescription,
   DialogClose,
 } from "@/components/ui/dialog";
-import { ComponentKind } from "@/types/blocks";
+import { ComponentKind } from "@/lib/types/blocks";
 import { Plus } from "lucide-react";
 
 type SettingType = "backgroundColor" | "backgroundImage" | "textColor";

@@ -1,10 +1,10 @@
 // components/AddPageForm.tsx
 'use client';
-import { useCms } from "@/hooks/useCms";
+import { useCms } from "@/lib/hooks/useCms";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
-import { Page } from '@/types/page';
+import { Page } from '@/lib/types/page';
 
 interface AddPageFormProps {
   onClose: () => void;

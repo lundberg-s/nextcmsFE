@@ -1,8 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useState } from "react";
-import { Block } from "@/types/blocks";
-import { Page } from "@/types/page";
+import { Block } from "@/lib/types/blocks";
+import { Page } from "@/lib/types/page";
 
 interface CmsContextProps {
   selectedPage: Page | null;

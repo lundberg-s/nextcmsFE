@@ -12,7 +12,7 @@ import {
   DialogTrigger,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { ComponentKind, ComponentType } from "@/types/blocks";
+import { ComponentKind, ComponentType } from "@/lib/types/blocks";
 import { Plus } from "lucide-react";
 import { on } from "node:events";
 import { set } from "date-fns";

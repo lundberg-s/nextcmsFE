@@ -1,24 +1,20 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-import { Block } from "@/types/blocks";
-import { Page } from "@/types/page";
+import { Block } from "@/lib/types/blocks";
+import { Page } from "@/lib/types/page";
+import { get } from "node:http";
 
-export function useCms() {
+export function useCms(pageId?: string) {
   const queryClient = useQueryClient();
 
   // Queries
-  const {
-    data: blocks = [],
-    isLoading: isLoadingBlocks,
-    error: blocksError,
-  } = useQuery({
-    queryKey: ["blocks"],
-    queryFn: api.blocks.getAll,
-    staleTime: Infinity,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-  });
+  const usePageBlocks = (id: string) => {
+    const getBlockListQuery = useQuery({
+      queryKey: ["blocks", id],
+      queryFn: () => api.blocks.getBlockList(id),
+    });
+  return getBlockListQuery;
+  };
 
   const {
     data: pages = [],
@@ -34,16 +30,11 @@ export function useCms() {
   });
 
 
-  const getBlockById = (id: string) => {
-    return blocks.find((block) => block.id === id);
-  };
-
   // Block Mutations
   const addBlockMutation = useMutation({
     mutationFn: api.blocks.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["blocks"] });
-      queryClient.invalidateQueries({ queryKey: ["pages"] });
     },
   });
 
@@ -57,7 +48,6 @@ export function useCms() {
     }) => api.blocks.update(id, block),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["blocks"] });
-      queryClient.invalidateQueries({ queryKey: ["pages"] });
     },
   });
 
@@ -65,7 +55,6 @@ export function useCms() {
     mutationFn: api.blocks.delete,
     onSuccess: (_, deletedId) => {
       queryClient.invalidateQueries({ queryKey: ["blocks"] });
-      queryClient.invalidateQueries({ queryKey: ["pages"] });
     },
   });
 
@@ -73,19 +62,16 @@ export function useCms() {
     mutationFn: (updatedBlocks: Block[]) =>
       api.blocks.updateOrder(updatedBlocks),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["pages"] });
+      queryClient.invalidateQueries({ queryKey: ["blocks"] });
     },
   });
 
-  // const updateBlockIndex = (updatedBlocks: Block[]) => {
-  //   updateBlockIndexMutation.mutate(updatedBlocks);
-  // };
 
   // Page Mutations
   const addPageMutation = useMutation({
     mutationFn: api.pages.create,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["pages"] });
+      queryClient.invalidateQueries({ queryKey: ["blocks"] });
     },
   });
 
@@ -111,19 +97,14 @@ export function useCms() {
   });
 
   return {
-    // Data
-    blocks,
+
     pages,
 
-    // Loading States
-    isLoadingBlocks,
     isLoadingPages,
 
-    // Errors
-    blocksError,
     pagesError,
 
-    getBlockById,
+    usePageBlocks,
 
     // Mutations
     addBlock: addBlockMutation.mutate,

@@ -1,4 +1,4 @@
-import { ComponentType, ComponentKind } from "@/types/blocks";
+import { ComponentType, ComponentKind } from "@/lib/types/blocks";
 import React from "react";
 import { ConfirmationModal } from "../modals/ConfirmationModal";
 import { Button } from "../ui/button";

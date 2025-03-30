@@ -1,17 +1,19 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { BlockProvider } from "@/utils/BlockProvider";
-import { BlockSettings } from "@/components/wrappers/BlockSettings";
+import { BlockProvider } from "@/lib/providers/BlockProvider";
 import { EditBlockModal } from "@/components/modals/EditBlockModal";
 import { DeleteBlockModal } from "@/components/modals/DeleteBlockModal";
 import { DragHandle } from "@/components/ui/drag-handle";
-import { useCms } from "@/hooks/useCms";
+import { Block } from "@/lib/types/blocks";
+import { useCmsContext } from "@/lib/context/CmsContext";
+import { useFormContext } from "@/lib/hooks/useFormFontext";
 
-export function BlockItem({ blockId }: { blockId: string }) {
+export function BlockItem({ block }: { block: Block }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: blockId });
+    useSortable({ id: block?.id });
 
-  const block = useCms().getBlockById(blockId);
+  const { selectedBlock } = useCmsContext();
+  const { currentFormValues } = useFormContext();
 
   return (
     <div
@@ -24,13 +26,19 @@ export function BlockItem({ blockId }: { blockId: string }) {
     >
       {block && (
         <>
-          <BlockProvider block={block} />
+          {selectedBlock?.id === block.id ? (
+            <>
+              {currentFormValues && <BlockProvider block={currentFormValues} />}
+            </>
+          ) : (
+            <BlockProvider block={block} />
+          )}
 
-          <BlockSettings>
+          <div className="absolute top-1/2 right-4 flex flex-col gap-10 items-center transform -translate-y-1/2">
             <EditBlockModal block={block} />
             <DragHandle attributes={attributes} listeners={listeners} />
             <DeleteBlockModal block={block} />
-          </BlockSettings>
+          </div>
         </>
       )}
     </div>

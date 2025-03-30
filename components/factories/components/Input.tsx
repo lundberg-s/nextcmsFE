@@ -1,5 +1,5 @@
 import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
-import { BlockComponent } from "@/types/blocks";
+import { BlockComponent } from "@/lib/types/blocks";
 import { Label } from "@/components/ui/label";
 import { Input as InputField } from "@/components/ui/input";
 

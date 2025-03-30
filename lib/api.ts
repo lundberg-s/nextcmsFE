@@ -1,13 +1,13 @@
-import { Block } from "@/types/blocks";
-import { Page } from "@/types/page";
+import { Block } from "@/lib/types/blocks";
+import { Page } from "@/lib/types/page";
 import { nanoid } from "nanoid";
 
 const API_BASE_URL = "http://localhost:8000/api";
 
 export const api = {
   blocks: {
-    getAll: async (): Promise<Block[]> => {
-      const response = await fetch(`${API_BASE_URL}/blocks/`);
+    getBlockList: async (id: string): Promise<Block[]> => {
+      const response = await fetch(`${API_BASE_URL}/blocks/page/${id}/`);
       const data = await response.json();
       return data;
     },

@@ -2,7 +2,7 @@ import { Select } from "@/components/ui/select";
 import { SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SelectContent, SelectItem } from "@/components/ui/select";
 import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
-import { BlockComponent } from "@/types/blocks";
+import { BlockComponent } from "@/lib/types/blocks";
 import { Label } from "@/components/ui/label";
 
 interface SeparatorComponentProps {

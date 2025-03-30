@@ -1,6 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { BlockComponent } from "@/types/blocks";
+import { BlockComponent } from "@/lib/types/blocks";
 
 interface TitleProps {
   component: Partial<BlockComponent>;

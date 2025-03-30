@@ -1,4 +1,4 @@
-import { useCms } from "@/hooks/useCms";
+import { useCms } from "@/lib/hooks/useCms";
 import { useCmsContext } from "@/lib/context/CmsContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,20 +6,23 @@ import { Trash2 } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-import { Page } from "@/types/page";
-import { ConfirmationModal } from "../modals/ConfirmationModal";
+import { Page } from "@/lib/types/page";
+import { ConfirmationModal } from "@/components/modals/ConfirmationModal";
 
 interface EditPageFormProps {
   page: Page | null;
   onClose: () => void;
 }
 
-export function EditPageForm({ page, onClose }: EditPageFormProps) {
+export function EditPageForm({ onClose }: EditPageFormProps) {
+  const { selectedPage } = useCmsContext();
   const { updatePage, removePage } = useCms();
   const { setSelectedPage } = useCmsContext();
   const { register, handleSubmit, reset, setValue, watch } = useForm<Page>({
     defaultValues: {},
   });
+
+  const page = selectedPage;
 
   useEffect(() => {
     if (page) {

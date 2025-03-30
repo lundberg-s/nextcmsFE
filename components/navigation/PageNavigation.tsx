@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useCms } from "@/hooks/useCms";
+import { useCms } from "@/lib/hooks/useCms";
 
 export default function PageNavigation() {
   const { pages } = useCms();
@@ -20,7 +20,7 @@ export default function PageNavigation() {
             </li>
           ))}
         </ul>
-        <Button asChild>
+        <Button >
           <Link href="/login">Login</Link>
         </Button>
     </nav>

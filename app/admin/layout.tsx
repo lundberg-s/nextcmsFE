@@ -1,10 +1,11 @@
 "use client";
 
-import { AppSidebar } from "@/components/app-sidebar.tsx";
+import { AppSidebar } from "@/components/modals/Sidebar";
 import { AdminNavigation } from "@/components/navigation/AdminNavigation";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { SidebarContentProvider } from "@/lib/context/SidebarContext";
+import { FormProvider } from "@/lib/hooks/useFormFontext";
 
 export default function AdminLayout({
   children,
@@ -13,14 +14,16 @@ export default function AdminLayout({
 }) {
   return (
     <>
-      <SidebarContentProvider>
-        <SidebarProvider>
-          {/* <AdminNavigation /> */}
-          {children}
+      <FormProvider>
+        <SidebarContentProvider>
+          <SidebarProvider>
+            {/* <AdminNavigation /> */}
+            {children}
 
-          <AppSidebar />
-        </SidebarProvider>
-      </SidebarContentProvider>
+            <AppSidebar />
+          </SidebarProvider>
+        </SidebarContentProvider>
+      </FormProvider>
     </>
   );
 }

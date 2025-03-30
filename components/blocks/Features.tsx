@@ -1,6 +1,6 @@
 'use client';
 
-import { Block } from '@/types/blocks';
+import { Block } from '@/lib/types/blocks';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface FeaturesProps {
@@ -12,7 +12,7 @@ export function Features({ block }: FeaturesProps) {
 
   return (
     <div
-      className={`py-20 ${settings?.backgroundColor || 'bg-background'}`}
+      className={`py-20 bg-${settings?.backgroundColor || 'bg-background'}`}
     >
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12">{content.title}</h2>

@@ -1,12 +1,13 @@
 "use client";
 
-import { Block } from "@/types/blocks";
+import { Block } from "@/lib/types/blocks";
 import { Button } from "@/components/ui/button";
-import { EditBlockForm } from "@/components/forms/EditBlockForm";
+import { EditBlockForm } from "@/lib/entities/blocks/EditBlockForm";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useSidebarContent } from "@/lib/context/SidebarContext";
 import { useCmsContext } from "@/lib/context/CmsContext";
 import { Settings } from "lucide-react";
+import { useFormContext } from "@/lib/hooks/useFormFontext";
 
 interface EditBlockModalProps {
   block: Block | null;
@@ -15,6 +16,7 @@ interface EditBlockModalProps {
 export function EditBlockModal({ block }: EditBlockModalProps) {
   const { toggleSidebar, setOpen, open } = useSidebar();
   const { selectedBlock, setSelectedBlock } = useCmsContext();
+  const { setCurrentFormValues} = useFormContext();
   const { setBody, setFooter, clear } = useSidebarContent();
 
   const handleSubmit = (data: Block) => {

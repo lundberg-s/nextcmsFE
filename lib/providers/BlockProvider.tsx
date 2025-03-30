@@ -1,6 +1,6 @@
 'use client';
 
-import { Block } from '@/types/blocks';
+import { Block } from '@/lib/types/blocks';
 import { Hero } from '@/components/blocks/Hero';
 import { Features } from '@/components/blocks/Features';
 
