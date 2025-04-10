@@ -1,6 +1,6 @@
 "use client";
 import { useState, useMemo } from "react";
-import { BlockItem } from "@/lib/entities/blocks/BlockItem";
+import { BlockItem } from "@/lib/entities/block/BlockItem";
 import { useCms } from "@/lib/hooks/useCms";
 import { useCmsContext } from "@/lib/context/CmsContext";
 import {

@@ -9,7 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useIconSelector } from "@/lib/helpers/iconSelector";
+import { useIconSelector } from "@/lib/helpers/IconSelector";
 
 interface DialogModalProps {
   title: string;

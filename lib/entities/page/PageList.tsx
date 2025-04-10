@@ -3,8 +3,8 @@
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { useCms } from "@/lib/hooks/useCms";
 import { useCmsContext } from "@/lib/context/CmsContext";
-import { BlockList } from "../blocks/BlockList";
-import { AddBlockForm } from "@/lib/entities/blocks/AddBlockForm";
+import { BlockList } from "../block/BlockList";
+import { AddBlockForm } from "@/lib/entities/block/AddBlockForm";
 import { PageTabs } from "./PageTabs";
 import { PageSettings } from "@/components/wrappers/PageSettings";
 import { CMSPageHeader } from "@/components/wrappers/CMSPageHeader";

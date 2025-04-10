@@ -13,7 +13,7 @@ import { isEqual } from "lodash";
 import { AddSettingModal } from "../../../components/modals/AddSettingModal";
 import { ComponentFactory } from "../../../components/factories/ComponentFactory";
 import { useFormContext } from "@/lib/hooks/useFormFontext";
-import { useFactoryHelper } from "@/lib/helpers/factoryHelper";
+import { useFactoryHelper } from "@/lib/helpers/FactoryHelper";
 
 interface EditBlockFormProps {
   block: Block | null;

@@ -2,7 +2,7 @@
 
 import { Block } from "@/lib/types/blocks";
 import { Button } from "@/components/ui/button";
-import { EditBlockForm } from "@/lib/entities/blocks/EditBlockForm";
+import { EditBlockForm } from "@/lib/entities/block/EditBlockForm";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useSidebarContent } from "@/lib/context/SidebarContext";
 import { useCmsContext } from "@/lib/context/CmsContext";
