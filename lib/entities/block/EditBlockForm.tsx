@@ -63,15 +63,23 @@ export function EditBlockForm({
 
   const handleFormSubmit = (data: Block) => {
     if (block) {
-      updateBlock(block.id, data);
+      updateBlock(
+        { id: block.id, block: data},
+        { 
+          onSuccess: () => {
+            setTimeout(() => {
+              setSelectedBlock(null);
+              onSuccess();
+            }, 20);
+          }
+        },
+      );
     }
-    onSuccess();
   };
 
   const handleCancelClick = () => {
     if (block) {
       reset(block);
-      console.log("reset", block);
       setPreviewBlock(block);
     }
     onCancel();

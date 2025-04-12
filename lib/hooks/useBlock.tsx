@@ -2,7 +2,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { Block } from "@/lib/types/blocks";
 
-export function useBlock() {
+export function 
+useBlock() {
   const queryClient = useQueryClient();
 
   const filteredBlocks = (pageId: string) => {
@@ -51,8 +52,7 @@ export function useBlock() {
   return {
     filteredBlocks,
     addBlock: addBlockMutation.mutate,
-    updateBlock: (id: string, block: Partial<Omit<Block, "id">>) =>
-      updateBlockMutation.mutate({ id, block }),
+    updateBlock: updateBlockMutation.mutate,
     removeBlock: removeBlockMutation.mutate,
     updateIndex: updateBlockIndexMutation.mutate,
   };

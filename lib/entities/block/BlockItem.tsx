@@ -12,15 +12,17 @@ import { EditBlockForm } from "./EditBlockForm";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useSidebarContent } from "@/lib/context/SidebarContext";
 import { useIconSelector } from "@/lib/helpers/IconSelector";
+import { useState } from "react";
 
 export function BlockItem({ block }: { block: Block }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: block?.id });
   const { toggleSidebar, setOpen, open } = useSidebar();
-  const { setBody, setFooter, clear } = useSidebarContent();
+  const { setBody, clear } = useSidebarContent();
   const { selectedBlock, setSelectedBlock } = useCmsContext();
   const { previewBlock } = useBlockPreview();
   const { deleteBlock } = useBlockActions();
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const forms = {
     editBlock:
@@ -39,19 +41,25 @@ export function BlockItem({ block }: { block: Block }) {
 
   const handleClick = () => {
     if (!block) return;
-
-    setSelectedBlock(block);
-
     if (open && selectedBlock?.id === block?.id) {
       clear();
       setOpen(false);
       setSelectedBlock(null);
-    } else {
-      setBody(forms.editBlock);
-      if (!open) {
-        toggleSidebar();
-      }
+      return;
     }
+
+    setIsTransitioning(true);
+
+    if (selectedBlock) clear();
+
+    setSelectedBlock(block);
+    setBody(forms.editBlock);
+
+    if (!open) toggleSidebar();
+    
+    requestAnimationFrame(() => {
+      setIsTransitioning(false);
+    });
   };
 
   return (
@@ -66,7 +74,7 @@ export function BlockItem({ block }: { block: Block }) {
     >
       {block && (
         <>
-          {selectedBlock?.id === block.id ? (
+          {selectedBlock?.id === block.id && !isTransitioning ? (
             <>
               {previewBlock && <BlockProvider block={previewBlock} />}
             </>
