@@ -71,7 +71,7 @@ export function useCms(pageId?: string) {
   const addPageMutation = useMutation({
     mutationFn: api.pages.create,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["blocks"] });
+      queryClient.invalidateQueries({ queryKey: ["pages"] });
     },
   });
 
