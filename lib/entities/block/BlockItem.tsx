@@ -4,7 +4,7 @@ import { BlockProvider } from "@/lib/providers/BlockProvider";
 import { DragHandle } from "@/components/ui/drag-handle";
 import { Block } from "@/lib/types/blocks";
 import { useCmsContext } from "@/lib/context/CmsContext";
-import { useFormContext } from "@/lib/hooks/useFormFontext";
+import { useBlockPreview } from "@/lib/hooks/useBlockPreview";
 import { Button } from "@/components/ui/button";
 import { useBlockActions } from "./BlockActions";
 import { ConfirmationModal } from "@/components/modals/ConfirmationModal";
@@ -19,7 +19,7 @@ export function BlockItem({ block }: { block: Block }) {
   const { toggleSidebar, setOpen, open } = useSidebar();
   const { setBody, setFooter, clear } = useSidebarContent();
   const { selectedBlock, setSelectedBlock } = useCmsContext();
-  const { currentFormValues } = useFormContext();
+  const { previewBlock } = useBlockPreview();
   const { deleteBlock } = useBlockActions();
 
   const forms = {
@@ -68,7 +68,7 @@ export function BlockItem({ block }: { block: Block }) {
         <>
           {selectedBlock?.id === block.id ? (
             <>
-              {currentFormValues && <BlockProvider block={currentFormValues} />}
+              {previewBlock && <BlockProvider block={previewBlock} />}
             </>
           ) : (
             <BlockProvider block={block} />

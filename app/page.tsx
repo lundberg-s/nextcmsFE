@@ -1,10 +1,10 @@
 "use client";
 
 import { BlockProvider } from "@/lib/providers/BlockProvider";
-import { useCms } from "@/lib/hooks/useCms";
+import { usePage } from "@/lib/hooks/usePage";
 
 export default function Home() {
-  const { pages, isLoadingPages } = useCms();
+  const { pages, isLoadingPages } = usePage();
 
   if (isLoadingPages) {
     return <div>Loading...</div>;

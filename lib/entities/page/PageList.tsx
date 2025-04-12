@@ -1,7 +1,7 @@
 "use client";
 
 import { Tabs, TabsContent } from "@/components/ui/tabs";
-import { useCms } from "@/lib/hooks/useCms";
+import { usePage } from "@/lib/hooks/usePage";
 import { useCmsContext } from "@/lib/context/CmsContext";
 import { BlockList } from "../block/BlockList";
 import { AddBlockForm } from "@/lib/entities/block/AddBlockForm";
@@ -15,7 +15,7 @@ import { EditPageForm } from "./EditPageForm";
 import { DialogModal } from "@/components/modals/DialogModal";
 
 export function PageList({}) {
-  const { pages } = useCms();
+  const { pages } = usePage();
   const { selectedPage, setSelectedPage } = useCmsContext();
 
   const initialPage = pages.find((page) => page.slug === "home");

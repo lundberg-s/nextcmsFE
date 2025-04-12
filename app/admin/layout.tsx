@@ -5,7 +5,7 @@ import { AdminNavigation } from "@/components/navigation/AdminNavigation";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { SidebarContentProvider } from "@/lib/context/SidebarContext";
-import { FormProvider } from "@/lib/hooks/useFormFontext";
+import { BlockPreviewProvider } from "@/lib/hooks/useBlockPreview";
 
 export default function AdminLayout({
   children,
@@ -14,7 +14,7 @@ export default function AdminLayout({
 }) {
   return (
     <>
-      <FormProvider>
+      <BlockPreviewProvider>
         <SidebarContentProvider>
           <SidebarProvider>
             {/* <AdminNavigation /> */}
@@ -23,7 +23,7 @@ export default function AdminLayout({
             <AppSidebar />
           </SidebarProvider>
         </SidebarContentProvider>
-      </FormProvider>
+      </BlockPreviewProvider>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { useCms } from "@/lib/hooks/useCms";
+import { usePage } from "@/lib/hooks/usePage";
 import { useCmsContext } from "@/lib/context/CmsContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,9 +15,8 @@ interface EditPageFormProps {
 }
 
 export function EditPageForm({ onClose }: EditPageFormProps) {
-  const { selectedPage } = useCmsContext();
-  const { updatePage, removePage } = useCms();
-  const { setSelectedPage } = useCmsContext();
+  const { selectedPage, setSelectedPage } = useCmsContext();
+  const { updatePage, removePage } = usePage();
   const { register, handleSubmit, reset, setValue, watch } = useForm<Page>({
     defaultValues: {},
   });

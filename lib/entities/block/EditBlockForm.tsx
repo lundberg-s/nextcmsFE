@@ -7,14 +7,13 @@ import { useForm } from "react-hook-form";
 import { use, useEffect, useRef } from "react";
 import { AddComponentModal } from "../../../components/modals/AddComponentModal";
 import { SettingsFactory } from "../../../components/factories/SettingsFactory";
-import { useCms } from "@/lib/hooks/useCms";
+import { useBlock } from "@/lib/hooks/useBlock";
 import { isEqual } from "lodash";
 import { AddSettingModal } from "../../../components/modals/AddSettingModal";
 import { ComponentFactory } from "../../../components/factories/ComponentFactory";
-import { useFormContext } from "@/lib/hooks/useFormFontext";
+import { useBlockPreview } from "@/lib/hooks/useBlockPreview";
 import { useFactoryHelper } from "@/lib/helpers/FactoryHelper";
 import { useCmsContext } from "@/lib/context/CmsContext";
-import { on } from "node:events";
 
 export function EditBlockForm({
   id = "edit-block-form",
@@ -25,8 +24,8 @@ export function EditBlockForm({
   onSuccess: () => void;
   onCancel: () => void;
 }) {
-  const { updateBlock } = useCms();
-  const { setCurrentFormValues } = useFormContext();
+  const { updateBlock } = useBlock();
+  const { setPreviewBlock } = useBlockPreview();
   const { selectedBlock, setSelectedBlock } = useCmsContext();
   const { handleSubmit, reset, setValue, watch } = useForm<Block>({
     defaultValues: {},
@@ -52,9 +51,9 @@ export function EditBlockForm({
   useEffect(() => {
     if (!isEqual(prevFormValues.current, formValues)) {
       prevFormValues.current = formValues;
-      setCurrentFormValues(formValues);
+      setPreviewBlock(formValues);
     }
-  }, [formValues, setCurrentFormValues]);
+  }, [formValues, setPreviewBlock]);
 
   useEffect(() => {
     if (block) {
@@ -73,7 +72,7 @@ export function EditBlockForm({
     if (block) {
       reset(block);
       console.log("reset", block);
-      setCurrentFormValues(block);
+      setPreviewBlock(block);
     }
     onCancel();
   };

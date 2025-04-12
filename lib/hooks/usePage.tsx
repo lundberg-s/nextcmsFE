@@ -2,14 +2,13 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { Page } from "@/lib/types/page";
 
-export function usePages() {
+export function usePage() {
   const queryClient = useQueryClient();
 
-  // Query
   const {
     data: pages = [],
-    isLoading,
-    error,
+    isLoading: isLoadingPages,
+    error: pagesError,
   } = useQuery({
     queryKey: ["pages"],
     queryFn: api.pages.getAll,
@@ -19,15 +18,15 @@ export function usePages() {
     refetchOnReconnect: false,
   });
 
-  // Mutations
-  const addMutation = useMutation({
+
+  const addPageMutation = useMutation({
     mutationFn: api.pages.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pages"] });
     },
   });
 
-  const updateMutation = useMutation({
+  const updatePageMutation = useMutation({
     mutationFn: ({
       id,
       page,
@@ -40,28 +39,20 @@ export function usePages() {
     },
   });
 
-  const removeMutation = useMutation({
+  const removePageMutation = useMutation({
     mutationFn: api.pages.delete,
-    onSuccess: () => {
+    onSuccess: (_, deletedId) => {
       queryClient.invalidateQueries({ queryKey: ["pages"] });
     },
   });
 
   return {
-    // Data
     pages,
-    isLoading,
-    error,
-
-    // Actions
-    add: addMutation.mutate,
-    update: (id: string, page: Partial<Omit<Page, "id" | "blocks">>) =>
-      updateMutation.mutate({ id, page }),
-    remove: removeMutation.mutate,
-    
-    // Mutation states (if needed)
-    isAdding: addMutation.isPending,
-    isUpdating: updateMutation.isPending,
-    isRemoving: removeMutation.isPending,
+    isLoadingPages,
+    pagesError,
+    addPage: addPageMutation.mutate,
+    updatePage: (id: string, page: Partial<Omit<Page, "id" | "blocks">>) =>
+      updatePageMutation.mutate({ id, page }),
+    removePage: removePageMutation.mutate,
   };
 }

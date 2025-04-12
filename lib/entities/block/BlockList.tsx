@@ -1,7 +1,7 @@
 "use client";
 import { useState, useMemo } from "react";
 import { BlockItem } from "@/lib/entities/block/BlockItem";
-import { useCms } from "@/lib/hooks/useCms";
+import { useBlock } from "@/lib/hooks/useBlock";
 import { useCmsContext } from "@/lib/context/CmsContext";
 import {
   DndContext,
@@ -23,11 +23,10 @@ export function BlockList() {
   const queryClient = useQueryClient();
 
   const { selectedPage } = useCmsContext();
-  const { updateIndex } = useCms();
-  const { usePageBlocks } = useCms();
+  const { filteredBlocks, updateIndex } = useBlock();
 
-  const effectivePageId = selectedPage?.id || "";
-  const { data: blocks = [], isLoading } = usePageBlocks(effectivePageId);
+  const pageId = selectedPage?.id || "";
+  const { data: blocks = [], isLoading } = filteredBlocks(pageId);
 
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -66,7 +65,7 @@ export function BlockList() {
       })
     );
 
-    queryClient.setQueryData(["blocks", effectivePageId], updatedBlocks);
+    queryClient.setQueryData(["blocks", pageId], updatedBlocks);
 
     const timeoutId = setTimeout(() => {
       updateIndex.mutate(updatedBlocks);

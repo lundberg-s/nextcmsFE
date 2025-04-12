@@ -3,7 +3,7 @@
 import { useState, FormEvent } from "react";
 import { Block, BlockType } from "@/lib/types/blocks";
 import { useCmsContext } from "@/lib/context/CmsContext";
-import { useCms } from "@/lib/hooks/useCms";
+import { useBlock } from "@/lib/hooks/useBlock";
 
 const blockTypes = ["hero", "features"] as const;
 
@@ -13,7 +13,7 @@ interface AddBlockFormProps {
 }
 
 export function AddBlockForm({ onCancel, onAdd }: AddBlockFormProps) {
-  const { addBlock } = useCms();
+  const { addBlock } = useBlock();
   const { selectedPage } = useCmsContext();
   const [selectedType, setSelectedType] = useState<BlockType | null>(null);
   const [searchTerm, setSearchTerm] = useState("");

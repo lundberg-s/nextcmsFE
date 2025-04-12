@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useCms } from "@/lib/hooks/useCms";
+import { usePage } from "@/lib/hooks/usePage";
 
 export default function PageNavigation() {
-  const { pages } = useCms();
+  const { pages } = usePage();
 
   return (
     <div className="absolute w-full">
