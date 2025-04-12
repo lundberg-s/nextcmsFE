@@ -1,24 +1,55 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { BlockProvider } from "@/lib/providers/BlockProvider";
-import { EditBlockModal } from "@/components/modals/EditBlockModal";
-import { DeleteBlockModal } from "@/components/modals/DeleteBlockModal";
 import { DragHandle } from "@/components/ui/drag-handle";
 import { Block } from "@/lib/types/blocks";
 import { useCmsContext } from "@/lib/context/CmsContext";
 import { useFormContext } from "@/lib/hooks/useFormFontext";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
 import { useBlockActions } from "./BlockActions";
 import { ConfirmationModal } from "@/components/modals/ConfirmationModal";
+import { EditBlockForm } from "./EditBlockForm";
+import { useSidebar } from "@/components/ui/sidebar";
+import { useSidebarContent } from "@/lib/context/SidebarContext";
+import { useIconSelector } from "@/lib/helpers/IconSelector";
 
 export function BlockItem({ block }: { block: Block }) {
-  const { attributes, listeners, setNodeRef, transform, transition } =
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: block?.id });
-
-  const { selectedBlock } = useCmsContext();
+  const { toggleSidebar, setOpen, open } = useSidebar();
+  const { setBody, setFooter, clear } = useSidebarContent();
+  const { selectedBlock, setSelectedBlock } = useCmsContext();
   const { currentFormValues } = useFormContext();
   const { deleteBlock } = useBlockActions();
+
+  const forms = {
+    editBlock:
+      <EditBlockForm
+        id="edit-block-form"
+        onSuccess={() => {
+          setOpen(false);
+          setSelectedBlock(null);
+        }}
+        onCancel={() => {
+          setOpen(false);
+          setSelectedBlock(null);
+        }}
+      />,
+  };
+
+  const handleClick = () => {
+    setSelectedBlock(block);
+
+    if (open && selectedBlock?.id === block?.id) {
+      clear();
+      setOpen(false);
+    } else {
+      setBody(forms.editBlock);
+      if (!open) {
+        toggleSidebar();
+      }
+    }
+  };
 
   return (
     <div
@@ -26,6 +57,7 @@ export function BlockItem({ block }: { block: Block }) {
       style={{
         transform: CSS.Transform.toString(transform),
         transition,
+        opacity: isDragging ? 0 : 1,
       }}
       className="relative group"
     >
@@ -40,10 +72,15 @@ export function BlockItem({ block }: { block: Block }) {
           )}
 
           <div className="absolute top-1/2 right-4 flex flex-col gap-10 items-center transform -translate-y-1/2">
-            <EditBlockModal block={block} />
+
+            <Button icon={useIconSelector("settings")} variant="ghost" size="sm" onClick={handleClick} />
+
             <DragHandle attributes={attributes} listeners={listeners} />
+
             <ConfirmationModal
-              trigger={<Button variant="ghost" size="sm"><Trash2 className="w-4 h-4" /></Button>}
+              trigger={
+                <Button icon={useIconSelector("trash")} variant="ghost" size="sm" />
+              }
               title="Delete Block"
               description="Are you sure you want to delete this block? This action cannot be undone."
               onConfirm={() => deleteBlock(block.id)}
