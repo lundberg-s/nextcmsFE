@@ -79,13 +79,13 @@ export function EditBlockForm({
     <form
       id="edit-block-form"
       onSubmit={handleSubmit(handleFormSubmit)}
-      className="space-y-6"
+      className="flex flex-col gap-4"
     >
-      <div className="space-y-4">
+
         <AddComponentModal onSelect={addComponent} />
         <AddSettingModal onSelect={addSetting} />
-      </div>
-      <div className="space-y-4">
+
+
         {content &&
           Object.entries(content).map(([type, value]) => (
             <ComponentFactory
@@ -97,8 +97,8 @@ export function EditBlockForm({
               onRemove={removeComponent}
             />
           ))}
-      </div>
-      <div className="space-y-4">
+
+
         {settings &&
           Object.entries(settings).map(([type, value]) => (
             <SettingsFactory
@@ -110,10 +110,10 @@ export function EditBlockForm({
               onRemove={removeSetting}
             />
           ))}
-      </div>
+
       
       {/* Add form action buttons */}
-      <div className="flex justify-end space-x-3 mt-6">
+      <div>
         <button
           type="button"
           onClick={handleCancelClick}
