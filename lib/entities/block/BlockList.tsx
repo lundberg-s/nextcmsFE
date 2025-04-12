@@ -1,78 +1,21 @@
 "use client";
-import { useState, useMemo } from "react";
 import { BlockItem } from "@/lib/entities/block/BlockItem";
 import { useBlock } from "@/lib/hooks/useBlock";
 import { useCmsContext } from "@/lib/context/CmsContext";
-import {
-  DndContext,
-  closestCenter,
-  PointerSensor,
-  useSensor,
-  useSensors,
-  DragOverlay,
-  MeasuringStrategy,
-} from "@dnd-kit/core";
-import {
-  arrayMove,
-  SortableContext,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import { useQueryClient } from "@tanstack/react-query";
+import { useDnd } from "@/lib/hooks/useDnd";
 
 export function BlockList() {
-  const queryClient = useQueryClient();
-
   const { selectedPage } = useCmsContext();
   const { filteredBlocks, updateIndex } = useBlock();
 
   const pageId = selectedPage?.id || "";
   const { data: blocks = [], isLoading } = filteredBlocks(pageId);
 
-  const [activeId, setActiveId] = useState<string | null>(null);
-
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 8,
-      },
-    })
-  );
-
-  const activeBlock = useMemo(() => {
-    if (!activeId) return null;
-    return blocks.find((block) => block.id === activeId) || null;
-  }, [activeId, blocks]);
-
-  const handleDragStart = (event: any) => {
-    setActiveId(event.active.id);
-  };
-
-  const handleDragEnd = (event: any) => {
-    setActiveId(null);
-
-    const { active, over } = event;
-    if (!over || active.id === over.id) return;
-
-    const oldIndex = blocks.findIndex((block) => block.id === active.id);
-    const newIndex = blocks.findIndex((block) => block.id === over.id);
-
-    if (oldIndex === -1 || newIndex === -1) return;
-
-    const updatedBlocks = arrayMove([...blocks], oldIndex, newIndex).map(
-      (block, index) => ({
-        ...block,
-        drag_index: index + 1,
-      })
-    );
-
-    queryClient.setQueryData(["blocks", pageId], updatedBlocks);
-
-    const timeoutId = setTimeout(() => {
-      updateIndex.mutate(updatedBlocks);
-    }, 300);
-
-    return () => clearTimeout(timeoutId);
-  };
+  const { activeBlock, renderDndContext } = useDnd({
+    blocks,
+    pageId,
+    updateIndex,
+  });
 
   if (isLoading) {
     return <div>Loading blocks...</div>;
@@ -84,36 +27,19 @@ export function BlockList() {
 
   return (
     <div className="space-y-8">
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-        measuring={{
-          droppable: {
-            strategy: MeasuringStrategy.Always,
-          },
-        }}
-      >
-        <SortableContext
-          items={blocks.map((block) => block.id)}
-          strategy={verticalListSortingStrategy}
-        >
-          <div className="space-y-4">
-            {blocks.map((block) => (
-              <BlockItem key={block.id} block={block} />
-            ))}
+      {renderDndContext(
+        <div className="space-y-4">
+          {blocks.map((block) => (
+            <BlockItem key={block.id} block={block} />
+          ))}
+        </div>,
+        
+        activeBlock && (
+          <div className="opacity-80">
+            <BlockItem block={activeBlock} />
           </div>
-        </SortableContext>
-
-        <DragOverlay adjustScale={false}>
-          {activeBlock && (
-            <div className="opacity-80">
-              <BlockItem block={activeBlock} />
-            </div>
-          )}
-        </DragOverlay>
-      </DndContext>
+        )
+      )}
     </div>
   );
 }
