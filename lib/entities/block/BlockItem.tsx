@@ -38,11 +38,14 @@ export function BlockItem({ block }: { block: Block }) {
   };
 
   const handleClick = () => {
+    if (!block) return;
+
     setSelectedBlock(block);
 
     if (open && selectedBlock?.id === block?.id) {
       clear();
       setOpen(false);
+      setSelectedBlock(null);
     } else {
       setBody(forms.editBlock);
       if (!open) {
