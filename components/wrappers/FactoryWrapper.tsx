@@ -26,7 +26,7 @@ export default function FactoryWrapper({
           description="This action cannot be undone."
           confirmText="Delete"
           cancelText="Cancel"
-          triggerElement={
+          trigger={
             <Button variant="ghost" size="sm">
               <Trash2 className="w-4 h-4" />
             </Button>

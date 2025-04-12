@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 interface ConfirmationModalProps {
   title: string;
   description: string;
-  triggerElement: ReactNode;
+  trigger: ReactNode;
   confirmText: string;
   cancelText: string;
   onConfirm: () => void;
@@ -27,7 +27,7 @@ interface ConfirmationModalProps {
 export function ConfirmationModal({
   title,
   description,
-  triggerElement,
+  trigger,
   confirmText,
   cancelText,
   onConfirm,
@@ -38,7 +38,7 @@ export function ConfirmationModal({
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        {triggerElement}
+        {trigger}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

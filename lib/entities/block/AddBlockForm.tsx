@@ -18,7 +18,7 @@ export function AddBlockForm({ onCancel, onAdd }: AddBlockFormProps) {
   const [selectedType, setSelectedType] = useState<BlockType | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   
-  // Filter block types based on search term
+
   const filteredBlockTypes = blockTypes.filter(type => 
     type.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -34,15 +34,12 @@ export function AddBlockForm({ onCancel, onAdd }: AddBlockFormProps) {
         pageId: selectedPage?.id,
       };
       
-      // Call the API to add the block
       addBlock(newBlock);
       
-      // Call the callback if provided
       if (onAdd) {
         onAdd(newBlock as Block);
       }
       
-      // Reset form state
       setSelectedType(null);
       setSearchTerm("");
     }

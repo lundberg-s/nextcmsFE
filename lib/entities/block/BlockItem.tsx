@@ -7,6 +7,10 @@ import { DragHandle } from "@/components/ui/drag-handle";
 import { Block } from "@/lib/types/blocks";
 import { useCmsContext } from "@/lib/context/CmsContext";
 import { useFormContext } from "@/lib/hooks/useFormFontext";
+import { Button } from "@/components/ui/button";
+import { Trash2 } from "lucide-react";
+import { useBlockActions } from "./BlockActions";
+import { ConfirmationModal } from "@/components/modals/ConfirmationModal";
 
 export function BlockItem({ block }: { block: Block }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -14,6 +18,7 @@ export function BlockItem({ block }: { block: Block }) {
 
   const { selectedBlock } = useCmsContext();
   const { currentFormValues } = useFormContext();
+  const { deleteBlock } = useBlockActions();
 
   return (
     <div
@@ -37,7 +42,15 @@ export function BlockItem({ block }: { block: Block }) {
           <div className="absolute top-1/2 right-4 flex flex-col gap-10 items-center transform -translate-y-1/2">
             <EditBlockModal block={block} />
             <DragHandle attributes={attributes} listeners={listeners} />
-            <DeleteBlockModal block={block} />
+            <ConfirmationModal
+              trigger={<Button variant="ghost" size="sm"><Trash2 className="w-4 h-4" /></Button>}
+              title="Delete Block"
+              description="Are you sure you want to delete this block? This action cannot be undone."
+              onConfirm={() => deleteBlock(block.id)}
+              cancelText="Cancel"
+              confirmText="Delete"
+            />
+
           </div>
         </>
       )}

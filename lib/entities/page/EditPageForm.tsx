@@ -69,7 +69,7 @@ export function EditPageForm({ onClose }: EditPageFormProps) {
           description="Are you sure you want to delete this page? This action cannot be undone."
           confirmText="Delete"
           cancelText="Cancel"
-          triggerElement={
+          trigger={
             <Button className="flex gap-2" type="button" variant="destructive">
               <Trash2 className="w-4 h-4" /> Delete
             </Button>
