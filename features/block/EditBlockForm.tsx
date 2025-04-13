@@ -14,8 +14,8 @@ import { useBlockPreview } from "@/lib/hooks/useBlockPreview";
 import { useFactoryHelper } from "@/lib/helpers/FactoryHelper";
 import { useCmsContext } from "@/lib/context/CmsContext";
 import { DialogModal } from "@/components/modals/DialogModal";
-import { AddComponentForm } from "@/components/factories/AddComponentForm";
-import { AddSettingForm } from "@/components/factories/AddSettingForm";
+import { AddComponentForm } from "@/features/factory/AddComponentForm";
+import { AddSettingForm } from "@/features/factory/AddSettingForm";
 
 export function EditBlockForm({
   id = "edit-block-form",

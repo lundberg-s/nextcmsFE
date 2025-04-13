@@ -10,6 +10,7 @@ useBlock() {
     const getBlockListQuery = useQuery({
       queryKey: ["blocks", pageId],
       queryFn: () => api.blocks.getBlockList(pageId),
+      enabled: !!pageId,
     });
   return getBlockListQuery;
   };
