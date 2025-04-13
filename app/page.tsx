@@ -2,21 +2,15 @@
 
 import { BlockProvider } from "@/lib/providers/BlockProvider";
 import { usePage } from "@/lib/hooks/usePage";
+import LoadingView from "@/components/LoadingView";
 
 export default function Home() {
-  const { pages, isLoadingPages } = usePage();
-
-  if (isLoadingPages) {
-    return <div>Loading...</div>;
-  }
+  const { pages } = usePage();
 
   const homePage = pages?.find((page) => page.slug === "home");
 
-  if (!homePage) {
-    return <div>Home page not found</div>;
-  }
-
   return (
+    <LoadingView>
     <main>
       <div>
         {homePage?.blocks.map((block) => (
@@ -24,5 +18,6 @@ export default function Home() {
         ))}
       </div>
     </main>
+    </LoadingView>
   );
 }

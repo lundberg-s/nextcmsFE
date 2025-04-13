@@ -41,6 +41,7 @@ export interface BlockComponent {
   id: string;
   type: ComponentType;
   kind: ComponentKind;
+  position: "left" | "top" | "bottom" | "right";
   value: string;
   title?: string;
   description?: string;

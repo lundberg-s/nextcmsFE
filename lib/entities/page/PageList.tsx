@@ -8,17 +8,25 @@ import { AddBlockForm } from "@/lib/entities/block/AddBlockForm";
 import { PageTabs } from "./PageTabs";
 import { PageSettings } from "@/components/wrappers/PageSettings";
 import { CMSPageHeader } from "@/components/wrappers/CMSPageHeader";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { AddPageForm } from "./AddPageForm";
 import { EditPageForm } from "./EditPageForm";
 import { DialogModal } from "@/components/modals/DialogModal";
+import { LoadingScreen } from "@/components/ui/loading";
 
-export function PageList({}) {
-  const { pages } = usePage();
+export function PageList({ }) {
+  const { pages, isLoadingPages } = usePage();
   const { selectedPage, setSelectedPage } = useCmsContext();
+  const [isShowingLoader, setIsShowingLoader] = useState(true);
 
   const initialPage = pages.find((page) => page.slug === "home");
+
+  useEffect(() => {
+    if (initialPage) {
+      setSelectedPage(initialPage);
+    }
+  }, [initialPage, setSelectedPage]);
 
   const pageSettings = [
     {
@@ -56,11 +64,15 @@ export function PageList({}) {
     },
   ];
 
+  if (isLoadingPages) {
+    return null;
+  }
+
   return (
     <div className="w-[90%] mx-auto px-4 py-4">
       <ScrollArea className="w-full h-full">
         <Tabs
-          defaultValue={initialPage}
+          defaultValue={initialPage?.id}
           onValueChange={(value) =>
             setSelectedPage(pages.find((page) => page.id === value) || null)
           }

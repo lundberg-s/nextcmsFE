@@ -19,6 +19,7 @@ export function useFactoryHelper(
       const newComponent: Partial<BlockComponent> = {
         type,
         kind,
+        position: "bottom",
       };
 
       setValue("content", {

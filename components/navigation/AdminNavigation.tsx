@@ -3,6 +3,7 @@
 import { useUserStore } from '@/lib/store/user-store';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import LoadingView from '../LoadingView';
 
 export function AdminNavigation() {
   const { user, logout } = useUserStore();
@@ -14,6 +15,7 @@ export function AdminNavigation() {
   };
 
   return (
+    <LoadingView>
     <nav className="border-b">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="font-semibold">CMS</div>
@@ -29,5 +31,6 @@ export function AdminNavigation() {
         ) : null}
       </div>
     </nav>
+    </LoadingView>
   );
 }
