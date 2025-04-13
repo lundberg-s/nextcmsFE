@@ -15,15 +15,16 @@ export function Hero({ block }: HeroProps) {
   const { selectedBlock } = useCmsContext();
   const { updateBlock } = useBlock();
   const isSelected = selectedBlock?.id === block.id;
-  const [activePosition, setActivePosition] = useState<string | null>(null);
-  const [selectedComponent, setSelectedComopnent] = useState<BlockComponent | null>(null);
+  const [targetPosition, setTargetPosition] = useState<string | null>(null);
+  const [selectedComponent, setSelectedComponent] = useState<BlockComponent | null>(null);
+  const [showColumnColors, setShowColumnColors] = useState(false);
 
   // Function to handle container clicks
   const handleContainerClick = (position: "left" | "top" | "bottom" | "right") => {
     if (!isSelected) return;
+    setShowColumnColors(!showColumnColors);
+    setTargetPosition(position);
 
-    setActivePosition(position);
-    
     const [type, component] = selectedComponent ? [selectedComponent.type, selectedComponent] : ["", null];
 
     // Update the block with the new position for this component
@@ -42,10 +43,10 @@ export function Hero({ block }: HeroProps) {
           }
         }
       }, {
-        onSuccess: () => {
-          setSelectedComopnent(null);
-        },
-      }
+      onSuccess: () => {
+        setSelectedComponent(null);
+      },
+    }
     );
   };
 
@@ -57,12 +58,12 @@ export function Hero({ block }: HeroProps) {
       (comp as BlockComponent).position === position
     );
 
-    if (!componentEntry) return <div className="text-gray-400">Click to place component here</div>;
+    if (!componentEntry && isSelected) return <div className="text-gray-400">Click to place component here</div>;
 
-    const [type, component] = componentEntry;
+    const [type, component] = componentEntry || ["", null];
 
     return (
-      <div onClick={() => setSelectedComopnent(component as BlockComponent)}>
+      <div onClick={() => setSelectedComponent(component as BlockComponent)}>
         <ComponentRenderForm
           key={type}
           type={type as ComponentType}
@@ -86,6 +87,29 @@ export function Hero({ block }: HeroProps) {
     }
     : {};
 
+  const positions = {
+    left: {
+      position: "left",
+      backgroundColor: "bg-red-200",
+      hoverBackgroundColor: "bg-red-300",
+    },
+    top: {
+      position: "top",
+      backgroundColor: "bg-blue-200",
+      hoverBackgroundColor: "bg-blue-300",
+    },
+    bottom: {
+      position: "bottom",
+      backgroundColor: "bg-blue-300",
+      hoverBackgroundColor: "bg-blue-400",
+    },
+    right: {
+      position: "right",
+      backgroundColor: "bg-green-200",
+      hoverBackgroundColor: "bg-green-300",
+    },
+  };
+
   return (
     <div
       className={`min-h-[600px] flex w-full h-full`}
@@ -95,9 +119,10 @@ export function Hero({ block }: HeroProps) {
         <>
           {/* Left column - full height */}
           <div
-            className={`flex-1 p-4 flex items-center justify-center cursor-pointer
-                      ${activePosition === "left" ? "bg-red-300" : "bg-red-200"}
-                      ${activePosition === "left" ? "ring-2 ring-blue-500" : ""}`}
+            className={`flex-1 p-4 flex items-center justify-center cursor-pointer ${showColumnColors
+                ? `${targetPosition === "left" ? "bg-red-300 ring-2 ring-blue-500" : "bg-red-200"}`
+                : ""
+              }`}
             onClick={() => handleContainerClick("left")}
           >
             {renderComponentAt("left")}
@@ -106,17 +131,19 @@ export function Hero({ block }: HeroProps) {
           {/* Middle column - divided into two rows */}
           <div className="flex-1 flex flex-col">
             <div
-              className={`flex-1 p-4 flex items-center justify-center cursor-pointer
-                        ${activePosition === "top" ? "bg-blue-300" : "bg-blue-200"}
-                        ${activePosition === "top" ? "ring-2 ring-blue-500" : ""}`}
+              className={`flex-1 p-4 flex items-center justify-center cursor-pointer ${showColumnColors
+                  ? `${targetPosition === "top" ? "bg-blue-300 ring-2 ring-blue-500" : "bg-blue-200"}`
+                  : ""
+                }`}
               onClick={() => handleContainerClick("top")}
             >
               {renderComponentAt("top")}
             </div>
             <div
-              className={`flex-1 p-4 flex items-center justify-center cursor-pointer
-                        ${activePosition === "bottom" ? "bg-blue-400" : "bg-blue-300"}
-                        ${activePosition === "bottom" ? "ring-2 ring-blue-500" : ""}`}
+              className={`flex-1 p-4 flex items-center justify-center cursor-pointer ${showColumnColors
+                  ? `${targetPosition === "bottom" ? "bg-blue-400 ring-2 ring-blue-500" : "bg-blue-300"}`
+                  : ""
+                }`}
               onClick={() => handleContainerClick("bottom")}
             >
               {renderComponentAt("bottom")}
@@ -125,9 +152,10 @@ export function Hero({ block }: HeroProps) {
 
           {/* Right column - full height */}
           <div
-            className={`flex-1 p-4 flex items-center justify-center cursor-pointer
-                      ${activePosition === "right" ? "bg-green-300" : "bg-green-200"}
-                      ${activePosition === "right" ? "ring-2 ring-blue-500" : ""}`}
+            className={`flex-1 p-4 flex items-center justify-center cursor-pointer ${showColumnColors
+                ? `${targetPosition === "right" ? "bg-green-300 ring-2 ring-blue-500" : "bg-green-200"}`
+                : ""
+              }`}
             onClick={() => handleContainerClick("right")}
           >
             {renderComponentAt("right")}
