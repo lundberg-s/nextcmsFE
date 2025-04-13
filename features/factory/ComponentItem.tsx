@@ -1,8 +1,8 @@
 import { BlockComponent, ComponentKind, ComponentType } from "@/lib/types/blocks";
-import { CMS } from ".";
-import FactoryWrapper from "../wrappers/FactoryWrapper";
+import { CMS } from "../../components/factories";
+import FactoryWrapper from "../../components/wrappers/FactoryWrapper";
 
-interface ComponentFactoryProps {
+interface ComponentItemProps {
   type: ComponentType;
   component: Partial<BlockComponent>;
   kind: ComponentKind;
@@ -24,13 +24,20 @@ const COMPONENT_MAP = {
   carousel: CMS.Carousel,
 } as const;
 
-export function ComponentFactory({
+const SETTING_MAP = {
+  backgroundColor: CMS.BackgroundColor,
+  backgroundImage: CMS.BackgroundImage,
+  textColor: CMS.TextColor,
+  layout: CMS.ContainerLayout,
+} as const;
+
+export function ComponentItem({
   type,
   component,
   kind,
   onChange,
   onRemove,
-}: Omit<ComponentFactoryProps, "type"> & { type: keyof typeof COMPONENT_MAP }) {
+}: Omit<ComponentItemProps, "type"> & { type: keyof typeof COMPONENT_MAP }) {
   const handleComponentChange = (key: string, value: string | string[]) => {
     onChange(type, { ...component, [key]: value }, kind);
   };

@@ -92,7 +92,7 @@ export function EditBlockForm({
       title: "Add Component",
       description: "Select a component to add to your block. You can customize its properties after adding.",
       icon: "plus",
-      form: AddComponentForm,
+      content: AddComponentForm,
       function: addComponent,
       button: {
         label: "Add Component",
@@ -105,7 +105,7 @@ export function EditBlockForm({
       title: "Add Setting",
       description: "Select a setting to customize the appearance of your block.",
       icon: "plus",
-      form: AddSettingForm,
+      content: AddSettingForm,
       function: addSetting,
       button: {
         label: "Add Setting",
@@ -128,7 +128,7 @@ export function EditBlockForm({
           key={form.title}
           title={form.title}
           description={form.description}
-          content={form.form}
+          content={form.content}
           button={form.button}
           props={{
             onSubmit: (type: ComponentType, kind: ComponentKind) => {
