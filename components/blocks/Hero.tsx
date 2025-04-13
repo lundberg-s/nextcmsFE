@@ -18,7 +18,6 @@ export function Hero({ block }: HeroProps) {
   const [targetPosition, setTargetPosition] = useState<string | null>(null);
   const [selectedComponent, setSelectedComponent] = useState<BlockComponent | null>(null);
   const [showColumnColors, setShowColumnColors] = useState(false);
-
   // Function to handle container clicks
   const handleContainerClick = (position: "left" | "top" | "bottom" | "right") => {
     if (!isSelected) return;
@@ -50,29 +49,40 @@ export function Hero({ block }: HeroProps) {
     );
   };
 
-  const renderComponentAt = (position: string) => {
-    if (!content) return null;
+const renderComponentAt = (position: string) => {
+  if (!content) return null;
 
-    // Find component with matching position
-    const componentEntry = Object.entries(content).find(([_, comp]) =>
-      (comp as BlockComponent).position === position
-    );
+  // Find component with matching position
+  const componentEntry = Object.entries(content).find(([_, comp]) =>
+    (comp as BlockComponent).position === position
+  );
 
-    if (!componentEntry && isSelected) return <div className="text-gray-400">Click to place component here</div>;
+  if (!componentEntry && isSelected) return <div className="text-gray-400">Click to place component here</div>;
 
-    const [type, component] = componentEntry || ["", null];
+  const [type, component] = componentEntry || ["", null];
+  
+  // Check if this specific component is the one that's selected
+  const isThisComponentSelected = selectedComponent?.type === type && 
+    selectedComponent?.position === (component as BlockComponent)?.position;
 
-    return (
-      <div onClick={() => setSelectedComponent(component as BlockComponent)}>
-        <ComponentRenderForm
-          key={type}
-          type={type as ComponentType}
-          component={component as BlockComponent}
-          kind="component"
-        />
-      </div>
-    );
-  };
+  return (
+    <div 
+      className={`${isThisComponentSelected ? "bg-blue-400 p-4 rounded-md" : ""} 
+                  transition-colors duration-200`} 
+      onClick={(e) => {
+        e.stopPropagation(); // Prevent triggering container click
+        setSelectedComponent(component as BlockComponent);
+      }}
+    >
+      <ComponentRenderForm
+        key={type}
+        type={type as ComponentType}
+        component={component as BlockComponent}
+        kind="component"
+      />
+    </div>
+  );
+};
 
   const colours = {
     backgroundColor: settings?.backgroundColor || "bg-background",

@@ -3,13 +3,14 @@ export type BlockType =
   | "features"
   | "testimonials"
   | "cta"
-  | "content";
+  | "content"
+  | null;
 
 export interface Block {
   id: string;
   type: BlockType;
   content: {
-    items: any;
+    items?: any;
     title?: string;
     subtitle?: string;
     description?: string;

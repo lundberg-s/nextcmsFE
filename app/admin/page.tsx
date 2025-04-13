@@ -1,7 +1,7 @@
 // app/admin/page.tsx
 "use client";
 
-import { PageList } from "@/lib/entities/page/PageList";
+import { PageList } from "@/features/page/PageList";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function AdminPage() {

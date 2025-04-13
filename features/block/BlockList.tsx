@@ -1,5 +1,5 @@
 "use client";
-import { BlockItem } from "@/lib/entities/block/BlockItem";
+import { BlockItem } from "@/features/block/BlockItem";
 import { useBlock } from "@/lib/hooks/useBlock";
 import { useCmsContext } from "@/lib/context/CmsContext";
 import { useDnd } from "@/lib/hooks/useDnd";

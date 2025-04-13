@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { Carousel } from "../ui/carousel";
+import { Carousel } from "@/components/ui/carousel";
 
 interface FormValues {
   componentType: ComponentType;
@@ -136,7 +136,10 @@ export function AddComponentForm({ onSubmit, onCancel }: AddComponentFormProps) 
         <Button type="button" variant="outline" onClick={onCancel}>
           Cancel
         </Button>
-        <Button type="submit">
+        <Button onClick={(e) => {
+          e.preventDefault();
+          onFormSubmit(e);
+        }} type="submit">
           Add Component
         </Button>
       </div>

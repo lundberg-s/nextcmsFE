@@ -23,18 +23,18 @@ export function AddBlockForm({ onCancel, onAdd }: AddBlockFormProps) {
     type.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const newBlock = {
+    type: selectedType,
+    content: {},
+    settings: {},
+  };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     
     if (selectedType && selectedPage?.id) {
-      const newBlock: Omit<Block, "id"> & { pageId: string } = {
-        type: selectedType,
-        content: {},
-        settings: {},
-        pageId: selectedPage?.id,
-      };
       
-      addBlock(newBlock);
+      addBlock({ ...newBlock, pageId: selectedPage.id });
       
       if (onAdd) {
         onAdd(newBlock as Block);

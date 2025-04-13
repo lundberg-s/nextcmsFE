@@ -5,11 +5,13 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useIconSelector } from "@/lib/helpers/IconSelector";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 interface DialogModalProps {
   title: string;
@@ -36,6 +38,12 @@ export function DialogModal({
 
   const contentProps = {
     ...props,
+    onSubmit: (...args: any[]) => {
+      if (props?.onSubmit) {
+        props.onSubmit(...args);
+      }
+      setOpen(false);
+    },
     onCancel: () => setOpen(false),
     onClose: () => setOpen(false),
     onAdd: () => setOpen(false),
@@ -47,7 +55,10 @@ export function DialogModal({
   return (
     <>
       <Button
-        onClick={() => setOpen(true)}
+        onClick={(e) => {
+          e.preventDefault();
+          setOpen(true);
+        }}
         icon={button?.icon ? iconElement : null}
         variant={button?.variant || "default"}
         disabled={button?.disabled}
@@ -63,6 +74,28 @@ export function DialogModal({
           </DialogHeader>
 
           {Content ? <Content {...contentProps} /> : null}
+          {/* <DialogFooter>
+            <Button variant="outline" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              form={contentProps?.id}
+              disabled={props?.disabled}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                if (props?.onSubmit) {
+                  contentProps.onSubmit(contentProps);
+                } else {
+                  setOpen(false);
+                }
+              }}
+            >
+              {props?.submitLabel || "Submit"}
+            </Button>
+          </DialogFooter> */}
         </DialogContent>
       </Dialog>
     </>

@@ -83,7 +83,10 @@ export function AddSettingForm({ onSubmit, onCancel }: AddSettingFormProps) {
         <Button type="button" variant="outline" onClick={onCancel}>
           Cancel
         </Button>
-        <Button type="submit">
+        <Button onClick={(e) => {
+          e.preventDefault();
+          onFormSubmit(e);
+        }} type="submit">
           Add Setting
         </Button>
       </div>

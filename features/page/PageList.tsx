@@ -4,7 +4,7 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { usePage } from "@/lib/hooks/usePage";
 import { useCmsContext } from "@/lib/context/CmsContext";
 import { BlockList } from "../block/BlockList";
-import { AddBlockForm } from "@/lib/entities/block/AddBlockForm";
+import { AddBlockForm } from "@/features/block/AddBlockForm";
 import { PageTabs } from "./PageTabs";
 import { PageSettings } from "@/components/wrappers/PageSettings";
 import { CMSPageHeader } from "@/components/wrappers/CMSPageHeader";
@@ -13,7 +13,6 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { AddPageForm } from "./AddPageForm";
 import { EditPageForm } from "./EditPageForm";
 import { DialogModal } from "@/components/modals/DialogModal";
-import { LoadingScreen } from "@/components/ui/loading";
 
 export function PageList({ }) {
   const { pages, isLoadingPages } = usePage();
@@ -28,7 +27,7 @@ export function PageList({ }) {
     }
   }, [initialPage, setSelectedPage]);
 
-  const pageSettings = [
+  const settingsList = [
     {
       title: "Add Page",
       description: "Create a new page",
@@ -81,7 +80,7 @@ export function PageList({ }) {
             <div className="flex gap-2 items-center">
               <PageTabs />
               <PageSettings>
-                {pageSettings.slice(0, 1).map((setting) => (
+                {settingsList.slice(0, 1).map((setting) => (
                   <DialogModal
                     key={setting.title}
                     title={setting.title}
@@ -93,7 +92,7 @@ export function PageList({ }) {
               </PageSettings>
             </div>
             <PageSettings>
-              {pageSettings.slice(1).map((setting) => (
+              {settingsList.slice(1).map((setting) => (
                 <DialogModal
                   key={setting.title}
                   title={setting.title}
