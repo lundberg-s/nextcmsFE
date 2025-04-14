@@ -7,12 +7,12 @@ import { Input } from "@/components/ui/input";
 import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
 import React from "react";
 
-interface ButtonComponentProps {
+interface EditButtonComponentProps {
   component: any;
   onChange: (key: string, value: string) => void;
 }
 
-export function Button({ component, onChange }: ButtonComponentProps) {
+export function EditButton({ component, onChange }: EditButtonComponentProps) {
   return (
     <SettingsWrapper>
       <Select

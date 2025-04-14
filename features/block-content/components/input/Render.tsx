@@ -3,18 +3,16 @@ import { BlockComponent } from "@/lib/types/blocks";
 import { Label } from "@/components/ui/label";
 import { Input as InputField } from "@/components/ui/input";
 
-interface InputComponentProps {
+interface RenderInputComponentProps {
   component: Partial<BlockComponent>;
-  onChange: (key: string, value: string) => void;
 }
 
-export function Input({ component, onChange }: InputComponentProps) {
+export function RenderInput({ component, onChange }: RenderInputComponentProps) {
   return (
     <SettingsWrapper>
       <Label>Placeholder</Label>
       <InputField
         value={component.placeholder || ""}
-        onChange={(e) => onChange("placeholder", e.target.value)}
         placeholder="Enter placeholder text"
       />
     </SettingsWrapper>

@@ -7,7 +7,7 @@ interface TitleProps {
   onChange: (key: string, value: string | string[]) => void;
 }
 
-export function Title({ component, onChange }: TitleProps) {
+export function EditTitle({ component, onChange }: TitleProps) {
   return (
     <div className="space-y-2">
       <Label>Title</Label>

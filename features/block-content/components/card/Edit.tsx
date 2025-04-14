@@ -4,11 +4,11 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 
-interface CardComponentProps {
+interface EditCardComponentProps {
   component: any;
   onChange: (key: string, value: string) => void;
 }
-export function Card({ component, onChange }: CardComponentProps) {
+export function EditCard({ component, onChange }: EditCardComponentProps) {
   return (
     <SettingsWrapper>
         <Label>Card Title</Label>

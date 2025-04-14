@@ -68,7 +68,7 @@ export function PageList({ }) {
   }
 
   return (
-    <div className="w-[90%] mx-auto px-4 py-4">
+    <div className="mx-auto px-4 py-4">
       <ScrollArea className="w-full h-full">
         <Tabs
           defaultValue={initialPage?.id}

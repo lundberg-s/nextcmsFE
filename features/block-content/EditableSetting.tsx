@@ -2,7 +2,7 @@ import { ComponentKind, ComponentType } from "@/lib/types/blocks";
 import { CMS } from "../../components/factories";
 import FactoryWrapper from "../../components/wrappers/FactoryWrapper";
 
-interface SettingsFactoryProps {
+interface SettingsItemProps {
   type: ComponentType;
   value: string;
   kind: ComponentKind;
@@ -10,25 +10,25 @@ interface SettingsFactoryProps {
   onRemove: (type: ComponentType, kind: ComponentKind) => void;
 }
 
-const SETTING_MAP = {
+const SETTING_LIST = {
   backgroundColor: CMS.BackgroundColor,
   backgroundImage: CMS.BackgroundImage,
   textColor: CMS.TextColor,
   layout: CMS.ContainerLayout,
 } as const;
 
-export function SettingsFactory({
+export function SettingsItem({
   type,
   value,
   kind,
   onChange,
   onRemove,
-}: Omit<SettingsFactoryProps, "type"> & { type: keyof typeof SETTING_MAP }) {
+}: Omit<SettingsItemProps, "type"> & { type: keyof typeof SETTING_LIST }) {
   const handlePropChange = (value: string) => {
     onChange(type, value, kind);
   };
 
-  const EditorComponent = SETTING_MAP[type];
+  const EditorComponent = SETTING_LIST[type];
 
   return (
     <FactoryWrapper 

@@ -1,8 +1,9 @@
 import { BlockComponent, ComponentKind, ComponentType } from "@/lib/types/blocks";
 import { CMS } from "../../components/factories";
 import FactoryWrapper from "../../components/wrappers/FactoryWrapper";
+import { Edit } from "./components";
 
-interface ComponentItemProps {
+interface EditableComponentProps {
   type: ComponentType;
   component: Partial<BlockComponent>;
   kind: ComponentKind;
@@ -15,29 +16,22 @@ interface ComponentItemProps {
 }
 
 const COMPONENT_MAP = {
-  title: CMS.Title,
-  description: CMS.Description,
-  button: CMS.Button,
-  input: CMS.Input,
-  separator: CMS.Separator,
-  card: CMS.Card,
-  carousel: CMS.Carousel,
+  title: Edit.Title,
+  description: Edit.Description,
+  button: Edit.Button,
+  input: Edit.Input,
+  separator: Edit.Separator,
+  card: Edit.Card,
+  carousel: Edit.Carousel,
 } as const;
 
-const SETTING_MAP = {
-  backgroundColor: CMS.BackgroundColor,
-  backgroundImage: CMS.BackgroundImage,
-  textColor: CMS.TextColor,
-  layout: CMS.ContainerLayout,
-} as const;
-
-export function ComponentItem({
+export function EditableComponent({
   type,
   component,
   kind,
   onChange,
   onRemove,
-}: Omit<ComponentItemProps, "type"> & { type: keyof typeof COMPONENT_MAP }) {
+}: Omit<EditableComponentProps, "type"> & { type: keyof typeof COMPONENT_MAP }) {
   const handleComponentChange = (key: string, value: string | string[]) => {
     onChange(type, { ...component, [key]: value }, kind);
   };

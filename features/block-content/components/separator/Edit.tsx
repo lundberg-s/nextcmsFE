@@ -5,12 +5,12 @@ import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
 import { BlockComponent } from "@/lib/types/blocks";
 import { Label } from "@/components/ui/label";
 
-interface SeparatorComponentProps {
+interface EditSeparatorComponentProps {
   component: Partial<BlockComponent>;
   onChange: (key: string, value: string) => void;
 }
 
-export function Separator({ component, onChange }: SeparatorComponentProps) {
+export function EditSeparator({ component, onChange }: EditSeparatorComponentProps) {
   return (
     <SettingsWrapper>
       <Label>Orientation</Label>

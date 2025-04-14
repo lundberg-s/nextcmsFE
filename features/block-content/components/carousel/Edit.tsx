@@ -4,12 +4,12 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
-interface CarouselComponentProps {
+interface EditCarouselComponentProps {
   component: any;
   onChange: (key: string, value: string | string[]) => void;
 }
 
-export function Carousel({ component, onChange }: CarouselComponentProps) {
+export function EditCarousel({ component, onChange }: EditCarouselComponentProps) {
   const urls =
     component.urls && component.urls.length > 0 ? component.urls : [""];
 

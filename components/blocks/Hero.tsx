@@ -5,6 +5,7 @@ import { ComponentRenderForm } from "../forms/ComponentRenderForm";
 import { useCmsContext } from "@/lib/context/CmsContext";
 import { useBlock } from "@/lib/hooks/useBlock";
 import { useState } from "react";
+import { RenderedComponent } from "@/features/block-content/RenderedComponent";
 
 interface HeroProps {
   block: Block;
@@ -74,7 +75,7 @@ const renderComponentAt = (position: string) => {
         setSelectedComponent(component as BlockComponent);
       }}
     >
-      <ComponentRenderForm
+      <RenderedComponent
         key={type}
         type={type as ComponentType}
         component={component as BlockComponent}

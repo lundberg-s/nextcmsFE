@@ -4,13 +4,13 @@ import { BlockComponent } from "@/lib/types/blocks";
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 
-interface DescriptionComponentProps {
+interface EditDescriptionComponentProps {
   component: Partial<BlockComponent>;
   onChange: (key: string, value: string | string[]) => void;
 }
 
 
-export function Description({ component, onChange }: DescriptionComponentProps) {
+export function EditDescription({ component, onChange }: EditDescriptionComponentProps) {
   return (
     <SettingsWrapper>
         <Label>Description</Label>
