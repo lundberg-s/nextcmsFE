@@ -1,6 +1,6 @@
 import { Button } from "../../features/block-content/components/button/Edit";
 import { Input } from "../../features/block-content/components/input/Render";
-import { Description } from "../../features/block-content/components/description/Description";
+import { Description } from "../../features/block-content/components/description/Edit";
 import { Title } from "../../features/block-content/components/title/Edit";
 import { Separator } from "../../features/block-content/components/separator/Edit";
 import { Card } from "../../features/block-content/components/card/Edit";

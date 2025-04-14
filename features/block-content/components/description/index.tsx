@@ -1,5 +1,5 @@
 import { RenderDescription } from "./Render";
-import { EditDescription } from "./Description";
+import { EditDescription } from "./Edit";
 import { PreviewDescription } from "./Preview";
 
 export const Edit = { Description: EditDescription };
