@@ -16,7 +16,6 @@ export const Edit = {
   ...inputComponents.Edit,
 };
 
-
 export const Render = {
   ...buttonComponents.Render,
   ...titleComponents.Render,
@@ -25,4 +24,14 @@ export const Render = {
   ...carouselComponents.Render,
   ...descriptionComponents.Render,
   ...inputComponents.Render,
+};
+
+export const Preview = {
+  ...buttonComponents.Preview,
+  ...titleComponents.Preview,
+  ...separatorComponents.Preview,
+  ...cardComponents.Preview,
+  ...carouselComponents.Preview,
+  ...descriptionComponents.Preview,
+  ...inputComponents.Preview,
 };

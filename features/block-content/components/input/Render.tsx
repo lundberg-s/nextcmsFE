@@ -7,7 +7,7 @@ interface RenderInputComponentProps {
   component: Partial<BlockComponent>;
 }
 
-export function RenderInput({ component, onChange }: RenderInputComponentProps) {
+export function RenderInput({ component }: RenderInputComponentProps) {
   return (
     <SettingsWrapper>
       <Label>Placeholder</Label>
