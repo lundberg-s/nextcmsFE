@@ -4,7 +4,7 @@ import { SelectItem } from "@/components/ui/select";
 import { SelectContent } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
+
 import React from "react";
 
 interface EditButtonComponentProps {
@@ -14,7 +14,7 @@ interface EditButtonComponentProps {
 
 export function EditButton({ data, onChange }: EditButtonComponentProps) {
   return (
-    <SettingsWrapper>
+    <>
       <Select
         value={data.variant || "default"}
         onValueChange={(value) => onChange("variant", value)}
@@ -39,6 +39,6 @@ export function EditButton({ data, onChange }: EditButtonComponentProps) {
           <SelectItem value="destructive">Destructive</SelectItem>
         </SelectContent>
       </Select>
-    </SettingsWrapper>
+    </>
   );
 }

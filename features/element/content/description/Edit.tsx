@@ -1,5 +1,5 @@
 import React from 'react'
-import SettingsWrapper from '@/components/wrappers/SettingsWrapper'
+
 import { Element } from "@/lib/types/blocks";
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
@@ -13,7 +13,7 @@ interface EditDescriptionComponentProps {
 
 export function EditDescription({ data, onChange }: EditDescriptionComponentProps) {
   return (
-    <SettingsWrapper>
+    <>
       <div className='flex items-center gap-2 py-2'>
         <div className='h-6 w-6 border border-black' />
         <div className='h-6 w-6 border border-black' />
@@ -24,7 +24,7 @@ export function EditDescription({ data, onChange }: EditDescriptionComponentProp
             onChange={(e) => onChange("content", e.target.value)}
             placeholder="Enter description"
         />
-    </SettingsWrapper>
+    </>
   )
 
 }

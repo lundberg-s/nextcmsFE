@@ -18,7 +18,7 @@ export default function SidebarItemCard({
   kind,
 }: SidebarItemCardProps) {
   return (
-    <div className="border rounded-lg p-4">
+    <div className="border rounded-lg p-4 space-y-2">
       <div className="absolute right-10 -mt-2">
         <ConfirmationModal
           onConfirm={() => onRemove(type, kind)}

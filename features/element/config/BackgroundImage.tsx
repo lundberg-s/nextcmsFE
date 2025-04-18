@@ -1,5 +1,5 @@
 import React from "react";
-import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -13,14 +13,14 @@ export function BackgroundImage({
   onChange,
 }: BackgroundImageComponentProps) {
   return (
-    <SettingsWrapper>
+    <>
       <Label>Background Image</Label>
       <Input
         value={value || ""}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Background image"
       />
-    </SettingsWrapper>
+    </>
   );
 }
 

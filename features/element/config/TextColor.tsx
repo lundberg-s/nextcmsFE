@@ -1,5 +1,5 @@
 import React from "react";
-import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -14,13 +14,13 @@ export function TextColor({
 }: TextColorComponentProps) {
 
   return (
-    <SettingsWrapper>
+    <>
       <Label>Text Color</Label>
       <Input
         value={value || ""}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Text color"
       />
-    </SettingsWrapper>
+    </>
   );
 };

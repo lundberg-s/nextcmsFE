@@ -1,7 +1,7 @@
 import { Select } from "@/components/ui/select";
 import { SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SelectContent, SelectItem } from "@/components/ui/select";
-import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
+
 import { Element } from "@/lib/types/blocks";
 import { Label } from "@/components/ui/label";
 
@@ -12,7 +12,7 @@ interface EditSeparatorComponentProps {
 
 export function EditSeparator({ data, onChange }: EditSeparatorComponentProps) {
   return (
-    <SettingsWrapper>
+    <>
       <Label>Orientation</Label>
       <Select
         value={data.orientation || "horizontal"}
@@ -26,6 +26,6 @@ export function EditSeparator({ data, onChange }: EditSeparatorComponentProps) {
           <SelectItem value="vertical">Vertical</SelectItem>
         </SelectContent>
       </Select>
-    </SettingsWrapper>
+    </>
   );
 }

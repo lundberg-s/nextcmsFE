@@ -1,5 +1,5 @@
 import React from 'react'
-import SettingsWrapper from '@/components/wrappers/SettingsWrapper'
+
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -10,7 +10,7 @@ interface EditCardComponentProps {
 }
 export function EditCard({ data, onChange }: EditCardComponentProps) {
   return (
-    <SettingsWrapper>
+    <>
         <Label>Card Title</Label>
         <Input
             value={data.title || ""}
@@ -23,7 +23,7 @@ export function EditCard({ data, onChange }: EditCardComponentProps) {
             onChange={(e) => onChange("content", e.target.value)}
             placeholder="Enter card content"
         />
-    </SettingsWrapper>
+    </>
 
   )
 

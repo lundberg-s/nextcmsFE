@@ -1,5 +1,5 @@
 import React from "react";
-import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
+
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -28,7 +28,7 @@ export function EditCarousel({ data, onChange }: EditCarouselComponentProps) {
     </div>
   ));
   return (
-    <SettingsWrapper>
+    <>
       {inputs}
       <Button
         type="button"
@@ -39,6 +39,6 @@ export function EditCarousel({ data, onChange }: EditCarouselComponentProps) {
         <PlusCircle className="mr-2 h-4 w-4" />
         Add Image URL
       </Button>
-    </SettingsWrapper>
+    </>
   );
 }

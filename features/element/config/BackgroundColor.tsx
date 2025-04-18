@@ -1,6 +1,6 @@
 import React from "react";
 import { Element } from "@/lib/types/blocks";
-import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -17,7 +17,7 @@ export function BackgroundColor({
   const colors = ["red", "green", "blue", "yellow", "purple", "orange", "pink", "black", "white"];
 
   return (
-    <SettingsWrapper>
+    <>
       <Label>Background Color</Label>
       <Input
         value={value || ""}
@@ -41,6 +41,6 @@ export function BackgroundColor({
           />
         ))}
       </div>
-    </SettingsWrapper>
+    </>
   );
 }

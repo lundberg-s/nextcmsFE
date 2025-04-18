@@ -1,4 +1,4 @@
-import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
+
 import { Element } from "@/lib/types/blocks";
 import { Label } from "@/components/ui/label";
 import { Input as InputField } from "@/components/ui/input";
@@ -9,12 +9,12 @@ interface RenderInputComponentProps {
 
 export function RenderInput({ data }: RenderInputComponentProps) {
   return (
-    <SettingsWrapper>
+    <>
       <Label>Placeholder</Label>
       <InputField
         value={data.placeholder || ""}
         placeholder="Enter placeholder text"
       />
-    </SettingsWrapper>
+    </>
   );
 }

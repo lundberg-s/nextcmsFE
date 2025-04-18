@@ -9,13 +9,13 @@ interface TitleProps {
 
 export function EditTitle({ data, onChange }: TitleProps) {
   return (
-    <div className="space-y-2">
+    <>
       <Label>Title</Label>
       <Input
         value={data?.title || ""}
         onChange={(e) => onChange("title", e.target.value)}
         placeholder="Enter title"
       />
-    </div>
+    </>
   );
 }
