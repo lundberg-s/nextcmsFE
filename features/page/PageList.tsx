@@ -6,8 +6,6 @@ import { useCmsContext } from "@/lib/context/CmsContext";
 import { BlockList } from "../block/BlockList";
 import { AddBlockForm } from "@/features/block/AddBlockForm";
 import { PageTabs } from "./PageTabs";
-import { PageSettings } from "@/components/wrappers/PageSettings";
-import { CMSPageHeader } from "@/components/wrappers/CMSPageHeader";
 import { useEffect, useState } from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { AddPageForm } from "./AddPageForm";
@@ -68,7 +66,7 @@ export function PageList({ }) {
   }
 
   return (
-    <div className="mx-auto px-4 py-4">
+    <div className="mx-auto p-4">
       <ScrollArea className="w-full h-full">
         <Tabs
           defaultValue={initialPage?.id}
@@ -76,10 +74,9 @@ export function PageList({ }) {
             setSelectedPage(pages.find((page) => page.id === value) || null)
           }
         >
-          <CMSPageHeader>
+          <div className="flex justify-between items-center pb-4">
             <div className="flex gap-2 items-center">
               <PageTabs />
-              <PageSettings>
                 {settingsList.slice(0, 1).map((setting) => (
                   <DialogModal
                     key={setting.title}
@@ -89,9 +86,8 @@ export function PageList({ }) {
                     button={setting.button}
                   />
                 ))}
-              </PageSettings>
             </div>
-            <PageSettings>
+            <div className="flex items-center gap-0.5">
               {settingsList.slice(1).map((setting) => (
                 <DialogModal
                   key={setting.title}
@@ -101,8 +97,8 @@ export function PageList({ }) {
                   button={setting.button}
                 />
               ))}
-            </PageSettings>
-          </CMSPageHeader>
+            </div>
+          </div>
 
           {pages.map((page) => (
             <TabsContent key={page.id} value={page.id}>

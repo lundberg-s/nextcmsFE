@@ -38,8 +38,8 @@ export function EditPageForm({ onClose }: EditPageFormProps) {
 
   const onDelete = () => {
     if (page) {
-      removePage(page.id);
       setSelectedPage(null);
+      removePage(page.id);
       onClose();
     }
   };
