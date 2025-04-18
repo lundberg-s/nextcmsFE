@@ -1,13 +1,13 @@
-import { BlockComponent } from "@/lib/types/blocks";
+import { Element } from "@/lib/types/blocks";
 
 interface RenderDescriptionProps {
-  component: Partial<BlockComponent>;
+  data: Partial<Element>;
 }
 
-export function RenderDescription({ component }: RenderDescriptionProps) {
+export function RenderDescription({ data }: RenderDescriptionProps) {
   return (
     <p className="text-sm text-muted-foreground">
-      {component.content || component.placeholder || "Description text"}
+      {data.content || data.placeholder || "Description text"}
     </p>
   );
 }

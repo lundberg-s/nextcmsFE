@@ -1,22 +1,22 @@
 "use client";
 
-import { Block, BlockComponent, ComponentType } from "@/lib/types/blocks";
+import { Block, Element, ElementType } from "@/lib/types/blocks";
 import { useCmsContext } from "@/lib/context/CmsContext";
 import { useBlock } from "@/lib/hooks/useBlock";
 import { useState } from "react";
-import { RenderedComponent } from "@/features/block-content/RenderedComponent";
+import { RenderContentItem } from "@/features/element/RenderContentItem";
 
 interface HeroProps {
   block: Block;
 }
 
 export function Hero({ block }: HeroProps) {
-  const { content, settings } = block;
+  const { content, config } = block;
   const { selectedBlock } = useCmsContext();
   const { updateBlock } = useBlock();
   const isSelected = selectedBlock?.id === block.id;
   const [targetPosition, setTargetPosition] = useState<string | null>(null);
-  const [selectedComponent, setSelectedComponent] = useState<BlockComponent | null>(null);
+  const [selectedComponent, setSelectedComponent] = useState<Element | null>(null);
   const [showColumnColors, setShowColumnColors] = useState(false);
   // Function to handle container clicks
   const handleContainerClick = (position: "left" | "top" | "bottom" | "right") => {
@@ -36,7 +36,7 @@ export function Hero({ block }: HeroProps) {
           content: {
             ...content,
             [type]: {
-              ...(component as BlockComponent),
+              ...(component as Element),
               position: position
             }
           }
@@ -54,7 +54,7 @@ const renderComponentAt = (position: string) => {
 
   // Find component with matching position
   const componentEntry = Object.entries(content).find(([_, comp]) =>
-    (comp as BlockComponent).position === position
+    (comp as Element).position === position
   );
 
   if (!componentEntry && isSelected) return <div className="text-gray-400">Click to place component here</div>;
@@ -63,7 +63,7 @@ const renderComponentAt = (position: string) => {
   
   // Check if this specific component is the one that's selected
   const isThisComponentSelected = selectedComponent?.type === type && 
-    selectedComponent?.position === (component as BlockComponent)?.position;
+    selectedComponent?.position === (component as Element)?.position;
 
   return (
     <div 
@@ -71,27 +71,27 @@ const renderComponentAt = (position: string) => {
                   transition-colors duration-200`} 
       onClick={(e) => {
         e.stopPropagation(); // Prevent triggering container click
-        setSelectedComponent(component as BlockComponent);
+        setSelectedComponent(component as Element);
       }}
     >
-      <RenderedComponent
+      <RenderContentItem
         key={type}
-        type={type as ComponentType}
-        component={component as BlockComponent}
-        kind="component"
+        type={type as ElementType}
+        component={component as Element}
+        kind="content"
       />
     </div>
   );
 };
 
   const colours = {
-    backgroundColor: settings?.backgroundColor || "bg-background",
-    textColor: settings?.textColor || "",
+    backgroundColor: config?.backgroundColor || "bg-background",
+    textColor: config?.textColor || "",
   };
 
-  const backgroundImage = settings?.backgroundImage
+  const backgroundImage = config?.backgroundImage
     ? {
-      backgroundImage: `url(${settings?.backgroundImage})`,
+      backgroundImage: `url(${config?.backgroundImage})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
     }

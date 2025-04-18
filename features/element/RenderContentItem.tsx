@@ -1,13 +1,13 @@
-import { BlockComponent, ComponentKind, ComponentType } from "@/lib/types/blocks";
+import { Element, ElementKind, ElementType } from "@/lib/types/blocks";
 import { Render } from "./content";
 
-interface RenderedComponentProps {
-  type: ComponentType;
-  component: Partial<BlockComponent>;
-  kind: ComponentKind;
+interface RenderContentItemProps {
+  type: ElementType;
+  component: Partial<Element>;
+  kind: ElementKind;
 }
 
-const COMPONENT_MAP = {
+const CONTENT_LIST = {
   title: Render.Title,
   button: Render.Button,
   input: Render.Input,
@@ -17,17 +17,16 @@ const COMPONENT_MAP = {
   carousel: Render.Carousel,
 } as const;
 
-export function RenderedComponent({
+export function RenderContentItem({
   type,
-  component,
-  kind,
-}: Omit<RenderedComponentProps, "type"> & { type: keyof typeof COMPONENT_MAP | string }) {
+  component: data,
+}: Omit<RenderContentItemProps, "type"> & { type: keyof typeof CONTENT_LIST | string }) {
 
-  const RenderComponent = COMPONENT_MAP[type as keyof typeof COMPONENT_MAP];
+  const ContentItem = CONTENT_LIST[type as keyof typeof CONTENT_LIST];
 
-  if (!RenderComponent) {
+  if (!ContentItem) {
     return null;
   }
 
-  return <RenderComponent component={component} />;
+  return <ContentItem data={data} />;
 }

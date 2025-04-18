@@ -1,18 +1,18 @@
-import { BlockComponent } from "@/lib/types/blocks";
+import { Element } from "@/lib/types/blocks";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 
 interface SeparatorProps {
-  component: Partial<BlockComponent>;
+  data: Partial<Element>;
 }
 
-export function RenderSeparator({ component }: SeparatorProps) {
+export function RenderSeparator({ data }: SeparatorProps) {
   return (
     <Separator
-      orientation={component.orientation || "horizontal"}
+      orientation={data.orientation || "horizontal"}
       className={cn(
-        component.orientation === "vertical" ? "h-full" : "w-full",
-        component.className
+        data.orientation === "vertical" ? "h-full" : "w-full",
+        data.className
       )}
     />
   );

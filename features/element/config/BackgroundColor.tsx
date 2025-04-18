@@ -1,5 +1,5 @@
 import React from "react";
-import { BlockComponent } from "@/lib/types/blocks";
+import { Element } from "@/lib/types/blocks";
 import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

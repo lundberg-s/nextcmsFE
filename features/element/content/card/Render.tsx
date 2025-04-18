@@ -1,22 +1,22 @@
-import { BlockComponent } from "@/lib/types/blocks";
+import { Element } from "@/lib/types/blocks";
 import { Card as UICard, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 interface RenderCardProps {
-  component: Partial<BlockComponent>;
+  data: Partial<Element>;
 }
 
-export function RenderCard({ component }: RenderCardProps) {
+export function RenderCard({ data }: RenderCardProps) {
   return (
-    <UICard className={cn("w-full max-w-md", component.className)}>
-      {component.title && (
+    <UICard className={cn("w-full max-w-md", data.className)}>
+      {data.title && (
         <CardHeader>
-          <CardTitle>{component.title}</CardTitle>
+          <CardTitle>{data.title}</CardTitle>
         </CardHeader>
       )}
-      {component.content && (
+      {data.content && (
         <CardContent>
-          <p>{component.content}</p>
+          <p>{data.content}</p>
         </CardContent>
       )}
     </UICard>

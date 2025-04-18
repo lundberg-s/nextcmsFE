@@ -1,17 +1,17 @@
-import { BlockComponent, ComponentKind, ComponentType } from "@/lib/types/blocks";
-import FactoryWrapper from "../../components/wrappers/FactoryWrapper";
+import { Element, ElementKind, ElementType } from "@/lib/types/blocks";
+import SidebarItemCard from "../../components/wrappers/SidebarItemCard";
 import { Edit } from "./content";
 
 interface EditContentItemProps {
-  type: ComponentType;
-  component: Partial<BlockComponent>;
-  kind: ComponentKind;
+  type: ElementType;
+  component: Partial<Element>;
+  kind: ElementKind;
   onChange: (
-    type: ComponentType,
-    component: Partial<BlockComponent>,
-    kind: ComponentKind
+    type: ElementType,
+    component: Partial<Element>,
+    kind: ElementKind
   ) => void;
-  onRemove: (type: ComponentType, kind: ComponentKind) => void;
+  onRemove: (type: ElementType, kind: ElementKind) => void;
 }
 
 const CONTENT_LIST = {
@@ -26,29 +26,29 @@ const CONTENT_LIST = {
 
 export function EditContentItem({
   type,
-  component,
+  component: data,
   kind,
   onChange,
   onRemove,
 }: Omit<EditContentItemProps, "type"> & { type: keyof typeof CONTENT_LIST }) {
   const handleValueChange = (key: string, value: string | string[]) => {
-    onChange(type, { ...component, [key]: value }, kind);
+    onChange(type, { ...data, [key]: value }, kind);
   };
 
   const ContentItem = CONTENT_LIST[type];
 
   return (
-    <FactoryWrapper 
-      onRemove={() => onRemove(type, kind)} 
-      type={type} 
+    <SidebarItemCard
+      onRemove={() => onRemove(type, kind)}
+      type={type}
       kind={kind}
     >
       {ContentItem ? (
-        <ContentItem 
-          component={component} 
-          onChange={handleValueChange} 
+        <ContentItem
+          data={data}
+          onChange={handleValueChange}
         />
       ) : null}
-    </FactoryWrapper>
+    </SidebarItemCard>
   );
 }

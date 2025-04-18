@@ -16,7 +16,7 @@ import { DialogClose } from "@radix-ui/react-dialog";
 interface DialogModalProps {
   title: string;
   description: string;
-  content: React.ComponentType<any>;
+  content: React.ElementType<any>;
   button: {
     label?: string;
     icon?: string;

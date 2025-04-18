@@ -10,16 +10,16 @@ interface BlockProviderProps {
 
 export function BlockProvider({ block }: BlockProviderProps) {
 
-  const components: { [key: string]: React.ComponentType<{ block: Block; }> } = {
+  const components: { [key: string]: React.ElementType<{ block: Block; }> } = {
     hero: Hero,
     features: Features,
   };
 
-  const BlockComponent = components[block.type];
+  const Element = components[block.type];
   
-  if (!BlockComponent) {
+  if (!Element) {
     return null;
   }
 
-  return <BlockComponent block={block} />;
+  return <Element block={block} />;
 }

@@ -1,79 +1,79 @@
 import { useForm } from "react-hook-form";
-import { ComponentKind } from "@/lib/types/blocks";
+import { ElementKind } from "@/lib/types/blocks";
 import { Button } from "@/components/ui/button";
 
-type SettingType = "backgroundColor" | "backgroundImage" | "textColor";
+type ConfigType = "backgroundColor" | "backgroundImage" | "textColor";
 
 interface FormValues {
-  settingType: SettingType;
+  configType: ConfigType;
 }
 
-interface AddSettingFormProps {
-  onSubmit: (type: SettingType, kind: ComponentKind) => void;
+interface AddConfigFormProps {
+  onSubmit: (type: ConfigType, kind: ElementKind) => void;
   onCancel: () => void;
 }
 
-const settings: {
-  type: SettingType;
+const configs: {
+  type: ConfigType;
   label: string;
   description: string;
-  kind: ComponentKind;
+  kind: ElementKind;
 }[] = [
   {
     type: "backgroundColor",
     label: "Background Color",
     description: "Set the background color using hex or color name",
-    kind: "setting",
+    kind: "config",
   },
   {
     type: "backgroundImage",
     label: "Background Image",
     description: "Add an image URL for the background",
-    kind: "setting",
+    kind: "config",
   },
   {
     type: "textColor",
     label: "Text Color",
     description: "Set the color for text elements",
-    kind: "setting",
+    kind: "config",
   },
 ];
 
-export function AddSettingForm({ onSubmit, onCancel }: AddSettingFormProps) {
+export function AddConfigForm({ onSubmit, onCancel }: AddConfigFormProps) {
   const { register, handleSubmit, watch } = useForm<FormValues>({
     defaultValues: {
-      settingType: "backgroundColor",
+      configType: "backgroundColor",
     },
   });
 
-  const selectedType = watch("settingType");
+  const selectedType = watch("configType");
 
   const onFormSubmit = handleSubmit((data) => {
-    const setting = settings.find(s => s.type === data.settingType);
-    if (setting) {
-      onSubmit(setting.type, setting.kind);
+    const config = configs.find(c => c.type === data.configType);
+    if (config) {
+      onSubmit(config.type, config.kind);
     }
   });
 
   return (
     <form onSubmit={onFormSubmit} className="space-y-6">
       <div className="space-y-4">
-        {settings.map((setting) => (
+        {configs.map((config) => (
           <label 
-            key={setting.type}
+            key={config.type}
             className={`flex items-start p-4 border rounded-lg cursor-pointer transition-colors ${
-              selectedType === setting.type ? "border-blue-500 bg-blue-50" : "border-gray-200 hover:border-gray-300"
+              selectedType === config.type ? "border-primary bg-primary/10" : "border-border hover:border-muted-foreground"
             }`}
           >
             <input
               type="radio"
               className="mt-1 mr-3"
-              value={setting.type}
-              {...register("settingType")}
+              value={config.type}
+              {...register("configType")}
             />
             <div className="flex-1">
-              <div className="font-medium">{setting.label}</div>
-              <div className="text-sm text-gray-500">{setting.description}</div>
+              <div className="font-medium">{config.label}</div>
+              <div className="text-sm text-muted-foreground">{config.description}</div>
             </div>
           </label>
         ))}
@@ -87,7 +87,7 @@ export function AddSettingForm({ onSubmit, onCancel }: AddSettingFormProps) {
           e.preventDefault();
           onFormSubmit(e);
         }} type="submit">
-          Add Setting
+          Add Config
         </Button>
       </div>
     </form>

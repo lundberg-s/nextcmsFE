@@ -1,18 +1,18 @@
 import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
-import { BlockComponent } from "@/lib/types/blocks";
+import { Element } from "@/lib/types/blocks";
 import { Label } from "@/components/ui/label";
 import { Input as InputField } from "@/components/ui/input";
 
 interface RenderInputComponentProps {
-  component: Partial<BlockComponent>;
+  data: Partial<Element>;
 }
 
-export function RenderInput({ component }: RenderInputComponentProps) {
+export function RenderInput({ data }: RenderInputComponentProps) {
   return (
     <SettingsWrapper>
       <Label>Placeholder</Label>
       <InputField
-        value={component.placeholder || ""}
+        value={data.placeholder || ""}
         placeholder="Enter placeholder text"
       />
     </SettingsWrapper>

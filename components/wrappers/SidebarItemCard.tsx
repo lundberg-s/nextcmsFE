@@ -1,22 +1,22 @@
-import { ComponentType, ComponentKind } from "@/lib/types/blocks";
+import { ElementType, ElementKind } from "@/lib/types/blocks";
 import React from "react";
 import { ConfirmationModal } from "../modals/ConfirmationModal";
 import { Button } from "../ui/button";
 import { Trash2 } from "lucide-react";
 
-interface FactoryWrapperProps {
-  onRemove: (type: ComponentType, kind: ComponentKind) => void;
-  type: ComponentType;
-  kind: ComponentKind;
+interface SidebarItemCardProps {
+  onRemove: (type: ElementType, kind: ElementKind) => void;
+  type: ElementType;
+  kind: ElementKind;
   children: React.ReactNode;
 }
 
-export default function FactoryWrapper({
+export default function SidebarItemCard({
   children,
   onRemove,
   type,
   kind,
-}: FactoryWrapperProps) {
+}: SidebarItemCardProps) {
   return (
     <div className="border rounded-lg p-4">
       <div className="absolute right-10 -mt-2">

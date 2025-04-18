@@ -1,14 +1,14 @@
 import { useForm } from "react-hook-form";
-import { ComponentKind, ComponentType } from "@/lib/types/blocks";
+import { ElementKind, ElementType } from "@/lib/types/blocks";
 import { Button } from "@/components/ui/button";
 import { Preview } from "./content";
 
 interface FormValues {
-  componentType: ComponentType;
+  ElementType: ElementType;
 }
 
-interface AddComponentFormProps {
-  onSubmit: (type: ComponentType, kind: ComponentKind) => void;
+interface AddContentFormProps {
+  onSubmit: (type: ElementType, kind: ElementKind) => void;
   onCancel: () => void;
 }
 
@@ -22,26 +22,26 @@ const COMPONENT_MAP = {
   carousel: Preview.Carousel,
 } as const;
 
-export function AddComponentForm({ onSubmit, onCancel }: AddComponentFormProps) {
+export function AddContentForm({ onSubmit, onCancel }: AddContentFormProps) {
   const { register, handleSubmit, watch } = useForm<FormValues>({
     defaultValues: {
-      componentType: "title",
+      ElementType: "title",
     },
   });
 
-  const selectedType = watch("componentType");
+  const selectedType = watch("ElementType");
   
   const onFormSubmit = handleSubmit((data) => {
-    const componentType = data.componentType as keyof typeof COMPONENT_MAP;
-    onSubmit(componentType, "component");
+    const ElementType = data.ElementType as keyof typeof COMPONENT_MAP;
+    onSubmit(ElementType, "content");
   });
 
-  const componentTypes = Object.keys(COMPONENT_MAP) as Array<keyof typeof COMPONENT_MAP>;
+  const ElementTypes = Object.keys(COMPONENT_MAP) as Array<keyof typeof COMPONENT_MAP>;
 
   return (
     <form onSubmit={onFormSubmit} className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
-        {componentTypes.map((type) => {
+        {ElementTypes.map((type) => {
           const PreviewComponent = COMPONENT_MAP[type];
           
           return (
@@ -57,7 +57,7 @@ export function AddComponentForm({ onSubmit, onCancel }: AddComponentFormProps) 
                 type="radio"
                 className="sr-only"
                 value={type}
-                {...register("componentType")}
+                {...register("ElementType")}
               />
               <div className="mb-2">
                 <PreviewComponent />

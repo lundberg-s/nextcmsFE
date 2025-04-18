@@ -26,7 +26,7 @@ export function AddBlockForm({ onCancel, onAdd }: AddBlockFormProps) {
   const newBlock = {
     type: selectedType,
     content: {},
-    settings: {},
+    config: {},
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -47,7 +47,6 @@ export function AddBlockForm({ onCancel, onAdd }: AddBlockFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Search input */}
       <div className="mb-4">
         <input
           type="text"
@@ -90,8 +89,6 @@ export function AddBlockForm({ onCancel, onAdd }: AddBlockFormProps) {
           )}
         </div>
       </div>
-
-      {/* Form actions */}
       <div className="flex justify-end gap-2 pt-4">
         {onCancel && (
           <button

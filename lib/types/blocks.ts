@@ -29,7 +29,7 @@ export interface Block {
 
     layout?: string;
   };
-  settings?: {
+  config?: {
     backgroundColor?: string;
     backgroundImage?: string;
     textColor?: string;
@@ -38,10 +38,28 @@ export interface Block {
   pageId: string;
 }
 
-export interface BlockComponent {
+export type ElementKind = "config" | "content";
+
+export type ElementType =
+  | "title"
+  | "description"
+  | "button"
+  | "input"
+  | "textarea"
+  | "separator"
+  | "desc"
+  | "badge"
+  | "card"
+  | "layout"
+  | "backgroundColor"
+  | "backgroundImage"
+  | "textColor"
+  | "carousel";
+
+export interface Element {
   id: string;
-  type: ComponentType;
-  kind: ComponentKind;
+  type: ElementType;
+  kind: ElementKind;
   position: "left" | "top" | "bottom" | "right";
   value: string;
   title?: string;
@@ -65,20 +83,3 @@ export interface BlockComponent {
   layout?: string;
 }
 
-export type ComponentKind = "setting" | "component";
-
-export type ComponentType =
-  | "title"
-  | "description"
-  | "button"
-  | "input"
-  | "textarea"
-  | "separator"
-  | "desc"
-  | "badge"
-  | "card"
-  | "layout"
-  | "backgroundColor"
-  | "backgroundImage"
-  | "textColor"
-  | "carousel";

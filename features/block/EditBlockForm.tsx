@@ -1,20 +1,21 @@
 import {
   Block,
-  BlockComponent,
-  ComponentKind,
-  ComponentType,
+  Element,
+  ElementKind,
+  ElementType,
 } from "@/lib/types/blocks";
 import { useForm } from "react-hook-form";
 import { use, useEffect, useRef } from "react";
 import { useBlock } from "@/lib/hooks/useBlock";
 import { isEqual } from "lodash";
 import { useBlockPreview } from "@/lib/hooks/useBlockPreview";
-import { useFactoryHelper } from "@/lib/helpers/FactoryHelper";
+import { useFormHelper } from "@/lib/helpers/FormHelper";
 import { useCmsContext } from "@/lib/context/CmsContext";
 import { DialogModal } from "@/components/modals/DialogModal";
-import { AddComponentForm } from "@/features/block-content/AddComponentForm";
-import { AddSettingForm } from "@/features/block-content/AddSettingForm";
-import { EditComponentItem } from "../block-content/EditComponentItem";
+import { AddContentForm } from "@/features/element/AddContentForm";
+import { AddConfigForm } from "@/features/element/AddConfigForm";
+import { EditContentItem } from "@/features/element/EditContentItem";
+import { EditConfigItem } from "@/features/element/EditConfigItem";
 
 export function EditBlockForm({
   id = "edit-block-form",
@@ -35,16 +36,16 @@ export function EditBlockForm({
   const block = selectedBlock as Block;
 
   const {
-    addComponent,
-    addSetting,
-    updateComponent,
-    updateSetting,
-    removeComponent,
-    removeSetting
-  } = useFactoryHelper(setValue, watch);
+    addContent,
+    addConfig,
+    updateContent,
+    updateConfig,
+    removeContent,
+    removeConfig
+  } = useFormHelper(setValue, watch);
 
   const formValues = watch();
-  const settings = watch("settings");
+  const configurations = watch("config");
   const content = watch("content");
 
   const prevFormValues = useRef<Block | null>(null);
@@ -91,8 +92,8 @@ export function EditBlockForm({
       title: "Add Component",
       description: "Select a component to add to your block. You can customize its properties after adding.",
       icon: "plus",
-      content: AddComponentForm,
-      function: addComponent,
+      content: AddContentForm,
+      function: addContent,
       button: {
         label: "Add Component",
         icon: "plus",
@@ -104,8 +105,8 @@ export function EditBlockForm({
       title: "Add Setting",
       description: "Select a setting to customize the appearance of your block.",
       icon: "plus",
-      content: AddSettingForm,
-      function: addSetting,
+      content: AddConfigForm,
+      function: addConfig,
       button: {
         label: "Add Setting",
         icon: "plus",
@@ -130,7 +131,7 @@ export function EditBlockForm({
           content={form.content}
           button={form.button}
           props={{
-            onSubmit: (type: ComponentType, kind: ComponentKind) => {
+            onSubmit: (type: ElementType, kind: ElementKind) => {
               form.function(type, kind);
             },
           }}
@@ -139,25 +140,25 @@ export function EditBlockForm({
 
       {content &&
         Object.entries(content).map(([type, value]) => (
-          <EditComponentItem
+          <EditContentItem
             key={type}
-            type={type as ComponentType}
-            component={value as BlockComponent}
-            kind="component"
-            onChange={updateComponent}
-            onRemove={removeComponent}
+            type={type as ElementType}
+            component={value as Element}
+            kind="content"
+            onChange={updateContent}
+            onRemove={removeContent}
           />
         ))}
 
-      {settings &&
-        Object.entries(settings).map(([type, value]) => (
-          <SettingsFactory
+      {configurations &&
+        Object.entries(configurations).map(([type, value]) => (
+          <EditConfigItem
             key={type}
-            type={type as ComponentType}
+            type={type as ElementType}
             value={value as string}
-            kind="setting"
-            onChange={updateSetting}
-            onRemove={removeSetting}
+            kind="config"
+            onChange={updateConfig}
+            onRemove={removeConfig}
           />
         ))}
     </form>

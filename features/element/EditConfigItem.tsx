@@ -1,12 +1,12 @@
-import { ComponentKind, ComponentType } from "@/lib/types/blocks";
-import FactoryWrapper from "../../components/wrappers/FactoryWrapper";
+import { ElementKind, ElementType } from "@/lib/types/blocks";
+import SidebarItemCard from "../../components/wrappers/SidebarItemCard";
 import { Edit } from "./config";
-interface EditSettingItemProps {
-  type: ComponentType;
+interface EditConfigItemProps {
+  type: ElementType;
   value: string;
-  kind: ComponentKind;
-  onChange: (type: ComponentType, value: string, kind: ComponentKind) => void;
-  onRemove: (type: ComponentType, kind: ComponentKind) => void;
+  kind: ElementKind;
+  onChange: (type: ElementType, value: string, kind: ElementKind) => void;
+  onRemove: (type: ElementType, kind: ElementKind) => void;
 }
 
 const CONFIGURATIONS_LIST = {
@@ -16,13 +16,13 @@ const CONFIGURATIONS_LIST = {
   layout: Edit.ContainerLayout,
 } as const;
 
-export function EditSettingItem({
+export function EditConfigItem({
   type,
   value,
   kind,
   onChange,
   onRemove,
-}: Omit<EditSettingItemProps, "type"> & { type: keyof typeof CONFIGURATIONS_LIST }) {
+}: Omit<EditConfigItemProps, "type"> & { type: keyof typeof CONFIGURATIONS_LIST }) {
   const handlePropChange = (value: string) => {
     onChange(type, value, kind);
   };
@@ -30,7 +30,7 @@ export function EditSettingItem({
   const Config = CONFIGURATIONS_LIST[type];
 
   return (
-    <FactoryWrapper 
+    <SidebarItemCard 
       onRemove={() => onRemove(type, kind)} 
       type={type} 
       kind={kind}
@@ -41,6 +41,6 @@ export function EditSettingItem({
           onChange={handlePropChange} 
         />
       ) : null}
-    </FactoryWrapper>
+    </SidebarItemCard>
   );
 }

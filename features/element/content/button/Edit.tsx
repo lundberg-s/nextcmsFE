@@ -8,20 +8,20 @@ import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
 import React from "react";
 
 interface EditButtonComponentProps {
-  component: any;
+  data: any;
   onChange: (key: string, value: string) => void;
 }
 
-export function EditButton({ component, onChange }: EditButtonComponentProps) {
+export function EditButton({ data, onChange }: EditButtonComponentProps) {
   return (
     <SettingsWrapper>
       <Select
-        value={component.variant || "default"}
+        value={data.variant || "default"}
         onValueChange={(value) => onChange("variant", value)}
       >
         <Label>Button Text</Label>
         <Input
-          value={component.text || ""}
+          value={data.text || ""}
           onChange={(e) => onChange("text", e.target.value)}
           placeholder="Enter Button text"
         />

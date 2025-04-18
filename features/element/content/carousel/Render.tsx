@@ -1,4 +1,4 @@
-import { BlockComponent } from "@/lib/types/blocks";
+import { Element } from "@/lib/types/blocks";
 import {
   Carousel as UICarousel,
   CarouselContent,
@@ -10,14 +10,14 @@ import { Card } from "@/components/ui/card";
 import Image from "next/image";
 
 interface RenderCarouselProps {
-  component: Partial<BlockComponent>;
+  data: Partial<Element>;
 }
 
-export function RenderCarousel({ component }: RenderCarouselProps) {
+export function RenderCarousel({ data }: RenderCarouselProps) {
   return (
     <UICarousel className="h-full w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
       <CarouselContent>
-        {component.urls?.map((image, index) => (
+        {data.urls?.map((image, index) => (
           <CarouselItem key={index}>
             <Card className="relative w-full h-[300px] border-0">
               <Image

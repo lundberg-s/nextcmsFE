@@ -2,20 +2,20 @@ import { Select } from "@/components/ui/select";
 import { SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SelectContent, SelectItem } from "@/components/ui/select";
 import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
-import { BlockComponent } from "@/lib/types/blocks";
+import { Element } from "@/lib/types/blocks";
 import { Label } from "@/components/ui/label";
 
 interface EditSeparatorComponentProps {
-  component: Partial<BlockComponent>;
+  data: Partial<Element>;
   onChange: (key: string, value: string) => void;
 }
 
-export function EditSeparator({ component, onChange }: EditSeparatorComponentProps) {
+export function EditSeparator({ data, onChange }: EditSeparatorComponentProps) {
   return (
     <SettingsWrapper>
       <Label>Orientation</Label>
       <Select
-        value={component.orientation || "horizontal"}
+        value={data.orientation || "horizontal"}
         onValueChange={(value) => onChange("orientation", value)}
       >
         <SelectTrigger>

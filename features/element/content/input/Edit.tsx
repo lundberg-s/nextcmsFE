@@ -1,21 +1,21 @@
-import { BlockComponent } from "@/lib/types/blocks";
+import { Element } from "@/lib/types/blocks";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import SettingsWrapper from "@/components/wrappers/SettingsWrapper";
 
 interface InputProps {
-  component: Partial<BlockComponent>;
+  data: Partial<Element>;
 }
 
-export function EditInput({ component }: InputProps) {
+export function EditInput({ data }: InputProps) {
   return (
     <SettingsWrapper>
        <Label>Inputfield</Label>
       <Input
-        type={component.type || "text"}
-        placeholder={component.placeholder || "Input placeholder"}
-        className={cn("max-w-sm", component.className)}
+        type={data.type || "text"}
+        placeholder={data.placeholder || "Input placeholder"}
+        className={cn("max-w-sm", data.className)}
       />
     </SettingsWrapper>
   );

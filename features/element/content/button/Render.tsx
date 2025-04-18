@@ -1,19 +1,19 @@
-import { BlockComponent } from "@/lib/types/blocks";
+import { Element } from "@/lib/types/blocks";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface ButtonProps {
-  component: Partial<BlockComponent>;
+  data: Partial<Element>;
 }
 
-export function RenderButton({ component }: ButtonProps) {
+export function RenderButton({ data }: ButtonProps) {
   return (
     <Button
-      variant={component.variant || "default"}
-      size={component.size || "default"}
-      className={cn("w-fit", component.className)}
+      variant={data.variant || "default"}
+      size={data.size || "default"}
+      className={cn("w-fit", data.className)}
     >
-      {component.text || "Button"}
+      {data.text || "Button"}
     </Button>
   );
 }

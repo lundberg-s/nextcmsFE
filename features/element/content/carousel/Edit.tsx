@@ -5,13 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 interface EditCarouselComponentProps {
-  component: any;
+  data: any;
   onChange: (key: string, value: string | string[]) => void;
 }
 
-export function EditCarousel({ component, onChange }: EditCarouselComponentProps) {
+export function EditCarousel({ data, onChange }: EditCarouselComponentProps) {
   const urls =
-    component.urls && component.urls.length > 0 ? component.urls : [""];
+    data.urls && data.urls.length > 0 ? data.urls : [""];
 
   const inputs = urls.map((url: string, i: number) => (
     <div key={i} className="space-y-2">
