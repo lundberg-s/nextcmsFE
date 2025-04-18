@@ -6,17 +6,15 @@ import {
 } from "@/lib/types/blocks";
 import { useForm } from "react-hook-form";
 import { use, useEffect, useRef } from "react";
-import { SettingsFactory } from "@/components/factories/SettingsFactory";
 import { useBlock } from "@/lib/hooks/useBlock";
 import { isEqual } from "lodash";
-import { ComponentFactory } from "@/components/factories/ComponentFactory";
 import { useBlockPreview } from "@/lib/hooks/useBlockPreview";
 import { useFactoryHelper } from "@/lib/helpers/FactoryHelper";
 import { useCmsContext } from "@/lib/context/CmsContext";
 import { DialogModal } from "@/components/modals/DialogModal";
 import { AddComponentForm } from "@/features/block-content/AddComponentForm";
 import { AddSettingForm } from "@/features/block-content/AddSettingForm";
-import { EditableComponent } from "../block-content/EditableComponent";
+import { EditComponentItem } from "../block-content/EditComponentItem";
 
 export function EditBlockForm({
   id = "edit-block-form",
@@ -141,7 +139,7 @@ export function EditBlockForm({
 
       {content &&
         Object.entries(content).map(([type, value]) => (
-          <EditableComponent
+          <EditComponentItem
             key={type}
             type={type as ComponentType}
             component={value as BlockComponent}

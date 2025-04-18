@@ -1,5 +1,5 @@
 import { BlockComponent, ComponentKind, ComponentType } from "@/lib/types/blocks";
-import { Render } from "./components";
+import { Render } from "./content";
 
 interface RenderedComponentProps {
   type: ComponentType;

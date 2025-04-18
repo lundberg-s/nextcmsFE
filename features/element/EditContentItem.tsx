@@ -1,9 +1,8 @@
 import { BlockComponent, ComponentKind, ComponentType } from "@/lib/types/blocks";
-import { CMS } from "../../components/factories";
 import FactoryWrapper from "../../components/wrappers/FactoryWrapper";
-import { Edit } from "./components";
+import { Edit } from "./content";
 
-interface EditableComponentProps {
+interface EditContentItemProps {
   type: ComponentType;
   component: Partial<BlockComponent>;
   kind: ComponentKind;
@@ -15,7 +14,7 @@ interface EditableComponentProps {
   onRemove: (type: ComponentType, kind: ComponentKind) => void;
 }
 
-const COMPONENT_MAP = {
+const CONTENT_LIST = {
   title: Edit.Title,
   description: Edit.Description,
   button: Edit.Button,
@@ -25,18 +24,18 @@ const COMPONENT_MAP = {
   carousel: Edit.Carousel,
 } as const;
 
-export function EditableComponent({
+export function EditContentItem({
   type,
   component,
   kind,
   onChange,
   onRemove,
-}: Omit<EditableComponentProps, "type"> & { type: keyof typeof COMPONENT_MAP }) {
-  const handleComponentChange = (key: string, value: string | string[]) => {
+}: Omit<EditContentItemProps, "type"> & { type: keyof typeof CONTENT_LIST }) {
+  const handleValueChange = (key: string, value: string | string[]) => {
     onChange(type, { ...component, [key]: value }, kind);
   };
 
-  const EditorComponent = COMPONENT_MAP[type];
+  const ContentItem = CONTENT_LIST[type];
 
   return (
     <FactoryWrapper 
@@ -44,10 +43,10 @@ export function EditableComponent({
       type={type} 
       kind={kind}
     >
-      {EditorComponent ? (
-        <EditorComponent 
+      {ContentItem ? (
+        <ContentItem 
           component={component} 
-          onChange={handleComponentChange} 
+          onChange={handleValueChange} 
         />
       ) : null}
     </FactoryWrapper>

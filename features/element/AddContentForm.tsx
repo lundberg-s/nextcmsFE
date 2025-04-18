@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { ComponentKind, ComponentType } from "@/lib/types/blocks";
 import { Button } from "@/components/ui/button";
-import { Preview } from "./components";
+import { Preview } from "./content";
 
 interface FormValues {
   componentType: ComponentType;
