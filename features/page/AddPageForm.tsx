@@ -1,10 +1,8 @@
-// components/AddPageForm.tsx
 'use client';
 import { usePage } from "@/lib/hooks/usePage";
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { Page } from '@/lib/types/page';
+import { Form } from '@/components/form/Form';
 
 interface AddPageFormProps {
   onClose: () => void;
@@ -12,47 +10,57 @@ interface AddPageFormProps {
 
 export function AddPageForm({ onClose }: AddPageFormProps) {
   const { addPage } = usePage();
-  const { register, handleSubmit, reset } = useForm<Omit<Page, 'id' | 'blocks'>>({
+  const { handleSubmit, reset, watch, setValue } = useForm<Omit<Page, 'id' | 'blocks'>>({
     defaultValues: {
       title: '',
       slug: '',
     },
   });
 
+  const formValues = watch();
+
+  const handleFieldChange = (name: string, value: any) => {
+    setValue(name as any, value);
+  };
+
   const onSubmit = (data: Omit<Page, 'id' | 'blocks'>) => {
     addPage(data);
     reset();
-    onClose(); 
+    onClose();
+  };
+
+  const formConfig = {
+    fields: [
+      {
+        id: "title",
+        name: "title",
+        label: "Title",
+        type: "inputfield" as const, 
+        value: formValues.title,
+        required: true,
+        placeholder: "Enter page title"
+      },
+      {
+        id: "slug",
+        name: "slug",
+        label: "Slug",
+        type: "inputfield" as const,
+        value: formValues.slug,
+        required: true,
+        placeholder: "Enter page URL slug"
+      }
+    ],
+    submitText: "Add Page",
+    cancelText: "Cancel",
+    showCancel: true
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <div>
-        <label htmlFor="title" className="block text-sm font-medium">
-          Title
-        </label>
-        <Input
-          id="title"
-          type="text"
-          {...register('title')}
-        />
-      </div>
-      <div>
-        <label htmlFor="slug" className="block text-sm font-medium">
-          Slug
-        </label>
-        <Input
-          id="slug"
-          type="text"
-          {...register('slug')}
-        />
-      </div>
-      <div className="flex justify-end gap-2">
-        <Button type="button" variant="outline" onClick={onClose}>
-          Cancel
-        </Button>
-        <Button type="submit">Add Page</Button>
-      </div>
-    </form>
+    <Form
+      config={formConfig}
+      onChange={handleFieldChange}
+      onSubmit={handleSubmit(onSubmit)}
+      onCancel={onClose}
+    />
   );
 }

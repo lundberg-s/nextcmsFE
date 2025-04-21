@@ -22,9 +22,11 @@ export default function PageNavigation() {
             </li>
           ))}
         </ul> */}
+        <Link href="/login">
         <Button >
-          <Link href="/login">Login</Link>
+          Login
         </Button>
+        </Link>
     </nav>
     </div>
     </LoadingView>

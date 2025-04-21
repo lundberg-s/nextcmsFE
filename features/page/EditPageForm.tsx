@@ -1,33 +1,37 @@
 import { usePage } from "@/lib/hooks/usePage";
 import { useCmsContext } from "@/lib/context/CmsContext";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Trash2 } from "lucide-react";
-import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { Page } from "@/lib/types/page";
 import { ConfirmationModal } from "@/components/modals/ConfirmationModal";
+import { Form } from "@/components/form/Form";
+import { Description } from "@radix-ui/react-toast";
 
 interface EditPageFormProps {
-  page: Page | null;
   onClose: () => void;
 }
 
 export function EditPageForm({ onClose }: EditPageFormProps) {
   const { selectedPage, setSelectedPage } = useCmsContext();
   const { updatePage, removePage } = usePage();
-  const { register, handleSubmit, reset, setValue, watch } = useForm<Page>({
+  const { handleSubmit, reset, setValue, watch } = useForm<Page>({
     defaultValues: {},
   });
 
   const page = selectedPage;
+  const formValues = watch();
 
   useEffect(() => {
     if (page) {
       reset(page);
     }
   }, [page, reset]);
+
+  const handleFieldChange = (name: string, value: any) => {
+    setValue(name as any, value);
+  };
 
   const onSubmit = (data: Page) => {
     if (page) {
@@ -44,24 +48,70 @@ export function EditPageForm({ onClose }: EditPageFormProps) {
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div className="space-y-4">
-        <div className="border rounded-lg p-4">
-          <label htmlFor="title" className="block text-sm font-medium">
-            Title
-          </label>
-          <Input id="title" type="text" {...register("title")} />
-        </div>
-        <div className="border rounded-lg p-4">
-          <label htmlFor="slug" className="block text-sm font-medium">
-            slug
-          </label>
-          <Textarea id="slug" {...register("slug")} />
-        </div>
-      </div>
+  const formConfig = {
+    fields: [
+      {
+        id: "title",
+        name: "title",
+        label: "Title",
+        type: "inputfield" as const,
+        value: formValues.title,
+        required: true,
+        placeholder: "Enter page title"
+      },
+      {
+        id: "slug",
+        name: "slug",
+        label: "Slug",
+        type: "inputfield" as const,
+        value: formValues.slug,
+        required: true,
+        placeholder: "Enter page URL slug"
+      }
+    ],
+    submitText: "Save",
+    cancelText: "Cancel",
+  };
 
-      <div className="flex justify-between">
+  const FormActions = {
+    actions : [
+      {
+        label: "Save",
+        type: "submit",
+        action: "submit",
+        variant: "primary",
+      },
+      {
+        label: "Cancel",
+        type: "button",
+        action: "cancel",
+        variant: "outline",
+        onClick: onClose,
+      },
+      {
+        label: "Delete",
+        description: "Are you sure you want to delete this page? This action cannot be undone.",
+        confirmText: "Delete",
+        cancelText: "Cancel",
+        type: "button",
+        action: "delete",
+        variant: "destructive",
+        OnClick: onDelete,
+      }
+    ],
+  };
+
+  return (
+    <div className="space-y-6">
+      <Form
+        config={formConfig}
+        onChange={handleFieldChange}
+        onSubmit={handleSubmit(onSubmit)}
+        onCancel={onClose}
+      />
+      
+      {/* Delete button - kept separate as it's not part of the standard form */}
+      <div className="flex justify-start pt-2">
         <ConfirmationModal
           onConfirm={onDelete}
           title="Delete Page"
@@ -74,13 +124,7 @@ export function EditPageForm({ onClose }: EditPageFormProps) {
             </Button>
           }
         />
-        <div className="flex gap-4">
-          <Button type="button" variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button type="submit">Save</Button>
-        </div>
       </div>
-    </form>
+    </div>
   );
 }

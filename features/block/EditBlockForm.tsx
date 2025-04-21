@@ -5,10 +5,6 @@ import {
   ElementType,
 } from "@/lib/types/blocks";
 import { useForm } from "react-hook-form";
-import { use, useEffect, useRef } from "react";
-import { useBlock } from "@/lib/hooks/useBlock";
-import { isEqual } from "lodash";
-import { useBlockPreview } from "@/lib/hooks/useBlockPreview";
 import { useFormHelper } from "@/lib/helpers/FormHelper";
 import { useCmsContext } from "@/lib/context/CmsContext";
 import { DialogModal } from "@/components/modals/DialogModal";
@@ -26,14 +22,10 @@ export function EditBlockForm({
   onSuccess: () => void;
   onCancel: () => void;
 }) {
-  const { updateBlock } = useBlock();
-  const { setPreviewBlock } = useBlockPreview();
-  const { selectedBlock, setSelectedBlock } = useCmsContext();
+  const { selectedBlock } = useCmsContext();
   const { handleSubmit, reset, setValue, watch } = useForm<Block>({
     defaultValues: {},
   });
-
-  const block = selectedBlock as Block;
 
   const {
     addContent,
@@ -41,51 +33,21 @@ export function EditBlockForm({
     updateContent,
     updateConfig,
     removeContent,
-    removeConfig
-  } = useFormHelper(setValue, watch);
+    removeConfig,
+    submitForm,
+    cancelForm
+  } = useFormHelper(setValue, watch, reset);
 
-  const formValues = watch();
   const configurations = watch("config");
   const content = watch("content");
 
-  const prevFormValues = useRef<Block | null>(null);
-
-  useEffect(() => {
-    if (!isEqual(prevFormValues.current, formValues)) {
-      prevFormValues.current = formValues;
-      setPreviewBlock(formValues);
-    }
-  }, [formValues, setPreviewBlock]);
-
-  useEffect(() => {
-    if (block) {
-      reset(block);
-    }
-  }, [block, reset]);
-
-  const handleFormSubmit = (data: Block) => {
-    if (block) {
-      updateBlock(
-        { id: block.id, block: data },
-        {
-          onSuccess: () => {
-            setTimeout(() => {
-              setSelectedBlock(null);
-              onSuccess();
-            }, 20);
-          }
-        },
-      );
-    }
+  const onFormSubmit = (data: Block) => {
+    submitForm(data, onSuccess);
   };
 
-  const handleCancelClick = () => {
-    if (block) {
-      reset(block);
-      setPreviewBlock(block);
-    }
-    onCancel();
-  };
+  const onFormCancel = () => {
+    cancelForm(onCancel);
+  }
 
   const formsList = [
     {
@@ -119,8 +81,8 @@ export function EditBlockForm({
   return (
     <form
       id={id}
-      onSubmit={handleSubmit(handleFormSubmit)}
-      onReset={handleCancelClick}
+      onSubmit={handleSubmit(onFormSubmit)}
+      onReset={onFormCancel}
       className="flex flex-col gap-4"
     >
       {formsList.map((form) => (

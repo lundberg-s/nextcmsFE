@@ -13,7 +13,7 @@ interface AddConfigFormProps {
   onCancel: () => void;
 }
 
-const configs: {
+const configList: {
   type: ConfigType;
   label: string;
   description: string;
@@ -49,16 +49,16 @@ export function AddConfigForm({ onSubmit, onCancel }: AddConfigFormProps) {
   const selectedType = watch("configType");
 
   const onFormSubmit = handleSubmit((data) => {
-    const config = configs.find(c => c.type === data.configType);
-    if (config) {
-      onSubmit(config.type, config.kind);
+    const configItem = configList.find(c => c.type === data.configType);
+    if (configItem) {
+      onSubmit(configItem.type, configItem.kind);
     }
   });
 
   return (
     <form onSubmit={onFormSubmit} className="space-y-6">
       <div className="space-y-4">
-        {configs.map((config) => (
+        {configList.map((config) => (
           <label 
             key={config.type}
             className={`flex items-start p-4 border rounded-lg cursor-pointer transition-colors ${
