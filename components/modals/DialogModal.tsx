@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Dialog,
   DialogContent,
@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useIconSelector } from "@/lib/helpers/IconSelector";
-import { DialogClose } from "@radix-ui/react-dialog";
 
 interface DialogModalProps {
   title: string;
@@ -24,6 +23,9 @@ interface DialogModalProps {
     disabled?: boolean;
   };
   props?: any;
+  showFooter?: boolean;
+  cancelLabel?: string;
+  submitLabel?: string;
 }
 
 export function DialogModal({
@@ -32,21 +34,43 @@ export function DialogModal({
   content: Content,
   button,
   props,
+  showFooter = true,
+  cancelLabel = "Cancel",
+  submitLabel = "Submit",
   ...rest
 }: DialogModalProps) {
   const [open, setOpen] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const formActions = useRef({
+    submit: () => {
+      if (formRef.current) {
+        formRef.current.requestSubmit();
+      }
+    },
+    cancel: () => {
+      if (formRef.current) {
+        formRef.current.reset();
+      }
+    },
+  });
 
   const contentProps = {
     ...props,
-    onSubmit: (...args: any[]) => {
-      if (props?.onSubmit) {
-        props.onSubmit(...args);
+    formRef,
+    onSubmitCallback: (...args: any[]) => {
+      if (props?.onSubmitCallback) {
+        props.onSubmitCallback(...args);
       }
       setOpen(false);
     },
-    onCancel: () => setOpen(false),
+    onCancelCallback: () => {
+      if (props?.onCancelCallback) {
+        props.onCancelCallback();
+      }
+      setOpen(false);
+    },
     onClose: () => setOpen(false),
-    onAdd: () => setOpen(false),
     ...rest,
   };
 
@@ -74,28 +98,17 @@ export function DialogModal({
           </DialogHeader>
 
           {Content ? <Content {...contentProps} /> : null}
-          {/* <DialogFooter>
-            <Button variant="outline" onClick={() => setOpen(false)}>
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              form={contentProps?.id}
-              disabled={props?.disabled}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
 
-                if (props?.onSubmit) {
-                  contentProps.onSubmit(contentProps);
-                } else {
-                  setOpen(false);
-                }
-              }}
-            >
-              {props?.submitLabel || "Submit"}
-            </Button>
-          </DialogFooter> */}
+          {showFooter && (
+            <DialogFooter>
+              <Button variant="outline" onClick={formActions.current.cancel}>
+                {cancelLabel}
+              </Button>
+              <Button type="submit" onClick={formActions.current.submit}>
+                {submitLabel}
+              </Button>
+            </DialogFooter>
+          )}
         </DialogContent>
       </Dialog>
     </>

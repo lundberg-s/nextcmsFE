@@ -1,32 +1,41 @@
-'use client';
+"use client";
+import React, { FormEvent } from "react";
 import { usePage } from "@/lib/hooks/usePage";
-import { useForm } from 'react-hook-form';
-import { Page } from '@/lib/types/page';
-import { Form } from '@/components/form/Form';
+import { useForm } from "@/lib/hooks/useForm";
+import { Form } from "@/components/form/Form";
 
 interface AddPageFormProps {
-  onClose: () => void;
+  formRef: React.RefObject<HTMLFormElement>;
+  onCancelCallback: () => void;
+  onSubmitCallback?: () => void;
 }
 
-export function AddPageForm({ onClose }: AddPageFormProps) {
+export function AddPageForm({
+  formRef,
+  onCancelCallback,
+  onSubmitCallback,
+}: AddPageFormProps) {
   const { addPage } = usePage();
-  const { handleSubmit, reset, watch, setValue } = useForm<Omit<Page, 'id' | 'blocks'>>({
+  const {
+    handleSubmit,
+    formValues,
+    handleFieldChange,
+    handleFormSubmit,
+    handleFormCancel,
+  } = useForm({
     defaultValues: {
-      title: '',
-      slug: '',
+      title: "",
+      slug: "",
     },
   });
 
-  const formValues = watch();
+  const submitFormHandler = handleSubmit((data: any) => {
+    handleFormSubmit(data, addPage, onSubmitCallback);
+  });
 
-  const handleFieldChange = (name: string, value: any) => {
-    setValue(name as any, value);
-  };
-
-  const onSubmit = (data: Omit<Page, 'id' | 'blocks'>) => {
-    addPage(data);
-    reset();
-    onClose();
+  const resetFormHandler = (e: FormEvent) => {
+    e.preventDefault();
+    handleFormCancel(onCancelCallback);
   };
 
   const formConfig = {
@@ -50,17 +59,16 @@ export function AddPageForm({ onClose }: AddPageFormProps) {
         placeholder: "Enter page URL slug"
       }
     ],
-    submitText: "Add Page",
-    cancelText: "Cancel",
-    showCancel: true
   };
 
   return (
     <Form
+      ref={formRef}
       config={formConfig}
       onChange={handleFieldChange}
-      onSubmit={handleSubmit(onSubmit)}
-      onCancel={onClose}
-    />
+      onSubmit={submitFormHandler}
+      onReset={resetFormHandler}
+      />
+
   );
 }

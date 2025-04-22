@@ -15,7 +15,6 @@ import { DialogModal } from "@/components/modals/DialogModal";
 export function PageList({ }) {
   const { pages, isLoadingPages } = usePage();
   const { selectedPage, setSelectedPage } = useCmsContext();
-  const [isShowingLoader, setIsShowingLoader] = useState(true);
 
   const initialPage = pages.find((page) => page.slug === "home");
 
