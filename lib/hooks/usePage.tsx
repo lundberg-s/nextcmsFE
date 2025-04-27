@@ -51,8 +51,7 @@ export function usePage() {
     isLoadingPages,
     pagesError,
     addPage: addPageMutation.mutate,
-    updatePage: (id: string, page: Partial<Omit<Page, "id" | "blocks">>) =>
-      updatePageMutation.mutate({ id, page }),
+    updatePage: updatePageMutation.mutate,
     removePage: removePageMutation.mutate,
   };
 }

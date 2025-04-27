@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useIconSelector } from "@/lib/helpers/IconSelector";
+import { ConfirmationModal } from "./ConfirmationModal";
 
 interface DialogModalProps {
   title: string;
@@ -24,6 +25,7 @@ interface DialogModalProps {
   };
   props?: any;
   showFooter?: boolean;
+  showDelete?: boolean;
   cancelLabel?: string;
   submitLabel?: string;
 }
@@ -35,6 +37,7 @@ export function DialogModal({
   button,
   props,
   showFooter = true,
+  showDelete = false,
   cancelLabel = "Cancel",
   submitLabel = "Submit",
   ...rest
@@ -75,7 +78,7 @@ export function DialogModal({
   };
 
   const iconElement = useIconSelector(button?.icon || "");
-
+  const trashIcon = useIconSelector("trash");
   return (
     <>
       <Button
@@ -101,6 +104,16 @@ export function DialogModal({
 
           {showFooter && (
             <DialogFooter>
+            {showDelete && (
+              <ConfirmationModal
+                onConfirm={formActions.current.submit}
+                trigger={
+                  <Button icon={trashIcon} variant="destructive" type="button">
+                    Delete
+                  </Button>
+                }
+              />
+            )}
               <Button variant="outline" onClick={formActions.current.cancel}>
                 {cancelLabel}
               </Button>

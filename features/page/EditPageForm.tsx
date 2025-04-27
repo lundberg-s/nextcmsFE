@@ -1,52 +1,46 @@
+"use client";
+import React, { useEffect } from "react";
 import { usePage } from "@/lib/hooks/usePage";
 import { useCmsContext } from "@/lib/context/CmsContext";
-import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { useEffect } from "react";
-import { Page } from "@/lib/types/page";
-import { ConfirmationModal } from "@/components/modals/ConfirmationModal";
+import { useForm } from "@/lib/hooks/useForm";
 import { Form } from "@/components/form/Form";
-import { Description } from "@radix-ui/react-toast";
+import { Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ConfirmationModal } from "@/components/modals/ConfirmationModal";
+import { Page } from "@/lib/types/page";
 
 interface EditPageFormProps {
-  onClose: () => void;
+  formRef: React.RefObject<HTMLFormElement>;
+  onCancelCallback: () => void;
+  onSubmitCallback?: () => void;
 }
 
-export function EditPageForm({ onClose }: EditPageFormProps) {
-  const { selectedPage, setSelectedPage } = useCmsContext();
+export function EditPageForm({
+  formRef,
+  onCancelCallback,
+  onSubmitCallback,
+}: EditPageFormProps) {
   const { updatePage, removePage } = usePage();
-  const { handleSubmit, reset, setValue, watch } = useForm<Page>({
-    defaultValues: {},
+  const { selectedPage, setSelectedPage } = useCmsContext();
+  
+  const {
+    formValues,
+    handleFieldChange,
+    handleFormSubmit,
+    handleFormCancel,
+  } = useForm({
+    queryFn: updatePage,
+    setState: setSelectedPage,
+    onSuccess: onSubmitCallback,
+    onCancel: onCancelCallback,
+    defaultValues: selectedPage
+      ? {
+          id: selectedPage.id,
+          title: selectedPage.title,
+          slug: selectedPage.slug,
+        }
+      : {}
   });
-
-  const page = selectedPage;
-  const formValues = watch();
-
-  useEffect(() => {
-    if (page) {
-      reset(page);
-    }
-  }, [page, reset]);
-
-  const handleFieldChange = (name: string, value: any) => {
-    setValue(name as any, value);
-  };
-
-  const onSubmit = (data: Page) => {
-    if (page) {
-      updatePage(page.id, data);
-      onClose();
-    }
-  };
-
-  const onDelete = () => {
-    if (page) {
-      setSelectedPage(null);
-      removePage(page.id);
-      onClose();
-    }
-  };
 
   const formConfig = {
     fields: [
@@ -54,7 +48,7 @@ export function EditPageForm({ onClose }: EditPageFormProps) {
         id: "title",
         name: "title",
         label: "Title",
-        type: "inputfield" as const,
+        type: "inputfield" as const, 
         value: formValues.title,
         required: true,
         placeholder: "Enter page title"
@@ -69,51 +63,30 @@ export function EditPageForm({ onClose }: EditPageFormProps) {
         placeholder: "Enter page URL slug"
       }
     ],
-    submitText: "Save",
-    cancelText: "Cancel",
   };
 
-  const FormActions = {
-    actions : [
-      {
-        label: "Save",
-        type: "submit",
-        action: "submit",
-        variant: "primary",
-      },
-      {
-        label: "Cancel",
-        type: "button",
-        action: "cancel",
-        variant: "outline",
-        onClick: onClose,
-      },
-      {
-        label: "Delete",
-        description: "Are you sure you want to delete this page? This action cannot be undone.",
-        confirmText: "Delete",
-        cancelText: "Cancel",
-        type: "button",
-        action: "delete",
-        variant: "destructive",
-        OnClick: onDelete,
-      }
-    ],
+  const handleDelete = () => {
+    if (selectedPage) {
+      setSelectedPage(null);
+      removePage(selectedPage.id);
+      onCancelCallback();
+    }
   };
 
   return (
     <div className="space-y-6">
       <Form
+        ref={formRef}
         config={formConfig}
         onChange={handleFieldChange}
-        onSubmit={handleSubmit(onSubmit)}
-        onCancel={onClose}
+        onSubmit={handleFormSubmit}
+        onReset={handleFormCancel}
       />
       
       {/* Delete button - kept separate as it's not part of the standard form */}
       <div className="flex justify-start pt-2">
         <ConfirmationModal
-          onConfirm={onDelete}
+          onConfirm={handleDelete}
           title="Delete Page"
           description="Are you sure you want to delete this page? This action cannot be undone."
           confirmText="Delete"

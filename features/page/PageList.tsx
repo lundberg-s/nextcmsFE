@@ -94,6 +94,7 @@ export function PageList({ }) {
                   description={setting.description}
                   content={setting.form}
                   button={setting.button}
+                  showDelete
                 />
               ))}
             </div>

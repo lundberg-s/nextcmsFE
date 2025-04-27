@@ -14,21 +14,21 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface ConfirmationModalProps {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   trigger: ReactNode;
-  confirmText: string;
-  cancelText: string;
+  confirmText?: string;
+  cancelText?: string;
   onConfirm: () => void;
   children?: ReactNode;
 }
 
 export function ConfirmationModal({
-  title,
-  description,
+  title = "Are you sure?",
+  description = "This action cannot be undone.",
   trigger,
-  confirmText,
-  cancelText,
+  confirmText = "Confirm",
+  cancelText = "Cancel",
   onConfirm,
   children,
 }: ConfirmationModalProps) {

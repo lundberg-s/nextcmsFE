@@ -1,4 +1,5 @@
 import { useForm as useReactHookForm } from "react-hook-form";
+import { FormEvent } from "react";
 
 type Page = {
   id: string;
@@ -6,16 +7,26 @@ type Page = {
   [key: string]: any;
 };
 
-type QueryFunction<T = any> = (
-  data: T,
-  options: { onSuccess: () => void }
-) => void;
+type QueryFunction<T = any> = 
+  | ((data: T, options: { onSuccess: () => void }) => void)
+  | ((data: { id: string; page: T }, options: { onSuccess: () => void }) => void);
 
-interface UseFormProps {
+interface UseFormProps<T = any> {
   defaultValues: Partial<Omit<Page, "id" | "blocks">>;
+  queryFn: QueryFunction<T>;
+  setState?: React.Dispatch<React.SetStateAction<T>> | any
+  onSuccess?: () => void;
+  onCancel?: () => void;
 }
-export function useForm({ defaultValues }: UseFormProps) {
-  const { register, handleSubmit, reset, watch, setValue } = useReactHookForm({
+
+export function useForm<T extends Partial<Omit<Page, "id" | "blocks">>>({
+  defaultValues,
+  queryFn,
+  setState,
+  onSuccess,
+  onCancel,
+}: UseFormProps<T>) {
+  const { handleSubmit, reset, watch, setValue } = useReactHookForm({
     defaultValues,
   });
 
@@ -25,36 +36,32 @@ export function useForm({ defaultValues }: UseFormProps) {
     setValue(name, value);
   };
 
-  const handleFormSubmit = <T,>(
-    data: T,
-    queryFunction: QueryFunction<T>,
-    onSubmitCallback?: () => void
-  ) => {
-    queryFunction(data, {
+  const handleFormSubmit = handleSubmit((data) => {
+    const payload = defaultValues.id 
+      ? { id: defaultValues.id, page: data } 
+      : (data as T);
+    
+    queryFn(payload as T & { id: string; page: T }, {
       onSuccess: () => {
         reset();
-        if (onSubmitCallback) {
-          console.log("onsubmit was called");
-          onSubmitCallback();
-        }
-      },
+        if (onSuccess) onSuccess();
+        if (setState) setState(data as T);
+      }
     });
-  };
+  });
 
-  const handleFormCancel = (onCancelCallback: () => void) => {
-    if (onCancelCallback) {
-      console.log("onCancel was called");
-      onCancelCallback();
+  const handleFormCancel = (e?: FormEvent) => {
+    if (e) {
+      e.preventDefault();
+    }
+
+    if (onCancel) {
+      onCancel();
     }
     reset();
   };
 
   return {
-    register,
-    handleSubmit,
-    reset,
-    watch,
-    setValue,
     formValues,
     handleFieldChange,
     handleFormSubmit,

@@ -1,5 +1,5 @@
 "use client";
-import React, { FormEvent } from "react";
+import React from "react";
 import { usePage } from "@/lib/hooks/usePage";
 import { useForm } from "@/lib/hooks/useForm";
 import { Form } from "@/components/form/Form";
@@ -16,27 +16,22 @@ export function AddPageForm({
   onSubmitCallback,
 }: AddPageFormProps) {
   const { addPage } = usePage();
+  
   const {
-    handleSubmit,
     formValues,
     handleFieldChange,
     handleFormSubmit,
-    handleFormCancel,
+    handleFormCancel
   } = useForm({
+    queryFn: addPage,
+    onSuccess: onSubmitCallback,
+    onCancel: onCancelCallback,
     defaultValues: {
       title: "",
       slug: "",
     },
-  });
 
-  const submitFormHandler = handleSubmit((data: any) => {
-    handleFormSubmit(data, addPage, onSubmitCallback);
   });
-
-  const resetFormHandler = (e: FormEvent) => {
-    e.preventDefault();
-    handleFormCancel(onCancelCallback);
-  };
 
   const formConfig = {
     fields: [
@@ -66,9 +61,8 @@ export function AddPageForm({
       ref={formRef}
       config={formConfig}
       onChange={handleFieldChange}
-      onSubmit={submitFormHandler}
-      onReset={resetFormHandler}
-      />
-
+      onSubmit={handleFormSubmit}
+      onReset={handleFormCancel}
+    />
   );
 }
