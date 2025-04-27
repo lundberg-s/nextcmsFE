@@ -13,12 +13,16 @@ interface EditPageFormProps {
   formRef: React.RefObject<HTMLFormElement>;
   onCancelCallback: () => void;
   onSubmitCallback?: () => void;
+  onDeleteCallback?: () => void;
+  setHandleDelete?: React.Dispatch<React.SetStateAction<(() => void) | null>>;
 }
 
 export function EditPageForm({
   formRef,
   onCancelCallback,
   onSubmitCallback,
+  onDeleteCallback,
+  setHandleDelete,
 }: EditPageFormProps) {
   const { updatePage, removePage } = usePage();
   const { selectedPage, setSelectedPage } = useCmsContext();
@@ -28,11 +32,14 @@ export function EditPageForm({
     handleFieldChange,
     handleFormSubmit,
     handleFormCancel,
+    handleDelete,
   } = useForm({
     queryFn: updatePage,
+    deleteFn: removePage,
     setState: setSelectedPage,
     onSuccess: onSubmitCallback,
     onCancel: onCancelCallback,
+    onDelete: onDeleteCallback,
     defaultValues: selectedPage
       ? {
           id: selectedPage.id,
@@ -41,6 +48,10 @@ export function EditPageForm({
         }
       : {}
   });
+
+  if (setHandleDelete) {
+    setHandleDelete(handleDelete);
+  }
 
   const formConfig = {
     fields: [
@@ -65,16 +76,7 @@ export function EditPageForm({
     ],
   };
 
-  const handleDelete = () => {
-    if (selectedPage) {
-      setSelectedPage(null);
-      removePage(selectedPage.id);
-      onCancelCallback();
-    }
-  };
-
   return (
-    <div className="space-y-6">
       <Form
         ref={formRef}
         config={formConfig}
@@ -82,22 +84,5 @@ export function EditPageForm({
         onSubmit={handleFormSubmit}
         onReset={handleFormCancel}
       />
-      
-      {/* Delete button - kept separate as it's not part of the standard form */}
-      <div className="flex justify-start pt-2">
-        <ConfirmationModal
-          onConfirm={handleDelete}
-          title="Delete Page"
-          description="Are you sure you want to delete this page? This action cannot be undone."
-          confirmText="Delete"
-          cancelText="Cancel"
-          trigger={
-            <Button className="flex gap-2" type="button" variant="destructive">
-              <Trash2 className="w-4 h-4" /> Delete
-            </Button>
-          }
-        />
-      </div>
-    </div>
   );
 }

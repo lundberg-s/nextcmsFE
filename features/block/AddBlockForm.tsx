@@ -36,27 +36,13 @@ export function AddBlockForm({
     },
   });
 
-  // Filter block types based on search term
-  const filteredBlockTypes = blockTypes.filter(type => 
-    formValues.searchTerm ? type.includes(formValues.searchTerm) : true
-  );
-
   const formConfig = {
     fields: [
-      {
-        id: "searchTerm",
-        name: "searchTerm",
-        label: "Search",
-        type: "inputfield" as const,
-        value: formValues.searchTerm || "",
-        required: false,
-        placeholder: "Search block types..."
-      },
       {
         id: "type",
         name: "type",
         label: "Block Type",
-        type: "dropdown" as const, 
+        type: "list" as const, 
         value: formValues.type || "",
         required: true,
         options: blockTypes.map(type => ({ 

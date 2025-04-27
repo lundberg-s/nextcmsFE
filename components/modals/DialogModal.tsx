@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useIconSelector } from "@/lib/helpers/IconSelector";
 import { ConfirmationModal } from "./ConfirmationModal";
+import { Trash2 } from "lucide-react";
 
 interface DialogModalProps {
   title: string;
@@ -28,6 +29,8 @@ interface DialogModalProps {
   showDelete?: boolean;
   cancelLabel?: string;
   submitLabel?: string;
+  deleteLabel?: string;
+  deleteDescription?: string;
 }
 
 export function DialogModal({
@@ -40,12 +43,15 @@ export function DialogModal({
   showDelete = false,
   cancelLabel = "Cancel",
   submitLabel = "Submit",
+  deleteLabel = "Delete",
+  deleteDescription = "Are you sure you want to delete this item? This action cannot be undone.",
   ...rest
 }: DialogModalProps) {
   const [open, setOpen] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const handleDeleteRef = useRef<(() => void) | null>(null);
 
-  const formActions = useRef({
+  const formActions = {
     submit: () => {
       if (formRef.current) {
         formRef.current.requestSubmit();
@@ -56,11 +62,16 @@ export function DialogModal({
         formRef.current.reset();
       }
     },
-  });
+  };
+
+  const setHandleDelete = (fn: () => void) => {
+    handleDeleteRef.current = fn;
+  };
 
   const contentProps = {
     ...props,
     formRef,
+    setHandleDelete,
     onSubmitCallback: (...args: any[]) => {
       if (props?.onSubmitCallback) {
         props.onSubmitCallback(...args);
@@ -73,12 +84,18 @@ export function DialogModal({
       }
       setOpen(false);
     },
+    onDeleteCallback: () => {
+      if (props?.onDeleteCallback) {
+        props.onDeleteCallback();
+      }
+      setOpen(false);
+    },
     onClose: () => setOpen(false),
     ...rest,
   };
 
   const iconElement = useIconSelector(button?.icon || "");
-  const trashIcon = useIconSelector("trash");
+
   return (
     <>
       <Button
@@ -104,22 +121,46 @@ export function DialogModal({
 
           {showFooter && (
             <DialogFooter>
-            {showDelete && (
-              <ConfirmationModal
-                onConfirm={formActions.current.submit}
-                trigger={
-                  <Button icon={trashIcon} variant="destructive" type="button">
-                    Delete
+              <div
+                className={`flex w-full items-center ${
+                  showDelete ? "justify-between" : "justify-end"
+                }`}
+              >
+                {showDelete && (
+                  <div className="mr-auto">
+                    <ConfirmationModal
+                      onConfirm={() => {
+                        if (handleDeleteRef.current) {
+                          console.log("Delete action triggered");
+                          handleDeleteRef.current();
+                        }
+                      }}
+                      title="Delete Confirmation"
+                      description={deleteDescription}
+                      confirmText={deleteLabel}
+                      cancelText={cancelLabel}
+                      trigger={
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          className="flex gap-2"
+                        >
+                          <Trash2 className="w-4 h-4" /> {deleteLabel}
+                        </Button>
+                      }
+                    />
+                  </div>
+                )}
+
+                <div className="flex gap-2">
+                  <Button variant="outline" onClick={formActions.cancel}>
+                    {cancelLabel}
                   </Button>
-                }
-              />
-            )}
-              <Button variant="outline" onClick={formActions.current.cancel}>
-                {cancelLabel}
-              </Button>
-              <Button type="submit" onClick={formActions.current.submit}>
-                {submitLabel}
-              </Button>
+                  <Button type="submit" onClick={formActions.submit}>
+                    {submitLabel}
+                  </Button>
+                </div>
+              </div>
             </DialogFooter>
           )}
         </DialogContent>

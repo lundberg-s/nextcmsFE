@@ -1,10 +1,12 @@
 import React, { FormEvent, forwardRef } from "react";
 import DropdownSelect from "@/components/dropdown/DropdownSelect";
 import InputField from "@/components/text-input/InputField";
+import { SelectableList } from "../list/List";
 
 const FORM_FIELDS = {
   inputfield: InputField,
   dropdown: DropdownSelect,
+  list: SelectableList,
 } as const;
 
 interface FormProps {
@@ -20,6 +22,7 @@ interface FormProps {
       value?: string | string[];
       required?: boolean;
       placeholder?: string;
+      options?: Array<{ label: string; value: string }>;
     }>;
     submitText?: string;
     cancelText?: string;
@@ -34,6 +37,9 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
         onChange(name, value.target?.value || value);
       },
       dropdown: (name: string, value: any) => {
+        onChange(name, value);
+      },
+      list: (name: string, value: any) => {
         onChange(name, value);
       },
     };
@@ -54,6 +60,8 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
                 label={field.label}
                 placeholder={field.placeholder}
                 value={field.value || ""}
+                required={field.required}
+                options={field.options}
                 onChange={handleFieldChange}
               />
             </div>

@@ -24,6 +24,9 @@ export function BlockItem({ block }: { block: Block }) {
   const { deleteBlock } = useBlockActions();
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+  const trashIcon = useIconSelector("trash");
+  const settingsIcon = useIconSelector("settings");
+
   const forms = {
     editBlock:
       <EditBlockForm
@@ -84,13 +87,13 @@ export function BlockItem({ block }: { block: Block }) {
 
           <div className="absolute top-1/2 right-4 flex flex-col gap-10 items-center transform -translate-y-1/2">
 
-            <Button icon={useIconSelector("settings")} variant="ghost" size="sm" onClick={handleClick} />
+            <Button icon={settingsIcon} variant="ghost" size="sm" onClick={handleClick} />
 
             <DragHandle attributes={attributes} listeners={listeners} />
 
             <ConfirmationModal
               trigger={
-                <Button icon={useIconSelector("trash")} variant="ghost" size="sm" />
+                <Button icon={trashIcon} variant="ghost" size="sm" />
               }
               title="Delete Block"
               description="Are you sure you want to delete this block? This action cannot be undone."
