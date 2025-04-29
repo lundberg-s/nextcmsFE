@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { usePage } from "@/lib/hooks/usePage";
-import { BlockProvider } from "@/lib/providers/BlockProvider";
-import { useCmsContext } from "@/lib/context/CmsContext";
+import { usePage } from "@/cms/lib/hooks/usePage";
+import { BlockProvider } from "@/cms/lib/providers/BlockProvider";
+import { useCmsContext } from "@/cms/lib/context/CmsContext";
 import { useRouter } from "next/navigation";
-import type { Page } from "@/lib/types/page";
+import type { Page } from "@/cms/lib/types/page";
 
 export default function Page({ params }: { params: { slug: string } }) {
   const { pages, isLoadingPages } = usePage();

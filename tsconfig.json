@@ -19,8 +19,12 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/*": ["./*"],
+      "@/cms/*": ["./cms/*"],
+      "@/shared/*": ["./shared/*"],
+      "@/auth/*": ["./auth/*"],
+      "@/ecommerce/*": ["./ecommerce/*"]
+    },
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

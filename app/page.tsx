@@ -1,8 +1,8 @@
 "use client";
 
-import { BlockProvider } from "@/lib/providers/BlockProvider";
-import { usePage } from "@/lib/hooks/usePage";
-import LoadingView from "@/components/LoadingView";
+import { BlockProvider } from "@/cms/lib/providers/BlockProvider";
+import { usePage } from "@/cms/lib/hooks/usePage";
+import LoadingView from "@/cms/components/LoadingView";
 
 export default function Home() {
   const { pages } = usePage();

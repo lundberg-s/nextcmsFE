@@ -1,10 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import NavigationWrapper from "@/components/navigation/NavigationWrapper";
-import QueryProvider from "@/lib/providers/QueryProvider";
-import { CmsProvider } from "@/lib/context/CmsContext";
-import LoadingView from "@/components/LoadingView";
+import NavigationWrapper from "@/cms/components/navigation/NavigationWrapper";
+import QueryProvider from "@/cms/lib/providers/QueryProvider";
+import { CmsProvider } from "@/cms/lib/context/CmsContext";
+import LoadingView from "@/cms/components/LoadingView";
 
 const inter = Inter({ subsets: ["latin"] });
 
