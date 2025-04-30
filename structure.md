@@ -1,4 +1,4 @@
-nextcmsfe/
+nextcmsfe/e
 │
 ├── app/                      # Next.js app directory (App Router)
 │   ├── (auth)/               # Auth-related route group
