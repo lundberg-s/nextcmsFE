@@ -65,7 +65,7 @@ export function PageList({ }) {
   }
 
   return (
-    <div className="mx-auto p-4">
+    <div className="mx-auto p-4 h-full">
       <ScrollArea className="w-full h-full">
         <Tabs
           defaultValue={initialPage?.id}

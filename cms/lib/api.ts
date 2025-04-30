@@ -2,7 +2,7 @@ import { Block } from "@/cms/lib/types/blocks";
 import { Page } from "@/cms/lib/types/page";
 import { nanoid } from "nanoid";
 
-const API_BASE_URL = "http://localhost:8000/api";
+const API_BASE_URL = "http://localhost:8000/cms";
 
 export const api = {
   blocks: {
