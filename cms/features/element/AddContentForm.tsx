@@ -8,8 +8,8 @@ interface FormValues {
 }
 
 interface AddContentFormProps {
-  onSubmit: (type: ElementType, kind: ElementKind) => void;
-  onCancel: () => void;
+  onSubmitCallback: (type: ElementType, kind: ElementKind) => void;
+  onCancelCallback: () => void;
 }
 
 const COMPONENT_MAP = {
@@ -22,7 +22,7 @@ const COMPONENT_MAP = {
   carousel: Preview.Carousel,
 } as const;
 
-export function AddContentForm({ onSubmit, onCancel }: AddContentFormProps) {
+export function AddContentForm({ onSubmitCallback, onCancelCallback }: AddContentFormProps) {
   const { register, handleSubmit, watch } = useForm<FormValues>({
     defaultValues: {
       ElementType: "title",
@@ -33,7 +33,7 @@ export function AddContentForm({ onSubmit, onCancel }: AddContentFormProps) {
   
   const onFormSubmit = handleSubmit((data) => {
     const ElementType = data.ElementType as keyof typeof COMPONENT_MAP;
-    onSubmit(ElementType, "content");
+    onSubmitCallback(ElementType, "content");
   });
 
   const ElementTypes = Object.keys(COMPONENT_MAP) as Array<keyof typeof COMPONENT_MAP>;
@@ -74,7 +74,7 @@ export function AddContentForm({ onSubmit, onCancel }: AddContentFormProps) {
       </div>
       
       <div className="flex justify-end space-x-2 mt-4">
-        <Button type="button" variant="outline" onClick={onCancel}>
+        <Button type="button" variant="outline" onClick={onCancelCallback}>
           Cancel
         </Button>
         <Button onClick={(e) => {
