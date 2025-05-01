@@ -1,8 +1,8 @@
 import { Input } from "@/cms/components/ui/input";
 import { Label } from "@/cms/components/ui/label";
 
-const InputField = (data) => {
-  const { id, name, value, onChange, placeholder, label } = data;
+const InputField = ({ data, onChange }) => {
+  const { id, name, value, placeholder, label } = data;
   return (
     <>
       <Label htmlFor={id} className="font-bold">
