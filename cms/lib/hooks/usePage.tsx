@@ -29,11 +29,11 @@ export function usePage() {
   const updatePageMutation = useMutation({
     mutationFn: ({
       id,
-      page,
+      data,
     }: {
       id: string;
-      page: Partial<Omit<Page, "id" | "blocks">>;
-    }) => api.pages.update(id, page),
+      data: Partial<Omit<Page, "id" | "blocks">>;
+    }) => api.pages.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pages"] });
     },
