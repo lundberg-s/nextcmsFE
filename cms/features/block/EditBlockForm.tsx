@@ -12,6 +12,7 @@ import { AddContentForm } from "@/cms/features/element/AddContentForm";
 import { AddConfigForm } from "@/cms/features/element/AddConfigForm";
 import { EditContentItem } from "@/cms/features/element/EditContentItem";
 import { EditConfigItem } from "@/cms/features/element/EditConfigItem";
+import { ElementList } from "../element/ElementList";
 
 export function EditBlockForm({
   id = "edit-block-form",
@@ -49,35 +50,6 @@ export function EditBlockForm({
     cancelForm(onCancel);
   }
 
-  const formsList = [
-    {
-      title: "Add Component",
-      description: "Select a component to add to your block. You can customize its properties after adding.",
-      icon: "plus",
-      content: AddContentForm,
-      function: addContent,
-      button: {
-        label: "Add Component",
-        icon: "plus",
-        variant: "outline",
-        disabled: !selectedBlock,
-      },
-    },
-    {
-      title: "Add Setting",
-      description: "Select a setting to customize the appearance of your block.",
-      icon: "plus",
-      content: AddConfigForm,
-      function: addConfig,
-      button: {
-        label: "Add Setting",
-        icon: "plus",
-        variant: "outline",
-        disabled: !selectedBlock,
-      },
-    },
-  ]
-
   return (
     <form
       id={id}
@@ -85,20 +57,7 @@ export function EditBlockForm({
       onReset={onFormCancel}
       className="flex flex-col gap-4"
     >
-      {formsList.map((form) => (
-        <DialogModal
-          key={form.title}
-          title={form.title}
-          description={form.description}
-          content={form.content}
-          button={form.button}
-          props={{
-            onSubmit: (type: ElementType, kind: ElementKind) => {
-              form.function(type, kind);
-            },
-          }}
-        />
-      ))}
+     <ElementList addContent={addContent} addConfig={addConfig} />
 
       {content &&
         Object.entries(content).map(([type, value]) => (

@@ -22,25 +22,26 @@ export function EditConfigItem({
   kind,
   onChange,
   onRemove,
-}: Omit<EditConfigItemProps, "type"> & { type: keyof typeof CONFIGURATIONS_LIST }) {
+}: Omit<EditConfigItemProps, "type"> & {
+  type: keyof typeof CONFIGURATIONS_LIST;
+}) {
   const handlePropChange = (value: string) => {
     onChange(type, value, kind);
   };
 
-  const Config = CONFIGURATIONS_LIST[type];
+  const ConfigItem = CONFIGURATIONS_LIST[type];
+
+  if (!ConfigItem) {
+    return null;
+  }
 
   return (
-    <SidebarItemCard 
-      onRemove={() => onRemove(type, kind)} 
-      type={type} 
+    <SidebarItemCard
+      onRemove={() => onRemove(type, kind)}
+      type={type}
       kind={kind}
     >
-      {Config ? (
-        <Config 
-          value={value} 
-          onChange={handlePropChange} 
-        />
-      ) : null}
+      <ConfigItem value={value} onChange={handlePropChange} />
     </SidebarItemCard>
   );
 }

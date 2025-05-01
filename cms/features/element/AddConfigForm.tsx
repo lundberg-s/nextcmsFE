@@ -9,8 +9,8 @@ interface FormValues {
 }
 
 interface AddConfigFormProps {
-  onSubmit: (type: ConfigType, kind: ElementKind) => void;
-  onCancel: () => void;
+  onSubmitCallback: (type: ConfigType, kind: ElementKind) => void;
+  onCancelCallback: () => void;
 }
 
 const configList: {
@@ -39,7 +39,7 @@ const configList: {
   },
 ];
 
-export function AddConfigForm({ onSubmit, onCancel }: AddConfigFormProps) {
+export function AddConfigForm({ onSubmitCallback, onCancelCallback }: AddConfigFormProps) {
   const { register, handleSubmit, watch } = useForm<FormValues>({
     defaultValues: {
       configType: "backgroundColor",
@@ -51,7 +51,7 @@ export function AddConfigForm({ onSubmit, onCancel }: AddConfigFormProps) {
   const onFormSubmit = handleSubmit((data) => {
     const configItem = configList.find(c => c.type === data.configType);
     if (configItem) {
-      onSubmit(configItem.type, configItem.kind);
+      onSubmitCallback(configItem.type, configItem.kind);
     }
   });
 
@@ -80,7 +80,7 @@ export function AddConfigForm({ onSubmit, onCancel }: AddConfigFormProps) {
       </div>
       
       <div className="flex justify-end space-x-2">
-        <Button type="button" variant="outline" onClick={onCancel}>
+        <Button type="button" variant="outline" onClick={onCancelCallback}>
           Cancel
         </Button>
         <Button onClick={(e) => {

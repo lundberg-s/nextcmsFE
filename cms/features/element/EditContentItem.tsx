@@ -37,18 +37,17 @@ export function EditContentItem({
 
   const ContentItem = CONTENT_LIST[type];
 
+  if (!ContentItem) {
+    return null;
+  }
+
   return (
     <SidebarItemCard
       onRemove={() => onRemove(type, kind)}
       type={type}
       kind={kind}
     >
-      {ContentItem ? (
-        <ContentItem
-          data={data}
-          onChange={handleValueChange}
-        />
-      ) : null}
+      <ContentItem data={data} onChange={handleValueChange} />
     </SidebarItemCard>
   );
 }
