@@ -9,6 +9,7 @@ interface FormValues {
 
 interface AddElementFormProps {
   kind: ElementKind;
+  formRef?: React.RefObject<HTMLFormElement>;
   onSubmitCallback: (type: string, kind: ElementKind) => void;
   onCancelCallback: () => void;
 }
@@ -46,6 +47,7 @@ const CONTENT_OPTIONS = [
 
 export function AddElementForm({
   kind,
+  formRef,
   onSubmitCallback,
   onCancelCallback,
 }: AddElementFormProps) {
@@ -54,7 +56,6 @@ export function AddElementForm({
       elementType: kind === "content" ? "title" : "backgroundColor",
     },
   });
-
   const selectedType = watch("elementType");
 
   const onFormSubmit = handleSubmit((data) => {
@@ -65,8 +66,12 @@ export function AddElementForm({
     setValue("elementType", type);
   };
 
+  const handleFormCancel = () => {
+    onCancelCallback();
+  };
+
   return (
-    <form onSubmit={onFormSubmit} className="space-y-6">
+    <form ref={formRef} onSubmit={onFormSubmit} onReset={handleFormCancel} className="space-y-6">
       {kind === "content" && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
           {CONTENT_OPTIONS.map((type) => (

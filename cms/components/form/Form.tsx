@@ -10,11 +10,12 @@ const FORM_FIELDS = {
 } as const;
 
 interface FormProps {
-  onChange: (name: string, value: any) => void;
+  id?: string;
+  onChange?: (name: string, value: any) => void;
   onSubmit: (e: FormEvent) => void;
   onReset: (e: FormEvent) => void;
   children?: React.ReactNode;
-  ref?: React.Ref<HTMLFormElement>
+  ref?: React.Ref<HTMLFormElement>;
   options?: Array<{ label?: string; value: string }>;
   data?: {
     options?: Array<{ label?: string; value: string }>;
@@ -46,21 +47,21 @@ interface FormProps {
 }
 
 export const Form = forwardRef<HTMLFormElement, FormProps>(
-  ({ onChange, onSubmit, onReset, config, children }: FormProps, ref: React.Ref<HTMLFormElement>) => {
+  ({ id, onChange, onSubmit, onReset, config, children }: FormProps, ref: React.Ref<HTMLFormElement>) => {
     const fieldHandlers = {
       inputfield: (name: string, value: any) => {
-        onChange(name, value.target?.value || value);
+        onChange?.(name, value.target?.value || value);
       },
       dropdown: (name: string, value: any) => {
-        onChange(name, value);
+        onChange?.(name, value);
       },
       list: (name: string, value: any) => {
-        onChange(name, value);
+        onChange?.(name, value);
       },
     };
 
     return (
-      <form ref={ref} onSubmit={onSubmit} onReset={onReset} className="space-y-4">
+      <form id={id} ref={ref} onSubmit={onSubmit} onReset={onReset} className="space-y-4">
         {config?.fields.map((field) => {
           const FormField = FORM_FIELDS[field.type];
           const handleFieldChange = (value: any) => {

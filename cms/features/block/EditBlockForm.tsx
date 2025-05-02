@@ -95,7 +95,11 @@ export function EditBlockForm({
   ];
 
   return (
-    <Form onSubmit={handleFormSubmit} onReset={handleFormCancel} formRef={null}>
+    <Form
+      id={id}
+      onSubmit={handleFormSubmit}
+      onReset={handleFormCancel}
+    >
       <div className="flex flex-col gap-4">
         {formsList.map((form) => (
           <DialogModal
