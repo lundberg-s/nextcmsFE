@@ -28,7 +28,6 @@ export function EditBlockForm({
   const {
     handleFormSubmit,
     handleFormCancel,
-    handleDelete,
     reset,
     setValue,
     watch,
