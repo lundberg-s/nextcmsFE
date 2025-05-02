@@ -36,7 +36,13 @@ export function EditBlockForm({
     queryFn: updateBlock,
     onSuccess: onSubmitCallback,
     onCancel: onCancelCallback,
-    defaultValues: {},
+    defaultValues: selectedBlock
+      ? {
+          id: selectedBlock.id,
+          content: selectedBlock.content,
+          config: selectedBlock.config,
+        }
+      : {},
   });
 
   const {

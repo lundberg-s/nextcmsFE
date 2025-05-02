@@ -25,11 +25,11 @@ useBlock() {
   const updateBlockMutation = useMutation({
     mutationFn: ({
       id,
-      block,
+      data,
     }: {
       id: string;
-      block: Partial<Omit<Block, "id">>;
-    }) => api.blocks.update(id, block),
+      data: Partial<Omit<Block, "id">>;
+    }) => api.blocks.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["blocks"] });
     },
