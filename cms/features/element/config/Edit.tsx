@@ -1,6 +1,6 @@
 import { ElementKind, ElementType } from "@/cms/lib/types/blocks";
 import SidebarItemCard from "@/cms/components/wrappers/SidebarItemCard";
-import { Edit } from "./config";
+import { Edit } from ".";
 interface EditConfigItemProps {
   type: ElementType;
   value: string;

@@ -1,5 +1,5 @@
 import { ElementKind, ElementType } from "@/cms/lib/types/blocks";
-import { Preview } from "./content";
+import { Preview } from ".";
 
 interface PreviewContentItemProps {
   type: ElementType;

@@ -1,5 +1,5 @@
 import { Element, ElementKind, ElementType } from "@/cms/lib/types/blocks";
-import { Render } from "./content";
+import { Render } from ".";
 
 interface RenderContentItemProps {
   type: ElementType;

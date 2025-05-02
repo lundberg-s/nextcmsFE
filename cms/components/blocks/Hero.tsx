@@ -4,7 +4,7 @@ import { Block, Element, ElementType } from "@/cms/lib/types/blocks";
 import { useCmsContext } from "@/cms/lib/context/CmsContext";
 import { useBlock } from "@/cms/lib/hooks/useBlock";
 import { useState } from "react";
-import { RenderContentItem } from "@/cms/features/element/RenderContentItem";
+import { ElementItem } from "@/cms/features/element/ElementItem";
 
 interface HeroProps {
   block: Block;
@@ -74,7 +74,8 @@ const renderComponentAt = (position: string) => {
         setSelectedComponent(component as Element);
       }}
     >
-      <RenderContentItem
+      <ElementItem
+        mode="render"
         key={type}
         type={type as ElementType}
         component={component as Element}

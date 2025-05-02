@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { ElementKind, ElementType } from "@/cms/lib/types/blocks";
 import { Button } from "@/cms/components/ui/button";
-import { PreviewContentItem } from "./PreviewContentItem";
+import { ElementItem } from "./ElementItem";
 
 interface FormValues {
   ElementType: ElementType;
@@ -30,15 +30,16 @@ export function AddContentForm({ onSubmitCallback, onCancelCallback }: AddConten
   };
 
   // Define component types dynamically using the PREVIEW_LIST from PreviewContentItem
-  const componentTypes = [
+  const contentList = [
     "title", "description", "button", "input", "separator", "card", "carousel"
   ] as const;
 
   return (
     <form onSubmit={onFormSubmit} className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
-        {componentTypes.map((type) => (
-          <PreviewContentItem
+        {contentList.map((type) => (
+          <ElementItem
+            mode="preview"
             key={type}
             type={type}
             kind="content"
