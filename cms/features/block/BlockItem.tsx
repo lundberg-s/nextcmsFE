@@ -6,29 +6,35 @@ import { Block } from "@/cms/lib/types/blocks";
 import { useCmsContext } from "@/cms/lib/context/CmsContext";
 import { useBlockPreview } from "@/cms/lib/hooks/useBlockPreview";
 import { Button } from "@/cms/components/ui/button";
-import { useBlockActions } from "./BlockActions";
 import { ConfirmationModal } from "@/cms/components/modals/ConfirmationModal";
 import { EditBlockForm } from "./EditBlockForm";
 import { useSidebar } from "@/cms/components/ui/sidebar";
 import { useSidebarContent } from "@/cms/lib/context/SidebarContext";
 import { useIconSelector } from "@/cms/lib/helpers/IconSelector";
 import { useState } from "react";
+import { useBlock } from "@/cms/lib/hooks/useBlock";
 
 export function BlockItem({ block }: { block: Block }) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
-    useSortable({ id: block?.id });
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: block?.id });
   const { toggleSidebar, setOpen, open } = useSidebar();
   const { setBody, clear } = useSidebarContent();
   const { selectedBlock, setSelectedBlock } = useCmsContext();
   const { previewBlock } = useBlockPreview();
-  const { deleteBlock } = useBlockActions();
+  const { removeBlock } = useBlock();
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const trashIcon = useIconSelector("trash");
   const settingsIcon = useIconSelector("settings");
 
   const forms = {
-    editBlock:
+    editBlock: (
       <EditBlockForm
         id="edit-block-form"
         onSuccess={() => {
@@ -39,7 +45,8 @@ export function BlockItem({ block }: { block: Block }) {
           setOpen(false);
           setSelectedBlock(null);
         }}
-      />,
+      />
+    ),
   };
 
   const handleClick = () => {
@@ -59,7 +66,7 @@ export function BlockItem({ block }: { block: Block }) {
     setBody(forms.editBlock);
 
     if (!open) toggleSidebar();
-    
+
     requestAnimationFrame(() => {
       setIsTransitioning(false);
     });
@@ -78,30 +85,29 @@ export function BlockItem({ block }: { block: Block }) {
       {block && (
         <>
           {selectedBlock?.id === block.id && !isTransitioning ? (
-            <>
-              {previewBlock && <BlockProvider block={previewBlock} />}
-            </>
+            <>{previewBlock && <BlockProvider block={previewBlock} />}</>
           ) : (
             <BlockProvider block={block} />
           )}
 
           <div className="absolute top-1/2 right-4 flex flex-col gap-10 items-center transform -translate-y-1/2">
-
-            <Button icon={settingsIcon} variant="ghost" size="sm" onClick={handleClick} />
+            <Button
+              icon={settingsIcon}
+              variant="ghost"
+              size="sm"
+              onClick={handleClick}
+            />
 
             <DragHandle attributes={attributes} listeners={listeners} />
 
             <ConfirmationModal
-              trigger={
-                <Button icon={trashIcon} variant="ghost" size="sm" />
-              }
+              trigger={<Button icon={trashIcon} variant="ghost" size="sm" />}
               title="Delete Block"
               description="Are you sure you want to delete this block? This action cannot be undone."
-              onConfirm={() => deleteBlock(block.id)}
+              onConfirm={() => removeBlock(block.id)}
               cancelText="Cancel"
               confirmText="Delete"
             />
-
           </div>
         </>
       )}
