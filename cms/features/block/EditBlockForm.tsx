@@ -10,9 +10,8 @@ import { useForm } from "@/cms/lib/hooks/useForm";
 import { Form } from "@/cms/components/form/Form";
 import { useBlock } from "@/cms/lib/hooks/useBlock";
 import { DialogModal } from "@/cms/components/modals/DialogModal";
-import { AddContentForm } from "@/cms/features/element/AddContentForm";
-import { AddConfigForm } from "@/cms/features/element/AddConfigForm";
 import { useCmsContext } from "@/cms/lib/context/CmsContext";
+import { AddElementForm } from "../element/AddElementForm";
 
 export function EditBlockForm({
   id = "edit-block-form",
@@ -58,7 +57,13 @@ export function EditBlockForm({
       description:
         "Select a component to add to your block. You can customize its properties after adding.",
       icon: "plus",
-      content: AddContentForm,
+      content: (props: any) => (
+        <AddElementForm
+          kind="content"
+          onSubmitCallback={(type, kind) => props.onSubmitCallback(type, kind)}
+          onCancelCallback={props.onCancelCallback}
+        />
+      ),
       onSubmit: addContent,
       button: {
         label: "Add Component",
@@ -72,7 +77,13 @@ export function EditBlockForm({
       description:
         "Select a setting to customize the appearance of your block.",
       icon: "plus",
-      content: AddConfigForm,
+      content: (props: any) => (
+        <AddElementForm
+          kind="config"
+          onSubmitCallback={(type, kind) => props.onSubmitCallback(type, kind)}
+          onCancelCallback={props.onCancelCallback}
+        />
+      ),
       onSubmit: addConfig,
       button: {
         label: "Add Setting",
@@ -84,11 +95,7 @@ export function EditBlockForm({
   ];
 
   return (
-    <Form
-      onSubmit={handleFormSubmit}
-      onReset={handleFormCancel}
-      formRef={null}
-    >
+    <Form onSubmit={handleFormSubmit} onReset={handleFormCancel} formRef={null}>
       <div className="flex flex-col gap-4">
         {formsList.map((form) => (
           <DialogModal

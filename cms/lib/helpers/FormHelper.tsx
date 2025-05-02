@@ -1,4 +1,9 @@
-import { Element, ElementKind, ElementType, Block } from "@/cms/lib/types/blocks";
+import {
+  Element,
+  ElementKind,
+  ElementType,
+  Block,
+} from "@/cms/lib/types/blocks";
 import { UseFormSetValue, UseFormWatch, UseFormReset } from "react-hook-form";
 import { useEffect, useRef } from "react";
 import { isEqual } from "lodash";
@@ -10,15 +15,19 @@ interface FormHelpers {
   // Existing methods
   addContent: (type: ElementType, kind: ElementKind) => void;
   addConfig: (type: ElementType, kind: ElementKind) => void;
-  updateContent: (type: ElementType, content: Partial<Element>, kind: ElementKind) => void;
+  updateContent: (
+    type: ElementType,
+    content: Partial<Element>,
+    kind: ElementKind
+  ) => void;
   updateConfig: (type: ElementType, value: string, kind: ElementKind) => void;
   removeContent: (type: ElementType, kind: ElementKind) => void;
   removeConfig: (type: ElementType, kind: ElementKind) => void;
-  
+
   // New methods
   submitForm: (data: Block, onSuccess?: () => void) => void;
   cancelForm: (onCancel?: () => void) => void;
-  
+
   // Track the form values reference
   prevFormValues: React.MutableRefObject<Block | null>;
 }
@@ -33,7 +42,7 @@ export function useFormHelper(
   const { selectedBlock, setSelectedBlock } = useCmsContext();
   const prevFormValues = useRef<Block | null>(null);
   const formValues = watch();
-  
+
   // Effect 1: Update preview block when form values change
   useEffect(() => {
     if (!isEqual(prevFormValues.current, formValues)) {
@@ -48,9 +57,13 @@ export function useFormHelper(
       reset(selectedBlock as Block);
     }
   }, [selectedBlock, reset]);
-  
+
   // Content methods
-  const addContent = (type: ElementType, kind: ElementKind) => {
+  const addContent = (
+    type: ElementType,
+    kind: ElementKind,
+    options?: { onSuccess?: () => void }
+  ) => {
     if (kind === "content") {
       const newContent: Partial<Element> = {
         type,
@@ -62,10 +75,18 @@ export function useFormHelper(
         ...watch("content"),
         [type]: newContent,
       });
+
+      if (options?.onSuccess) {
+        options.onSuccess();
+      }
     }
   };
 
-  const addConfig = (type: ElementType, kind: ElementKind) => {
+  const addConfig = (
+    type: ElementType,
+    kind: ElementKind,
+    options?: { onSuccess?: () => void }
+  ) => {
     if (kind === "config") {
       const newConfig = {
         [type]: "",
@@ -75,6 +96,10 @@ export function useFormHelper(
         ...watch("config"),
         ...newConfig,
       });
+      
+      if (options?.onSuccess) {
+        options.onSuccess();
+      }
     }
   };
 
@@ -133,7 +158,7 @@ export function useFormHelper(
               setSelectedBlock(null);
               if (onSuccess) onSuccess();
             }, 20);
-          }
+          },
         }
       );
     }
@@ -157,6 +182,6 @@ export function useFormHelper(
     removeConfig,
     submitForm,
     cancelForm,
-    prevFormValues
+    prevFormValues,
   };
 }
