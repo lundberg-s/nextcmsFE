@@ -9,32 +9,36 @@ import { ElementList } from "../element/ElementList";
 import { useForm } from "@/cms/lib/hooks/useForm";
 import { Form } from "@/cms/components/form/Form";
 import { useBlock } from "@/cms/lib/hooks/useBlock";
-import { ElementItem } from "../element/ElementItem";
+import { DialogModal } from "@/cms/components/modals/DialogModal";
+import { AddContentForm } from "@/cms/features/element/AddContentForm";
+import { AddConfigForm } from "@/cms/features/element/AddConfigForm";
+import { useCmsContext } from "@/cms/lib/context/CmsContext";
 
 export function EditBlockForm({
   id = "edit-block-form",
-  onSuccess: onCancelCallback,
-  onCancel: onSubmitCallback,
+  onSuccess: onSubmitCallback,
+  onCancel: onCancelCallback,
 }: {
   id: string;
   onSuccess: () => void;
   onCancel: () => void;
 }) {
   const { updateBlock } = useBlock();
+  const { selectedBlock } = useCmsContext();
 
-    const {
-      handleFormSubmit,
-      handleFormCancel,
-      handleDelete,
-      reset,
-      setValue,
-      watch,
-    } = useForm({
-      queryFn: updateBlock,
-      onSuccess: onSubmitCallback,
-      onCancel: onCancelCallback,
-      defaultValues: {}
-    });
+  const {
+    handleFormSubmit,
+    handleFormCancel,
+    handleDelete,
+    reset,
+    setValue,
+    watch,
+  } = useForm({
+    queryFn: updateBlock,
+    onSuccess: onSubmitCallback,
+    onCancel: onCancelCallback,
+    defaultValues: {},
+  });
 
   const {
     addContent,
@@ -43,47 +47,72 @@ export function EditBlockForm({
     updateConfig,
     removeContent,
     removeConfig,
-    submitForm,
   } = useFormHelper(setValue, watch, reset);
 
   const configurations = watch("config");
   const content = watch("content");
 
+  const formsList = [
+    {
+      title: "Add Component",
+      description:
+        "Select a component to add to your block. You can customize its properties after adding.",
+      icon: "plus",
+      content: AddContentForm,
+      onSubmit: addContent,
+      button: {
+        label: "Add Component",
+        icon: "plus",
+        variant: "outline",
+        disabled: !selectedBlock,
+      },
+    },
+    {
+      title: "Add Setting",
+      description:
+        "Select a setting to customize the appearance of your block.",
+      icon: "plus",
+      content: AddConfigForm,
+      onSubmit: addConfig,
+      button: {
+        label: "Add Setting",
+        icon: "plus",
+        variant: "outline",
+        disabled: !selectedBlock,
+      },
+    },
+  ];
+
   return (
-    <Form 
-      id={id}
+    <Form
       onSubmit={handleFormSubmit}
-      onCancel={handleFormCancel}
-      onDelete={handleDelete}
+      onReset={handleFormCancel}
       formRef={null}
-      >
-     <ElementList addContent={addContent} addConfig={addConfig} />
-
-      {content &&
-        Object.entries(content).map(([type, value]) => (
-          <ElementItem
-            mode="edit"
-            key={type}
-            type={type as ElementType}
-            component={value as Element}
-            kind="content"
-            onChange={updateContent}
-            onRemove={removeContent}
+    >
+      <div className="flex flex-col gap-4">
+        {formsList.map((form) => (
+          <DialogModal
+            key={form.title}
+            title={form.title}
+            description={form.description}
+            content={form.content}
+            button={form.button}
+            props={{
+              onSubmitCallback: (type: ElementType, kind: ElementKind) => {
+                form.onSubmit(type, kind);
+              },
+            }}
           />
         ))}
-
-      {configurations &&
-        Object.entries(configurations).map(([type, value]) => (
-          <ElementItem
-            mode="edit"
-            key={type}
-            type={type as ElementType}
-            value={value as string}
-            kind="config"
-            onChange={updateConfig}
-            onRemove={removeConfig}
-          />
-        ))}
+      </div>
+      <ElementList
+        content={content}
+        config={configurations}
+        updateContent={updateContent}
+        updateConfig={updateConfig}
+        removeContent={removeContent}
+        removeConfig={removeConfig}
+      />
     </Form>
   );
 }
