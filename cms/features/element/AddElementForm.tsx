@@ -90,29 +90,16 @@ export function AddElementForm({
       {kind === "config" && (
         <div className="space-y-4">
           {CONFIG_OPTIONS.map((config) => (
-            <label
+            <ElementItem
+              mode="preview"
               key={config.type}
-              className={`flex items-start p-4 border rounded-lg cursor-pointer transition-colors ${
-                selectedType === config.type
-                  ? "border-primary bg-primary/10"
-                  : "border-border hover:border-muted-foreground"
-              }`}
-            >
-              <input
-                type="radio"
-                className="mt-1 mr-3"
-                value={config.type}
-                checked={selectedType === config.type}
-                onChange={() => handleSelect(config.type)}
-                name="elementType"
-              />
-              <div className="flex-1">
-                <div className="font-medium">{config.label}</div>
-                <div className="text-sm text-muted-foreground">
-                  {config.description}
-                </div>
-              </div>
-            </label>
+              type={config.type}
+              label={config.label}
+              description={config.description}
+              kind="config"
+              isSelected={selectedType === config.type}
+              onSelect={handleSelect}
+            />
           ))}
         </div>
       )}

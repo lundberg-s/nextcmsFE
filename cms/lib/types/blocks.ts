@@ -70,7 +70,11 @@ export interface Element {
   input_text: string;
   input?: string;
   textarea?: string;
+  orientation?: "horizontal" | "vertical";
   separator?: string;
+  placeholder?: string;
+  content?: string;
+  className?: string;
   desc?: string;
   badge?: string;
   card?: {

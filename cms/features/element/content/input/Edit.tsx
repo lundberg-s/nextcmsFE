@@ -6,6 +6,7 @@ import { Label } from "@/cms/components/ui/label";
 
 interface InputProps {
   data: Partial<Element>;
+  onChange: (key: string, value: string | string[]) => void;
 }
 
 export function EditInput({ data }: InputProps) {
