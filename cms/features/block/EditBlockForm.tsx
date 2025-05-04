@@ -53,7 +53,7 @@ export function EditBlockForm({
     removeConfig,
   } = useFormHelper(setValue, watch, reset);
 
-  const configurations = watch("config");
+  const config = watch("config");
   const content = watch("content");
 
   const formsList = [
@@ -123,7 +123,7 @@ export function EditBlockForm({
       </div>
       <ElementList
         content={content}
-        config={configurations}
+        config={config}
         updateContent={updateContent}
         updateConfig={updateConfig}
         removeContent={removeContent}

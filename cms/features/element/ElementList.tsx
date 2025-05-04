@@ -19,38 +19,41 @@ export function ElementList({
   content,
   config,
 }: ElementListProps) {
+  const sections = [
+    {
+      kind: "content" as ElementKind,
+      data: content || {},
+      onChange: updateContent,
+      onRemove: removeContent,
+      getProps: (value: any) => ({ component: value as Element }),
+    },
+    {
+      kind: "config" as ElementKind,
+      data: config || {},
+      onChange: updateConfig,
+      onRemove: removeConfig,
+      getProps: (value: any) => ({ value }),
+    }
+  ];
+
   return (
     <>
-      {content && Object.keys(content).length > 0 && (
-        <>
-          {Object.entries(content).map(([type, value]) => (
-            <ElementItem
-              mode="edit"
-              key={`content-${type}`}
-              type={type as ElementType}
-              component={value as Element}
-              kind="content"
-              onChange={updateContent}
-              onRemove={removeContent}
-            />
-          ))}
-        </>
-      )}
-
-      {config && Object.keys(config).length > 0 && (
-        <>
-          {Object.entries(config).map(([type, value]: [string, string]) => (
-            <ElementItem
-              mode="edit"
-              key={`config-${type}`}
-              type={type as ElementType}
-              value={value}
-              kind="config"
-              onChange={updateConfig}
-              onRemove={removeConfig}
-            />
-          ))}
-        </>
+      {sections.map(section => 
+        Object.keys(section.data).length > 0 && (
+          <>
+            {Object.entries(section.data).map(([type, value]) => (
+              <ElementItem
+                mode="edit"
+                key={`${section.kind}-${type}`}
+                type={type as ElementType}
+                kind={section.kind}
+                onChange={section.onChange}
+                onRemove={section.onRemove}
+                {...section.getProps(value)}
+              />
+            ))}
+          </>
+        )
       )}
     </>
   );
