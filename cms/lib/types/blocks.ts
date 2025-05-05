@@ -67,6 +67,9 @@ export interface Element {
   subtitle?: string;
   button_text: string;
   button_variant: string;
+  variant: "default" | "secondary" | "ghost" | "link" | "destructive" | "defaultLeft" | "defaultRight";
+  size: "default" | "sm" | "lg" | "icon";
+  text: string;
   input_text: string;
   input?: string;
   textarea?: string;
