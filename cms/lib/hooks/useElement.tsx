@@ -8,7 +8,7 @@ import { UseFormSetValue, UseFormWatch, UseFormReset } from "react-hook-form";
 import { useEffect, useRef } from "react";
 import { isEqual } from "lodash";
 import { useBlock } from "@/cms/lib/hooks/useBlock";
-import { useBlockPreview } from "@/cms/lib/hooks/useBlockPreview";
+import { useBlockPreview } from "@/cms/lib/context/BlockPreviewContext";
 import { useCmsContext } from "@/cms/lib/context/CmsContext";
 
 interface FormHelpers {
@@ -32,7 +32,7 @@ interface FormHelpers {
   prevFormValues: React.MutableRefObject<Block | null>;
 }
 
-export function useFormHelper(
+export function useElement(
   setValue: UseFormSetValue<Block>,
   watch: UseFormWatch<Block>,
   reset: UseFormReset<Block>

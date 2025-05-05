@@ -4,7 +4,7 @@ import {
   ElementKind,
   ElementType,
 } from "@/cms/lib/types/blocks";
-import { useFormHelper } from "@/cms/lib/helpers/FormHelper";
+import { useElement } from "@/cms/lib/hooks/useElement";
 import { ElementList } from "../element/ElementList";
 import { useForm } from "@/cms/lib/hooks/useForm";
 import { Form } from "@/cms/components/form/Form";
@@ -25,6 +25,12 @@ export function EditBlockForm({
   const { updateBlock } = useBlock();
   const { selectedBlock } = useCmsContext();
 
+  const selectedBlockValues = {
+    id: selectedBlock ? selectedBlock.id : "",
+    content: selectedBlock ? selectedBlock.content : [],
+    config: selectedBlock ? selectedBlock.config : {},
+  };
+
   const {
     handleFormSubmit,
     handleFormCancel,
@@ -35,13 +41,7 @@ export function EditBlockForm({
     queryFn: updateBlock,
     onSuccess: onSubmitCallback,
     onCancel: onCancelCallback,
-    defaultValues: selectedBlock
-      ? {
-          id: selectedBlock.id,
-          content: selectedBlock.content,
-          config: selectedBlock.config,
-        }
-      : {},
+    defaultValues: selectedBlockValues,
   });
 
   const {
@@ -51,7 +51,7 @@ export function EditBlockForm({
     updateConfig,
     removeContent,
     removeConfig,
-  } = useFormHelper(setValue, watch, reset);
+  } = useElement(setValue, watch, reset);
 
   const config = watch("config");
   const content = watch("content");

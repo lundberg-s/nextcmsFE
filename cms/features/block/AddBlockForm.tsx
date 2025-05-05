@@ -20,6 +20,11 @@ export function AddBlockForm({
 }: AddBlockFormProps) {
   const { addBlock } = useBlock();
   const { selectedPage } = useCmsContext();
+
+  const newBlockValues = {
+    type: "",
+    pageId: selectedPage?.id || "",
+  };
   
   const {
     formValues,
@@ -30,10 +35,7 @@ export function AddBlockForm({
     queryFn: addBlock,
     onSuccess: onSubmitCallback,
     onCancel: onCancelCallback,
-    defaultValues: {
-      type: "",
-      pageId: selectedPage?.id || ""
-    },
+    defaultValues: newBlockValues
   });
 
   const formConfig = {

@@ -23,6 +23,12 @@ export function EditPageForm({
   const { updatePage, removePage } = usePage();
   const { selectedPage, setSelectedPage } = useCmsContext();
   
+  const selectedPagesValues = {
+    id: selectedPage ? selectedPage.id : "",
+    title: selectedPage ? selectedPage.title : "",
+    slug: selectedPage ? selectedPage.slug : "",
+  };
+
   const {
     formValues,
     handleFieldChange,
@@ -36,13 +42,7 @@ export function EditPageForm({
     onSuccess: onSubmitCallback,
     onCancel: onCancelCallback,
     onDelete: onDeleteCallback,
-    defaultValues: selectedPage
-      ? {
-          id: selectedPage.id,
-          title: selectedPage.title,
-          slug: selectedPage.slug,
-        }
-      : {}
+    defaultValues: selectedPagesValues
   });
 
   if (setHandleDelete) {

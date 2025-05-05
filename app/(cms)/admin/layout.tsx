@@ -5,7 +5,7 @@ import { AdminNavigation } from "@/cms/components/navigation/AdminNavigation";
 import { SidebarProvider, SidebarTrigger } from "@/cms/components/ui/sidebar";
 import { ScrollArea } from "@/cms/components/ui/scroll-area";
 import { SidebarContentProvider } from "@/cms/lib/context/SidebarContext";
-import { BlockPreviewProvider } from "@/cms/lib/hooks/useBlockPreview";
+import { BlockPreviewProvider } from "@/cms/lib/context/BlockPreviewContext";
 
 export default function AdminLayout({
   children,

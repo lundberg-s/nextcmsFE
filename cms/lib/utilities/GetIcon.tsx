@@ -1,6 +1,6 @@
 import { Plus, PlusCircle, Settings, Trash2 } from "lucide-react";
 
-export function useIconSelector (icon: string) {
+export function getIcon (icon: string) {
 
     switch (icon) {
         case "plus":

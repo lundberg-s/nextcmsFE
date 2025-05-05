@@ -4,13 +4,13 @@ import { BlockProvider } from "@/cms/lib/providers/BlockProvider";
 import { DragHandle } from "@/cms/components/ui/drag-handle";
 import { Block } from "@/cms/lib/types/blocks";
 import { useCmsContext } from "@/cms/lib/context/CmsContext";
-import { useBlockPreview } from "@/cms/lib/hooks/useBlockPreview";
+import { useBlockPreview } from "@/cms/lib/context/BlockPreviewContext";
 import { Button } from "@/cms/components/ui/button";
 import { ConfirmationModal } from "@/cms/components/modals/ConfirmationModal";
 import { EditBlockForm } from "./EditBlockForm";
 import { useSidebar } from "@/cms/components/ui/sidebar";
 import { useSidebarContent } from "@/cms/lib/context/SidebarContext";
-import { useIconSelector } from "@/cms/lib/helpers/IconSelector";
+import { getIcon } from "@/cms/lib/utilities/GetIcon";
 import { useState } from "react";
 import { useBlock } from "@/cms/lib/hooks/useBlock";
 
@@ -30,8 +30,8 @@ export function BlockItem({ block }: { block: Block }) {
   const { removeBlock } = useBlock();
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const trashIcon = useIconSelector("trash");
-  const settingsIcon = useIconSelector("settings");
+  const trashIcon = getIcon("trash");
+  const settingsIcon = getIcon("settings");
 
   const forms = {
     editBlock: (
