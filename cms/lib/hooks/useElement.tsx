@@ -24,11 +24,6 @@ interface FormHelpers {
   removeContent: (type: ElementType, kind: ElementKind) => void;
   removeConfig: (type: ElementType, kind: ElementKind) => void;
 
-  // New methods
-  submitForm: (data: Block, onSuccess?: () => void) => void;
-  cancelForm: (onCancel?: () => void) => void;
-
-  // Track the form values reference
   prevFormValues: React.MutableRefObject<Block | null>;
 }
 
@@ -70,7 +65,6 @@ export function useElement(
         kind,
         position: "bottom",
       };
-
       setValue("content", {
         ...watch("content"),
         [type]: newContent,
@@ -147,32 +141,6 @@ export function useElement(
     }
   };
 
-  // Form submission handler
-  const submitForm = (data: Block, onSuccess?: () => void) => {
-    if (selectedBlock) {
-      updateBlock(
-        { id: selectedBlock.id, block: data },
-        {
-          onSuccess: () => {
-            setTimeout(() => {
-              setSelectedBlock(null);
-              if (onSuccess) onSuccess();
-            }, 20);
-          },
-        }
-      );
-    }
-  };
-
-  // Cancel handler
-  const cancelForm = (onCancel?: () => void) => {
-    if (selectedBlock) {
-      reset(selectedBlock as Block);
-      setPreviewBlock(selectedBlock as Block);
-    }
-    if (onCancel) onCancel();
-  };
-
   return {
     addContent,
     addConfig,
@@ -180,8 +148,6 @@ export function useElement(
     updateConfig,
     removeContent,
     removeConfig,
-    submitForm,
-    cancelForm,
     prevFormValues,
   };
 }

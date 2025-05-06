@@ -1,16 +1,20 @@
 import { useForm } from "react-hook-form";
 import { ElementKind, ElementType } from "@/cms/lib/types/blocks";
-import { Button } from "@/cms/components/ui/button";
 import { ElementItem } from "./ElementItem";
 
 interface FormValues {
-  elementType: string;
+  elementType: ElementType;
 }
 
 interface AddElementFormProps {
   kind: ElementKind;
+  formFn: (
+    type: ElementType,
+    kind: ElementKind,
+    options: { onSuccess: () => void }
+  ) => void;
   formRef?: React.RefObject<HTMLFormElement>;
-  onSubmitCallback: (type: string, kind: ElementKind) => void;
+  onSubmitCallback: () => void;
   onCancelCallback: () => void;
 }
 
@@ -47,6 +51,7 @@ const CONTENT_OPTIONS = [
 
 export function AddElementForm({
   kind,
+  formFn,
   formRef,
   onSubmitCallback,
   onCancelCallback,
@@ -58,12 +63,18 @@ export function AddElementForm({
   });
   const selectedType = watch("elementType");
 
-  const onFormSubmit = handleSubmit((data) => {
-    onSubmitCallback(data.elementType, kind);
-  });
-
-  const handleSelect = (type: string) => {
+  const handleSelect = (type: ElementType) => {
     setValue("elementType", type);
+  };
+
+  const onFormSubmit = () => {
+    handleSubmit(() => {
+      formFn(selectedType as ElementType, kind, {
+        onSuccess: () => {
+          onSubmitCallback();
+        },
+      });
+    })();
   };
 
   const handleFormCancel = () => {
@@ -71,7 +82,20 @@ export function AddElementForm({
   };
 
   return (
-    <form ref={formRef} onSubmit={onFormSubmit} onReset={handleFormCancel} className="space-y-6">
+    <form
+      ref={formRef}
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onFormSubmit();
+      }}
+      onReset={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleFormCancel();
+      }}
+      className="space-y-6"
+    >
       {kind === "content" && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
           {CONTENT_OPTIONS.map((type) => (
@@ -103,22 +127,6 @@ export function AddElementForm({
           ))}
         </div>
       )}
-
-      <div className="flex justify-end space-x-2 mt-4">
-        <Button type="button" variant="outline" onClick={onCancelCallback}>
-          Cancel
-        </Button>
-        <Button
-          onClick={(e) => {
-            e.preventDefault();
-            onFormSubmit(e);
-          }}
-          type="submit"
-        >
-          {kind === "content" ? "Add Component" : "Add Config"}
-        </Button>
-      </div>
-
       <input type="hidden" {...register("elementType")} />
     </form>
   );
