@@ -6,11 +6,11 @@ import { useBlock } from "@/cms/lib/hooks/useBlock";
 import { useState } from "react";
 import { ElementItem } from "@/cms/features/element/ElementItem";
 
-interface HeroProps {
+interface ExperimentalProps {
   block: Block;
 }
 
-export function Hero({ block }: HeroProps) {
+export function Experimental({ block }: ExperimentalProps) {
   const { content, config } = block;
   const { selectedBlock } = useCmsContext();
   const { updateBlock } = useBlock();
@@ -25,13 +25,13 @@ export function Hero({ block }: HeroProps) {
     setTargetPosition(position);
 
     const [type, component] = selectedComponent ? [selectedComponent.type, selectedComponent] : ["", null];
-
+    console.log("block", block);
     // Update the block with the new position for this component
     if (!component) return;
     updateBlock(
       {
         id: block.id,
-        block: {
+        data: {
           ...block,
           content: {
             ...content,

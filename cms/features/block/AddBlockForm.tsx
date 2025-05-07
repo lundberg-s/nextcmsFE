@@ -5,7 +5,7 @@ import { useCmsContext } from "@/cms/lib/context/CmsContext";
 import { useForm } from "@/cms/lib/hooks/useForm";
 import { Form } from "@/cms/components/form/Form";
 
-const blockTypes = ["hero", "features"] as const;
+const blockTypes = ["hero", "experimental"] as const;
 
 interface AddBlockFormProps {
   formRef: React.RefObject<HTMLFormElement>;
