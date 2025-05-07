@@ -2,8 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/cms/lib/api";
 import { Block } from "@/cms/lib/types/blocks";
 
-export function 
-useBlock() {
+export function useBlock() {
   const queryClient = useQueryClient();
 
   function useFilteredBlocks(pageId: string) {
@@ -51,6 +50,7 @@ useBlock() {
 
   return {
     useFilteredBlocks,
+    addBlock: addBlockMutation.mutate,
     updateBlock: updateBlockMutation.mutate,
     removeBlock: removeBlockMutation.mutate,
     updateIndex: updateBlockIndexMutation.mutate,
