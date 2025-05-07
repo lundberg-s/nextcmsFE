@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/cms/lib/api";
-import { Block } from "@/cms/lib/types/blocks";
+
 
 export function useBlock() {
   const queryClient = useQueryClient();

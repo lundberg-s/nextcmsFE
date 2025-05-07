@@ -1,4 +1,4 @@
-import { Element } from "@/cms/lib/types/blocks";
+
 
 interface TitleProps {
   data: Partial<Element>;

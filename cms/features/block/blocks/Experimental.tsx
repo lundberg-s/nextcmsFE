@@ -1,6 +1,5 @@
 "use client";
 
-import { Block, Element, ElementType } from "@/cms/lib/types/blocks";
 import { useCmsContext } from "@/cms/lib/context/CmsContext";
 import { useBlock } from "@/cms/lib/hooks/useBlock";
 import { useState } from "react";

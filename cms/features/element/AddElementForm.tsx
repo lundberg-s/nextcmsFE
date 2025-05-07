@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { ElementKind, ElementType } from "@/cms/lib/types/blocks";
 import { ElementItem } from "./ElementItem";
 
 interface FormValues {

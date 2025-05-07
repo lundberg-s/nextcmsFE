@@ -1,4 +1,4 @@
-import { Element } from "@/cms/lib/types/blocks";
+
 import { Input } from "@/cms/components/ui/input";
 import { cn } from "@/cms/lib/utils";
 import { Label } from "@/cms/components/ui/label";

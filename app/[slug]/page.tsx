@@ -5,7 +5,6 @@ import { usePage } from "@/cms/lib/hooks/usePage";
 import { BlockItem } from "@/cms/features/block/BlockItem";
 import { useCmsContext } from "@/cms/lib/context/CmsContext";
 import { useRouter } from "next/navigation";
-import type { Page } from "@/cms/lib/types/page";
 
 export default function Page({ params }: { params: { slug: string } }) {
   const { pages, isLoadingPages } = usePage();

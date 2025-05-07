@@ -1,6 +1,5 @@
 'use client';
 
-import { Block } from '@/cms/lib/types/blocks';
 import { Hero } from '@/cms/features/block/blocks/Hero';
 import { Experimental } from '@/cms/features/block/blocks/Experimental';
 import { Features } from '@/cms/features/block/blocks/Features';

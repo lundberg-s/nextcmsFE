@@ -1,4 +1,3 @@
-import { ElementKind, ElementType } from "@/cms/lib/types/blocks";
 import { Preview } from ".";
 
 interface PreviewContentItemProps {

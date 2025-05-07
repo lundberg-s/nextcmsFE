@@ -11,7 +11,6 @@ import { useBlock } from "@/cms/lib/hooks/useBlock";
 import { useDnd } from "@/cms/lib/hooks/useDnd";
 import { getIcon } from "@/cms/lib/utilities/GetIcon";
 import { Draggable } from "@/cms/components/dnd/Draggable";
-import { Block } from "@/cms/lib/types/blocks";
 
 export function BlockList() {
   const { selectedPage, selectedBlock, setSelectedBlock } = useCmsContext();

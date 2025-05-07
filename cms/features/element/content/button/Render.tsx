@@ -1,4 +1,4 @@
-import { Element } from "@/cms/lib/types/blocks";
+
 import { Button } from "@/cms/components/ui/button";
 import { cn } from "@/cms/lib/utils";
 

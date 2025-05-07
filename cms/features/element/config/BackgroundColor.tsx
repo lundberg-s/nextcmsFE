@@ -1,5 +1,4 @@
 import React from "react";
-import { Element } from "@/cms/lib/types/blocks";
 
 import { Input } from "@/cms/components/ui/input";
 import { Label } from "@/cms/components/ui/label";

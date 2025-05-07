@@ -14,7 +14,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { Block } from "@/cms/lib/types/blocks";
+
 
 interface useDndProps {
   blocks: Block[];

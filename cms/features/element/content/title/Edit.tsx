@@ -1,6 +1,6 @@
 import { Label } from "@/cms/components/ui/label";
 import { Input } from "@/cms/components/ui/input";
-import { Element } from "@/cms/lib/types/blocks";
+
 
 interface TitleProps {
   data: Partial<Element>;

@@ -1,6 +1,4 @@
 "use client";
-
-import { Block, Element, ElementType } from "@/cms/lib/types/blocks";
 import { ElementItem } from "@/cms/features/element/ElementItem";
 
 interface HeroProps {

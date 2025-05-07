@@ -1,5 +1,5 @@
 
-import { Element } from "@/cms/lib/types/blocks";
+
 import { Label } from "@/cms/components/ui/label";
 import { Input as InputField } from "@/cms/components/ui/input";
 

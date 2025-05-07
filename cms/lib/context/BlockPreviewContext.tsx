@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { Block } from '@/cms/lib/types/blocks';
+
 
 interface BlockPreviewContextType {
   previewBlock: Block | null;

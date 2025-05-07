@@ -1,6 +1,5 @@
 'use client';
 
-import { Block } from '@/cms/lib/types/blocks';
 import { Card, CardContent, CardHeader, CardTitle } from '@/cms/components/ui/card';
 
 interface FeaturesProps {
