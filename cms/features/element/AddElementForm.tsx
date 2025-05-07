@@ -117,7 +117,7 @@ export function AddElementForm({
             <ElementItem
               mode="preview"
               key={config.type}
-              type={config.type}
+              type={config.type as ElementType}
               label={config.label}
               description={config.description}
               kind="config"

@@ -10,7 +10,8 @@ interface ElementItemProps {
   kind: ElementKind;
 
   mode: "edit" | "preview" | "render";
-  
+  label?: string;
+  description?: string;
   component?: Partial<Element>;
   value?: string;
   onChange?: (type: ElementType, valueOrComponent: any, kind: ElementKind) => void;
