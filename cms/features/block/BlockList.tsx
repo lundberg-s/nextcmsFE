@@ -91,7 +91,7 @@ export function BlockList() {
             <BlockItem block={block} />
           )}
 
-          <div className="absolute top-1/2 right-4 flex flex-col gap-10 items-center transform -translate-y-1/2">
+          <div className="absolute bg-gray-200 py-4 rounded-lg bg-opacity-80 top-1/2 right-4 flex flex-col gap-10 items-center transform -translate-y-1/2">
             <Button
               icon={settingsIcon}
               variant="ghost"
