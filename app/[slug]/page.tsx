@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { usePage } from "@/cms/lib/hooks/usePage";
-import { BlockProvider } from "@/cms/lib/providers/BlockProvider";
+import { BlockItem } from "@/cms/features/block/BlockItem";
 import { useCmsContext } from "@/cms/lib/context/CmsContext";
 import { useRouter } from "next/navigation";
 import type { Page } from "@/cms/lib/types/page";
@@ -37,7 +37,7 @@ export default function Page({ params }: { params: { slug: string } }) {
     <div className="min-h-screen bg-background">
       <div className="container-fluid">
         {selectedPage?.blocks.map((block) => (
-          <BlockProvider key={block.id} block={block} />
+          <BlockItem key={block.id} block={block} />
         ))}
       </div>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { BlockProvider } from "@/cms/lib/providers/BlockProvider";
+import { BlockItem } from "@/cms/features/block/BlockItem";
 import { usePage } from "@/cms/lib/hooks/usePage";
 import LoadingView from "@/cms/components/LoadingView";
 
@@ -14,7 +14,7 @@ export default function Home() {
     <main>
       <div>
         {homePage?.blocks.map((block) => (
-          <BlockProvider key={block.id} block={block} />
+          <BlockItem key={block.id} block={block} />
         ))}
       </div>
     </main>
