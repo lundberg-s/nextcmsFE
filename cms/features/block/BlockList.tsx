@@ -105,15 +105,15 @@ export function BlockList() {
   );
 
   return (
-    <div className="space-y-8">
+    <>
       {renderDndContext(
         <div className="space-y-4">
           {blocks.map((block) => renderBlock(block))}
         </div>,
         activeBlock && (
-          <div className="opacity-80">{renderBlock(activeBlock)}</div>
+          <div className="opacity-90">{renderBlock(activeBlock)}</div>
         )
       )}
-    </div>
+    </>
   );
 }
