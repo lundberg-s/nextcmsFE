@@ -9,6 +9,8 @@ export type BlockType =
 export interface Block {
   id: string;
   type: BlockType;
+  drag_index: number;
+  pageId: string;
   content: {
     items?: any;
     title?: string;
@@ -35,7 +37,6 @@ export interface Block {
     textColor?: string;
     layout?: "left" | "right" | "center";
   };
-  pageId: string;
 }
 
 export type ElementKind = "config" | "content";

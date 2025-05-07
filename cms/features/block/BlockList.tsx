@@ -7,21 +7,22 @@ import { EditBlockForm } from "@/cms/features/block/EditBlockForm";
 import { useCmsContext } from "@/cms/lib/context/CmsContext";
 import { useSidebar } from "@/cms/components/ui/sidebar";
 import { useSidebarContent } from "@/cms/lib/context/SidebarContext";
-import { useBlockPreview } from "@/cms/lib/context/BlockPreviewContext";
 import { useBlock } from "@/cms/lib/hooks/useBlock";
 import { useDnd } from "@/cms/lib/hooks/useDnd";
 import { getIcon } from "@/cms/lib/utilities/GetIcon";
 import { Draggable } from "@/cms/components/dnd/Draggable";
+import { Block } from "@/cms/lib/types/blocks";
+import { useState } from "react";
 
 export function BlockList() {
   const { selectedPage, selectedBlock, setSelectedBlock } = useCmsContext();
-  const { filteredBlocks, updateIndex, removeBlock } = useBlock();
+  const { useFilteredBlocks, updateIndex, removeBlock } = useBlock();
   const { toggleSidebar, setOpen, open } = useSidebar();
   const { setBody, clear } = useSidebarContent();
-  const { previewBlock } = useBlockPreview();
+  const [isEditingBlock, setIsEditingBlock] = useState(false);
 
   const pageId = selectedPage?.id || "";
-  const { data: blocks = [], isLoading } = filteredBlocks(pageId);
+  const { data: blocks = [], isLoading } = useFilteredBlocks(pageId);
 
   const { activeBlock, renderDndContext } = useDnd({
     blocks,
@@ -32,35 +33,45 @@ export function BlockList() {
   const trashIcon = getIcon("trash");
   const settingsIcon = getIcon("settings");
 
-  const handleEditClick = (block: any) => {
-    if (!block) return;
-
-    if (open && selectedBlock?.id === block.id) {
-      clear();
-      setOpen(false);
-      setSelectedBlock(null);
-      return;
-    }
-
-    if (selectedBlock) clear();
-
+  const resetEditor = () => {
+    clear();
+    setOpen(false);
+    setSelectedBlock(null);
+    setIsEditingBlock(false);
+  };
+  
+  const openEditor = (block: Block) => {
+    setIsEditingBlock(true);
     setSelectedBlock(block);
     setBody(
       <EditBlockForm
         id="edit-block-form"
-        onSuccess={() => {
-          setOpen(false);
-          setSelectedBlock(null);
-        }}
-        onCancel={() => {
-          setOpen(false);
-          setSelectedBlock(null);
-        }}
+        onSuccess={resetEditor}
+        onCancel={resetEditor}
       />
     );
-
     if (!open) toggleSidebar();
   };
+  
+  const handleEditClick = (block: Block) => {
+    const isEditorOpen = open;
+    const isSameBlock = selectedBlock?.id === block.id;
+
+    if (!block) return;
+  
+    if (isEditorOpen && isSameBlock) {
+      resetEditor();
+      return;
+    }
+  
+    if (isEditorOpen && !isSameBlock) {
+      setSelectedBlock(block);
+      return;
+    }
+  
+    openEditor(block);
+  };
+  
 
   if (isLoading) {
     return <div>Loading blocks...</div>;
@@ -69,13 +80,14 @@ export function BlockList() {
   if (!blocks || blocks.length === 0) {
     return <div>No blocks found for this page.</div>;
   }
-
+  
+  
   const renderBlock = (block: any) => (
     <Draggable id={block.id} key={block.id} className="relative group">
       {({ attributes, listeners }) => (
         <>
           {selectedBlock?.id === block.id ? (
-            previewBlock && <BlockItem block={previewBlock} />
+            selectedBlock && <BlockItem block={selectedBlock} />
           ) : (
             <BlockItem block={block} />
           )}

@@ -32,21 +32,17 @@ export function useElement(
   watch: UseFormWatch<Block>,
   reset: UseFormReset<Block>
 ): FormHelpers {
-  const { updateBlock } = useBlock();
-  const { setPreviewBlock } = useBlockPreview();
   const { selectedBlock, setSelectedBlock } = useCmsContext();
   const prevFormValues = useRef<Block | null>(null);
   const formValues = watch();
 
-  // Effect 1: Update preview block when form values change
   useEffect(() => {
     if (!isEqual(prevFormValues.current, formValues)) {
       prevFormValues.current = formValues;
-      setPreviewBlock(formValues);
+      setSelectedBlock(formValues);
     }
-  }, [formValues, setPreviewBlock]);
+  }, [formValues, setSelectedBlock]);
 
-  // Effect 2: Reset form when block changes
   useEffect(() => {
     if (selectedBlock) {
       reset(selectedBlock as Block);

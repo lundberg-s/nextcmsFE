@@ -6,14 +6,13 @@ export function
 useBlock() {
   const queryClient = useQueryClient();
 
-  const filteredBlocks = (pageId: string) => {
-    const getBlockListQuery = useQuery({
+  function useFilteredBlocks(pageId: string) {
+    return useQuery({
       queryKey: ["blocks", pageId],
       queryFn: () => api.blocks.getBlockList(pageId),
       enabled: !!pageId,
     });
-  return getBlockListQuery;
-  };
+  }
 
   const addBlockMutation = useMutation({
     mutationFn: api.blocks.create,
@@ -51,8 +50,7 @@ useBlock() {
   });
 
   return {
-    filteredBlocks,
-    addBlock: addBlockMutation.mutate,
+    useFilteredBlocks,
     updateBlock: updateBlockMutation.mutate,
     removeBlock: removeBlockMutation.mutate,
     updateIndex: updateBlockIndexMutation.mutate,

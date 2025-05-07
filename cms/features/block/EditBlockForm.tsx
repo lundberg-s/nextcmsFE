@@ -18,6 +18,9 @@ export function EditBlockForm({
 
   const selectedBlockValues = {
     id: selectedBlock ? selectedBlock.id : "",
+    drag_index: selectedBlock ? selectedBlock.drag_index : 0,
+    type: selectedBlock ? selectedBlock.type : "",
+    pageId: selectedBlock ? selectedBlock.pageId : "",
     content: selectedBlock ? selectedBlock.content : [],
     config: selectedBlock ? selectedBlock.config : {},
   };
