@@ -12,14 +12,12 @@ import { useDnd } from "@/cms/lib/hooks/useDnd";
 import { getIcon } from "@/cms/lib/utilities/GetIcon";
 import { Draggable } from "@/cms/components/dnd/Draggable";
 import { Block } from "@/cms/lib/types/blocks";
-import { useState } from "react";
 
 export function BlockList() {
   const { selectedPage, selectedBlock, setSelectedBlock } = useCmsContext();
   const { useFilteredBlocks, updateIndex, removeBlock } = useBlock();
   const { toggleSidebar, setOpen, open } = useSidebar();
   const { setBody, clear } = useSidebarContent();
-  const [isEditingBlock, setIsEditingBlock] = useState(false);
 
   const pageId = selectedPage?.id || "";
   const { data: blocks = [], isLoading } = useFilteredBlocks(pageId);
@@ -36,12 +34,13 @@ export function BlockList() {
   const resetEditor = () => {
     clear();
     setOpen(false);
-    setSelectedBlock(null);
-    setIsEditingBlock(false);
+    setTimeout(() => {
+      setSelectedBlock(null);
+    }
+    , 200);
   };
   
   const openEditor = (block: Block) => {
-    setIsEditingBlock(true);
     setSelectedBlock(block);
     setBody(
       <EditBlockForm

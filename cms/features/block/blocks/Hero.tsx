@@ -11,7 +11,7 @@ export function Hero({ block }: HeroProps) {
   const { content, config } = block;
 
   const colours = {
-    backgroundColor: config?.backgroundColor || "bg-background",
+    backgroundColor: config?.backgroundColor || "",
     textColor: config?.textColor || "",
   };
 
