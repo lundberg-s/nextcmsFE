@@ -10,7 +10,7 @@ export function Hero({ block }: HeroProps) {
 
   const colours = {
     backgroundColor: config?.backgroundColor || "",
-    textColor: config?.textColor || "",
+    color: config?.textColor || "",
   };
 
   const backgroundImage = config?.backgroundImage

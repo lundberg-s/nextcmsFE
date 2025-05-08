@@ -48,6 +48,10 @@ type ElementType =
     className?: string;
     desc?: string;
     badge?: string;
+    width?: number;
+    height?: number;
+    src?: string;
+    alt?: string;
     card?: {
       title: string;
       subtitle: string;

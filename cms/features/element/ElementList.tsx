@@ -2,6 +2,7 @@ import { ElementItem } from "./ElementItem";
 import { useElement } from "@/cms/lib/hooks/useElement";
 import { AddElementForm } from "./AddElementForm";
 import { DialogModal } from "@/cms/components/modals/DialogModal";
+import { Tabs } from "@/cms/components/tabs/Tabs";
 import { UseFormWatch } from "react-hook-form";
 import React from "react";
 
@@ -67,6 +68,8 @@ export function ElementList({ setValue, watch, reset }: ElementListProps) {
 
   const sections = [
     {
+      id: "content",
+      title: "Content",
       kind: "content" as ElementKind,
       data: content || {},
       onChange: updateContent,
@@ -74,6 +77,8 @@ export function ElementList({ setValue, watch, reset }: ElementListProps) {
       getProps: (value: any) => ({ component: value as Element }),
     },
     {
+      id: "config",
+      title: "Config",
       kind: "config" as ElementKind,
       data: config || {},
       onChange: updateConfig,
@@ -83,8 +88,9 @@ export function ElementList({ setValue, watch, reset }: ElementListProps) {
   ];
 
   return (
-    <>
-      <div className="flex flex-col gap-4">
+    <div className="p-2 space-y-4">
+
+      <div className="flex flex-col gap-3">
         {addElementModals.map((form) => (
           <React.Fragment key={form.kind}>
             <DialogModal
@@ -97,10 +103,16 @@ export function ElementList({ setValue, watch, reset }: ElementListProps) {
           </React.Fragment>
         ))}
       </div>
-      {sections.map(
-        (section) =>
-          Object.keys(section.data).length > 0 && (
-            <React.Fragment key={section.kind}>
+
+      <Tabs
+        tabs={sections.map(({ id, title }) => ({ id, title }))}
+        defaultTabId="content"
+        renderContent={(tabId) => {
+          const section = sections.find((section) => section.id === tabId);
+          if (!section) return null;
+
+          return (
+            <>
               {Object.entries(section.data).map(([type, value]) => (
                 <ElementItem
                   mode="edit"
@@ -112,9 +124,10 @@ export function ElementList({ setValue, watch, reset }: ElementListProps) {
                   {...section.getProps(value)}
                 />
               ))}
-            </React.Fragment>
-          )
-      )}
-    </>
+            </>
+          );
+        }}
+      />
+    </div>
   );
 }

@@ -21,6 +21,7 @@ const CONTENT_LIST = {
   separator: Edit.Separator,
   card: Edit.Card,
   carousel: Edit.Carousel,
+  image: Edit.Image,
 } as const;
 
 export function EditContentItem({

@@ -1,5 +1,5 @@
 import { useSidebarContent } from "@/cms/lib/context/SidebarContext";
-import { useSidebar } from "@/cms/components/ui/sidebar";
+import { SidebarHeader, useSidebar } from "@/cms/components/ui/sidebar";
 import {
   Sidebar,
   SidebarContent,
@@ -33,11 +33,7 @@ export function AppSidebar() {
   return (
     <Sidebar side="right">
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupContent>
             <SidebarMenu>{body}</SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
         <div className="flex justify-between gap-2">

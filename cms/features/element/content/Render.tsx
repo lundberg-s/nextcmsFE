@@ -14,6 +14,7 @@ const CONTENT_LIST = {
   separator: Render.Separator,
   card: Render.Card,
   carousel: Render.Carousel,
+  image: Render.Image,
 } as const;
 
 export function RenderContentItem({

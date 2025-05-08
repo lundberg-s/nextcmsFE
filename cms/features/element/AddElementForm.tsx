@@ -46,6 +46,7 @@ const CONTENT_OPTIONS = [
   "separator",
   "card",
   "carousel",
+  "image",
 ] as const;
 
 export function AddElementForm({

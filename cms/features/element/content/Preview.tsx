@@ -15,6 +15,7 @@ const PREVIEW_LIST = {
   separator: Preview.Separator,
   card: Preview.Card,
   carousel: Preview.Carousel,
+  image: Preview.Image,
 } as const;
 
 export function PreviewContentItem({
