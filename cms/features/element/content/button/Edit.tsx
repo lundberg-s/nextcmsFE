@@ -8,7 +8,7 @@ import { Input } from "@/cms/components/ui/input";
 import React from "react";
 
 interface EditButtonComponentProps {
-  data: any;
+  data: Partial<Element>;
   onChange: (key: string, value: string) => void;
 }
 

@@ -44,6 +44,7 @@ type ElementType =
     separator?: string;
     placeholder?: string;
     content?: string;
+    urls?: string[];
     className?: string;
     desc?: string;
     badge?: string;
