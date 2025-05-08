@@ -14,8 +14,8 @@ export function RenderImage({ data }: RenderImageProps) {
     <Image
       src={data.src}
       alt={data.alt || "Image"}
-      width={data.width || 300} // Default width
-      height={data.height || 200} // Default height
+      width={data.width || 300}
+      height={data.height || 200}
       className={data.className || ""}
     />
   );
