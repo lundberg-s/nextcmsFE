@@ -14,7 +14,9 @@ type ElementType =
   | "backgroundColor"
   | "backgroundImage"
   | "textColor"
-  | "carousel";
+  | "carousel"
+  | "image"
+  | "text";
 
   interface Element {
     id: string;
@@ -52,6 +54,9 @@ type ElementType =
     height?: number;
     src?: string;
     alt?: string;
+    titleTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+    cta1?: { label: string; link: string };
+    cta2?: { label: string; link: string };
     card?: {
       title: string;
       subtitle: string;

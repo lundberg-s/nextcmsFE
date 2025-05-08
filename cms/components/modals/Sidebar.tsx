@@ -11,11 +11,16 @@ import {
 import { Button } from "../ui/button";
 import React from "react";
 
+type BodyProps = {
+  id?: string;
+  onCancel?: () => void;
+};
+
 export function AppSidebar() {
   const { body, footer } = useSidebarContent();
 
-  const formId = React.isValidElement(body) ? body.props?.id : undefined;
-  const onCancel = React.isValidElement(body) ? body.props?.onCancel : undefined;
+  const formId = React.isValidElement(body) ? (body.props as BodyProps)?.id : undefined;
+  const onCancel = React.isValidElement(body) ? (body.props as BodyProps)?.onCancel : undefined;
 
   const handleClose = () => {
     if (formId) {

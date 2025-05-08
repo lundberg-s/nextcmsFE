@@ -8,7 +8,6 @@ export function PreviewImage() {
       alt="Preview"
       width={150}
       height={150}
-      layout="intrinsic"
       className="w-full h-auto"
     />
   );

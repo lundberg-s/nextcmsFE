@@ -6,6 +6,7 @@ import * as descriptionComponents from './description';
 import * as inputComponents from './input';
 import * as separatorComponents from './separator';
 import * as imageComponents from './image';
+import * as textComponents from './text';
 
 export const Edit = {
   ...buttonComponents.Edit,
@@ -16,6 +17,8 @@ export const Edit = {
   ...descriptionComponents.Edit,
   ...inputComponents.Edit,
   ...imageComponents.Edit,
+  ...textComponents.Edit,
+
 };
 
 export const Render = {
@@ -27,6 +30,7 @@ export const Render = {
   ...descriptionComponents.Render,
   ...inputComponents.Render,
   ...imageComponents.Render,
+  ...textComponents.Render,
 };
 
 export const Preview = {
@@ -38,4 +42,5 @@ export const Preview = {
   ...descriptionComponents.Preview,
   ...inputComponents.Preview,
   ...imageComponents.Preview,
+  ...textComponents.Preview,
 };

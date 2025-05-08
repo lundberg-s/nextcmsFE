@@ -47,6 +47,7 @@ const CONTENT_OPTIONS = [
   "card",
   "carousel",
   "image",
+  "text",
 ] as const;
 
 export function AddElementForm({

@@ -7,7 +7,7 @@ export default function PageNavigation() {
   const { pages } = usePage();
 
   return (
-    <LoadingView>
+
     <div className="absolute w-full">
     <nav className="container-fluid flex justify-between items-center p-5">
         <h1 className="text-xl font-bold text-gray-800 left-10">MyApp</h1>
@@ -29,6 +29,6 @@ export default function PageNavigation() {
         </Link>
     </nav>
     </div>
-    </LoadingView>
+  
   );
 }

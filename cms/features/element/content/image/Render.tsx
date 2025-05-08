@@ -17,7 +17,6 @@ export function RenderImage({ data }: RenderImageProps) {
       width={data.width || 300} // Default width
       height={data.height || 200} // Default height
       className={data.className || ""}
-      layout="intrinsic" // Ensures the image respects width and height
     />
   );
 }

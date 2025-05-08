@@ -1,3 +1,4 @@
+import { text } from "node:stream/consumers";
 import { Preview } from ".";
 
 interface PreviewContentItemProps {
@@ -16,6 +17,7 @@ const PREVIEW_LIST = {
   card: Preview.Card,
   carousel: Preview.Carousel,
   image: Preview.Image,
+  text: Preview.Text,
 } as const;
 
 export function PreviewContentItem({

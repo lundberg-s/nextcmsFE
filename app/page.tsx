@@ -10,7 +10,6 @@ export default function Home() {
   const homePage = pages?.find((page) => page.slug === "home");
 
   return (
-    <LoadingView>
     <main>
       <div>
         {homePage?.blocks.map((block) => (
@@ -18,6 +17,5 @@ export default function Home() {
         ))}
       </div>
     </main>
-    </LoadingView>
   );
 }

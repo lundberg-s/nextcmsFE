@@ -1,3 +1,4 @@
+import { text } from "node:stream/consumers";
 import { Render } from ".";
 
 interface RenderContentItemProps {
@@ -15,6 +16,7 @@ const CONTENT_LIST = {
   card: Render.Card,
   carousel: Render.Carousel,
   image: Render.Image,
+  text: Render.Text,
 } as const;
 
 export function RenderContentItem({

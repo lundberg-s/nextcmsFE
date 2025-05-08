@@ -28,9 +28,9 @@ export default function Page({ params }: { params: { slug: string } }) {
     }
   }, [foundPage, pages, router, setSelectedPage]);
 
-  if (isLoadingPages) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoadingPages) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <div className="min-h-screen bg-background">
