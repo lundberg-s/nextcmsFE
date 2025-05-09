@@ -18,12 +18,12 @@ export function BlockList() {
   const { toggleSidebar, setOpen, open } = useSidebar();
   const { setBody, clear } = useSidebarContent();
 
-  const pageId = selectedPage?.id || "";
-  const { data: blocks = [], isLoading } = useFilteredBlocks(pageId);
+  const page = selectedPage?.id || "";
+  const { data: blocks = [], isLoading } = useFilteredBlocks(page);
 
   const { activeBlock, renderDndContext } = useDnd({
     blocks,
-    pageId,
+    page,
     updateIndex,
   });
 

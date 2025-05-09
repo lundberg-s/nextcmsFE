@@ -5,11 +5,11 @@ import { api } from "@/cms/lib/api";
 export function useBlock() {
   const queryClient = useQueryClient();
 
-  function useFilteredBlocks(pageId: string) {
+  function useFilteredBlocks(page: string) {
     return useQuery({
-      queryKey: ["blocks", pageId],
-      queryFn: () => api.blocks.getBlockList(pageId),
-      enabled: !!pageId,
+      queryKey: ["blocks", page],
+      queryFn: () => api.blocks.getList(page),
+      enabled: !!page,
     });
   }
 
@@ -42,7 +42,7 @@ export function useBlock() {
 
   const updateBlockIndexMutation = useMutation({
     mutationFn: (updatedBlocks: Block[]) =>
-      api.blocks.updateOrder(updatedBlocks),
+      api.blocks.reorder(updatedBlocks),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["blocks"] });
     },

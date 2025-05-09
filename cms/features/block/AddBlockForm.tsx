@@ -23,7 +23,7 @@ export function AddBlockForm({
 
   const newBlockValues = {
     type: "",
-    pageId: selectedPage?.id || "",
+    page: selectedPage?.id || "",
   };
   
   const {

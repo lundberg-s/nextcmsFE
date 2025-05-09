@@ -10,8 +10,8 @@ declare global {
   interface Block {
     id: string;
     type: BlockType;
-    drag_index: number;
-    pageId: string;
+    order: number;
+    page: string;
     content: {
       items?: any;
       title?: string;

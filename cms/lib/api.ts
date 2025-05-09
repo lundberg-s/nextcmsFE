@@ -6,20 +6,20 @@ const API_BASE_URL = "http://localhost:8000/cms";
 
 export const api = {
   blocks: {
-    getBlockList: async (id: string): Promise<Block[]> => {
-      const response = await fetch(`${API_BASE_URL}/blocks/page/${id}/`);
+    getList: async (id: string): Promise<Block[]> => {
+      const response = await fetch(`${API_BASE_URL}/pages/${id}/blocks/`);
       const data = await response.json();
       return data;
     },
 
-    getBlock: async (id: string): Promise<Block> => {
+    getItem: async (id: string): Promise<Block> => {
       const response = await fetch(`${API_BASE_URL}/blocks/${id}/`);
       const data = await response.json();
       return data;
     },
 
     create: async (
-      block: Omit<Block, "id"> & { pageId: string }
+      block: Omit<Block, "id"> & { page: string }
     ): Promise<Block> => {
       const response = await fetch(`${API_BASE_URL}/blocks/`, {
         method: "POST",
@@ -52,7 +52,7 @@ export const api = {
       await fetch(`${API_BASE_URL}/blocks/${id}/`, { method: "DELETE" });
     },
 
-    updateOrder: async (blocks: Block[]): Promise<Block[]> => {
+    reorder: async (blocks: Block[]): Promise<Block[]> => {
       const response = await fetch(`${API_BASE_URL}/blocks/order/`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -64,7 +64,7 @@ export const api = {
   },
 
   pages: {
-    getAll: async (): Promise<Page[]> => {
+    getList: async (): Promise<Page[]> => {
       const response = await fetch(`${API_BASE_URL}/pages/`);
       const data = await response.json();
       return data;
@@ -74,7 +74,7 @@ export const api = {
       const response = await fetch(`${API_BASE_URL}/pages/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: nanoid(), blocks: [], ...page }),
+        body: JSON.stringify((page)),
       });
       const data = await response.json();
       return data;

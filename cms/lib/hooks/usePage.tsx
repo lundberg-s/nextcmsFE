@@ -11,7 +11,7 @@ export function usePage() {
     error: pagesError,
   } = useQuery({
     queryKey: ["pages"],
-    queryFn: api.pages.getAll,
+    queryFn: api.pages.getList,
     staleTime: Infinity,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
