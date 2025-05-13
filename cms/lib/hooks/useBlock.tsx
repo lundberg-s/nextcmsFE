@@ -8,13 +8,13 @@ export function useBlock() {
   function useFilteredBlocks(page: string) {
     return useQuery({
       queryKey: ["blocks", page],
-      queryFn: () => api.blocks.getList(page),
+      queryFn: () => api.block.get.list(page),
       enabled: !!page,
     });
   }
 
   const addBlockMutation = useMutation({
-    mutationFn: api.blocks.create,
+    mutationFn: api.block.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["blocks"] });
     },
@@ -27,14 +27,14 @@ export function useBlock() {
     }: {
       id: string;
       data: Partial<Omit<Block, "id">>;
-    }) => api.blocks.update(id, data),
+    }) => api.block.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["blocks"] });
     },
   });
 
   const removeBlockMutation = useMutation({
-    mutationFn: api.blocks.delete,
+    mutationFn: api.block.delete,
     onSuccess: (_, deletedId) => {
       queryClient.invalidateQueries({ queryKey: ["blocks"] });
     },
@@ -42,7 +42,7 @@ export function useBlock() {
 
   const updateBlockIndexMutation = useMutation({
     mutationFn: (updatedBlocks: Block[]) =>
-      api.blocks.reorder(updatedBlocks),
+      api.block.reorder(updatedBlocks),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["blocks"] });
     },

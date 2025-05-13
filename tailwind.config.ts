@@ -11,6 +11,10 @@ const config: Config = {
 	],
 	theme: {
 		extend: {
+			fontFamily: {
+				sans: ['var(--font-geist-sans)'],
+				mono: ['var(--font-geist-mono)'],
+			  },
 			fontSize: {
 				'4xl': ['2.25rem', { lineHeight: '2.5rem', fontWeight: '700' }],
 				'3xl': ['1.875rem', { lineHeight: '2.25rem', fontWeight: '600' }],

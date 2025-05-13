@@ -1,100 +1,48 @@
-
-
-import { nanoid } from "nanoid";
-
-const API_BASE_URL = "http://localhost:8000/cms";
+// cmsApi.ts
+import { apiClient as http } from "@/shared/lib/api/apiClient";
+const API_BASE_URL = "/api/cms";
 
 export const api = {
-  blocks: {
-    getList: async (id: string): Promise<Block[]> => {
-      const response = await fetch(`${API_BASE_URL}/pages/${id}/blocks/`);
-      const data = await response.json();
-      return data;
+  block: {
+    get: {
+      list: (pageId: string): Promise<Block[]> =>
+        http.get(`${API_BASE_URL}/pages/${pageId}/blocks/`),
+
+      item: (blockId: string): Promise<Block> =>
+        http.get(`${API_BASE_URL}/blocks/${blockId}/`),
     },
+    create: (block: Omit<Block, "id"> & { page: string }): Promise<Block> =>
+      http.post(`${API_BASE_URL}/blocks/`, block),
 
-    getItem: async (id: string): Promise<Block> => {
-      const response = await fetch(`${API_BASE_URL}/blocks/${id}/`);
-      const data = await response.json();
-      return data;
-    },
+    update: (id: string, block: Partial<Omit<Block, "id">>): Promise<Block> =>
+      http.put(`${API_BASE_URL}/blocks/${id}/`, block),
 
-    create: async (
-      block: Omit<Block, "id"> & { page: string }
-    ): Promise<Block> => {
-      const response = await fetch(`${API_BASE_URL}/blocks/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(block),
-      });
+    delete: (id: string): Promise<void> =>
+      http.delete(`${API_BASE_URL}/blocks/${id}/`),
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      return data;
-    },
-
-    update: async (
-      id: string,
-      block: Partial<Omit<Block, "id">>
-    ): Promise<Block> => {
-      const response = await fetch(`${API_BASE_URL}/blocks/${id}/`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(block),
-      });
-      const data = await response.json();
-      return data;
-    },
-
-    delete: async (id: string): Promise<void> => {
-      await fetch(`${API_BASE_URL}/blocks/${id}/`, { method: "DELETE" });
-    },
-
-    reorder: async (blocks: Block[]): Promise<Block[]> => {
-      const response = await fetch(`${API_BASE_URL}/blocks/order/`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(blocks),
-      });
-      const data = await response.json();
-      return data;
-    },
+    reorder: (blocks: Block[]): Promise<Block[]> =>
+      http.patch(`${API_BASE_URL}/blocks/order/`, blocks),
   },
 
-  pages: {
-    getList: async (): Promise<Page[]> => {
-      const response = await fetch(`${API_BASE_URL}/pages/`);
-      const data = await response.json();
-      return data;
+  page: {
+    get: {
+      list: (): Promise<Page[]> =>
+        http.get(`${API_BASE_URL}/pages/`),
+
+      item: (id: string): Promise<Page> =>
+        http.get(`${API_BASE_URL}/pages/${id}/`),
     },
 
-    create: async (page: Omit<Page, "id" | "blocks">): Promise<Page> => {
-      const response = await fetch(`${API_BASE_URL}/pages/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify((page)),
-      });
-      const data = await response.json();
-      return data;
-    },
+    create: (page: Omit<Page, "id" | "blocks">): Promise<Page> =>
+      http.post(`${API_BASE_URL}/pages/`, page),
 
-    update: async (
+    update: (
       id: string,
       page: Partial<Omit<Page, "id" | "blocks">>
-    ): Promise<Page> => {
-      const response = await fetch(`${API_BASE_URL}/pages/${id}/`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(page),
-      });
-      const data = await response.json();
-      return data;
-    },
+    ): Promise<Page> =>
+      http.put(`${API_BASE_URL}/pages/${id}/`, page),
 
-    delete: async (id: string): Promise<void> => {
-      await fetch(`${API_BASE_URL}/pages/${id}/`, { method: "DELETE" });
-    },
+    delete: (id: string): Promise<void> =>
+      http.delete(`${API_BASE_URL}/pages/${id}/`),
   },
 };

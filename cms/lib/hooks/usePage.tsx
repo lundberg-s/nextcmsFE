@@ -11,7 +11,7 @@ export function usePage() {
     error: pagesError,
   } = useQuery({
     queryKey: ["pages"],
-    queryFn: api.pages.getList,
+    queryFn: api.page.get.list,
     staleTime: Infinity,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
@@ -20,7 +20,7 @@ export function usePage() {
 
 
   const addPageMutation = useMutation({
-    mutationFn: api.pages.create,
+    mutationFn: api.page.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pages"] });
     },
@@ -33,14 +33,14 @@ export function usePage() {
     }: {
       id: string;
       data: Partial<Omit<Page, "id" | "blocks">>;
-    }) => api.pages.update(id, data),
+    }) => api.page.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pages"] });
     },
   });
 
   const removePageMutation = useMutation({
-    mutationFn: api.pages.delete,
+    mutationFn: api.page.delete,
     onSuccess: (_, deletedId) => {
       queryClient.invalidateQueries({ queryKey: ["pages"] });
     },
