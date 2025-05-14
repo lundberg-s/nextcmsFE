@@ -1,4 +1,4 @@
-import { Element } from "@/cms/lib/types/blocks";
+
 import { Separator } from "@/cms/components/ui/separator";
 import { cn } from "@/cms/lib/utils";
 

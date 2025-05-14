@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,13 +23,32 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"],
-      "@/cms/*": ["./cms/*"],
-      "@/shared/*": ["./shared/*"],
-      "@/auth/*": ["./auth/*"],
-      "@/ecommerce/*": ["./ecommerce/*"]
-    },
+      "@/*": [
+        "./*"
+      ],
+      "@/cms/*": [
+        "./cms/*"
+      ],
+      "@/shared/*": [
+        "./shared/*"
+      ],
+      "@/auth/*": [
+        "./auth/*"
+      ],
+      "@/ecommerce/*": [
+        "./ecommerce/*"
+      ]
+    }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts,",
+    "cms/lib/types/page.d.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

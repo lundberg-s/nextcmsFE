@@ -1,9 +1,8 @@
 import React from 'react'
 
-import { Element } from "@/cms/lib/types/blocks";
+
 import { Label } from '@/cms/components/ui/label'
 import { Textarea } from '@/cms/components/ui/textarea'
-import { Button } from '@/cms/components/ui/button'
 
 interface EditDescriptionComponentProps {
   data: Partial<Element>;

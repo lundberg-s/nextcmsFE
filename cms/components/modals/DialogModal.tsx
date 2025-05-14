@@ -10,7 +10,7 @@ import {
   DialogTitle,
 } from "@/cms/components/ui/dialog";
 import { Button } from "@/cms/components/ui/button";
-import { useIconSelector } from "@/cms/lib/helpers/IconSelector";
+import { getIcon } from "@/cms/lib/utilities/GetIcon";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { Trash2 } from "lucide-react";
 
@@ -94,7 +94,7 @@ export function DialogModal({
     ...rest,
   };
 
-  const iconElement = useIconSelector(button?.icon || "");
+  const iconElement = getIcon(button?.icon || "");
 
   return (
     <>

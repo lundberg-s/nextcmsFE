@@ -1,4 +1,4 @@
-import { Element } from "@/cms/lib/types/blocks";
+
 import {
   Carousel as UICarousel,
   CarouselContent,

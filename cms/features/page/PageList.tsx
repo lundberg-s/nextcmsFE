@@ -60,9 +60,9 @@ export function PageList({ }) {
     },
   ];
 
-  if (isLoadingPages) {
-    return null;
-  }
+  // if (isLoadingPages) {
+  //   return null;
+  // }
 
   return (
     <div className="mx-auto p-4 h-full">

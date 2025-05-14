@@ -5,7 +5,7 @@ import { Input } from '@/cms/components/ui/input'
 import { Textarea } from '@/cms/components/ui/textarea'
 
 interface EditCardComponentProps {
-  data: any;
+  data: Partial<Element>;
   onChange: (key: string, value: string) => void;
 }
 export function EditCard({ data, onChange }: EditCardComponentProps) {

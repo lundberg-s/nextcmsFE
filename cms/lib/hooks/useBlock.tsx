@@ -1,22 +1,20 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { api } from "@/cms/lib/api";
-import { Block } from "@/cms/lib/types/blocks";
+import { api } from "@/cms/lib/api/api";
 
-export function 
-useBlock() {
+
+export function useBlock() {
   const queryClient = useQueryClient();
 
-  const filteredBlocks = (pageId: string) => {
-    const getBlockListQuery = useQuery({
-      queryKey: ["blocks", pageId],
-      queryFn: () => api.blocks.getBlockList(pageId),
-      enabled: !!pageId,
+  function useFilteredBlocks(page: string) {
+    return useQuery({
+      queryKey: ["blocks", page],
+      queryFn: () => api.block.get.list(page),
+      enabled: !!page,
     });
-  return getBlockListQuery;
-  };
+  }
 
   const addBlockMutation = useMutation({
-    mutationFn: api.blocks.create,
+    mutationFn: api.block.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["blocks"] });
     },
@@ -25,18 +23,18 @@ useBlock() {
   const updateBlockMutation = useMutation({
     mutationFn: ({
       id,
-      block,
+      data,
     }: {
       id: string;
-      block: Partial<Omit<Block, "id">>;
-    }) => api.blocks.update(id, block),
+      data: Partial<Omit<Block, "id">>;
+    }) => api.block.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["blocks"] });
     },
   });
 
   const removeBlockMutation = useMutation({
-    mutationFn: api.blocks.delete,
+    mutationFn: api.block.delete,
     onSuccess: (_, deletedId) => {
       queryClient.invalidateQueries({ queryKey: ["blocks"] });
     },
@@ -44,14 +42,14 @@ useBlock() {
 
   const updateBlockIndexMutation = useMutation({
     mutationFn: (updatedBlocks: Block[]) =>
-      api.blocks.updateOrder(updatedBlocks),
+      api.block.reorder(updatedBlocks),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["blocks"] });
     },
   });
 
   return {
-    filteredBlocks,
+    useFilteredBlocks,
     addBlock: addBlockMutation.mutate,
     updateBlock: updateBlockMutation.mutate,
     removeBlock: removeBlockMutation.mutate,

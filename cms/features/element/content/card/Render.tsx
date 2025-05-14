@@ -1,4 +1,4 @@
-import { Element } from "@/cms/lib/types/blocks";
+
 import { Card as UICard, CardHeader, CardTitle, CardContent } from "@/cms/components/ui/card";
 import { cn } from "@/cms/lib/utils";
 

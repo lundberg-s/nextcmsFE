@@ -6,16 +6,16 @@ import {
   SelectValue,
 } from "@/cms/components/ui/select";
 
-export default function DropdownSelect({
-  options,
-  variant = "default",
-  value,
-  onChange,
-  placeholder,
-  disabled = false,
-  noOptionsMessage = "No options available",
-  enhancedOption = null,
-}) {
+export default function DropdownSelect({ data, onChange }) {
+  const {
+    options,
+    variant = "default",
+    value,
+    placeholder,
+    disabled = false,
+    noOptionsMessage = "No options available",
+    enhancedOption = null,
+  } = data;
   const enhancedOptions = () => {
     if (enhancedOption === "All") {
       return [{ value: "all", label: "All" }, ...options];

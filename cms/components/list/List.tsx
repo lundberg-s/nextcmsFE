@@ -8,18 +8,30 @@ import {
   ListContent,
   ListItem,
   ListEmpty,
-  ListItemButton
+  ListItemButton,
 } from "@/cms/components/ui/list";
 
-interface SelectableListOption {
-  value: string;
-  label?: string;
-}
-
 interface SelectableListProps {
-  options: SelectableListOption[];
+  options?: Array<{ label?: string; value: string }>;
   value: string | null;
   onChange: (value: string) => void;
+  data: {
+    options?: Array<{ label?: string; value: string }>;
+    value?: string | null;
+    onChange?: (value: string) => void;
+    searchable?: boolean;
+    defaultSearchTerm?: string;
+    title?: string;
+    placeholder?: string;
+    emptyMessage?: string;
+    maxHeight?: string | number;
+    className?: string;
+    required?: boolean;
+    id: string;
+    name: string;
+    label: string;
+  };
+
   searchable?: boolean;
   defaultSearchTerm?: string;
   title?: string;
@@ -29,32 +41,31 @@ interface SelectableListProps {
   className?: string;
 }
 
-export function SelectableList({
-  options = [], // Provide default empty array
-  value,
-  onChange,
-  searchable = true,
-  defaultSearchTerm = "",
-  title,
-  placeholder = "Search...",
-  emptyMessage = "No options available",
-  maxHeight = "15rem",
-  className = "",
-}: SelectableListProps) {
+export function SelectableList({ data, onChange }: SelectableListProps) {
+  const {
+    options = [],
+    value,
+    searchable = false,
+    defaultSearchTerm = "",
+    title,
+    placeholder = "Search...",
+    emptyMessage = "No options available",
+    maxHeight = "300px",
+    className = "",
+  } = data;
   const [searchTerm, setSearchTerm] = useState(defaultSearchTerm);
-  
-  // Ensure options is always an array
+
   const safeOptions = Array.isArray(options) ? options : [];
-  
-  const filteredOptions = searchable && searchTerm
-    ? safeOptions.filter(option => 
-        (option.label || option.value).toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : safeOptions;
 
+  const filteredOptions =
+    searchable && searchTerm
+      ? safeOptions.filter((option) =>
+          (option.label || option.value)
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
+        )
+      : safeOptions;
 
-      console.log("options", options);
-      console.log("filteredOptions", filteredOptions);
   return (
     <div className={className}>
       {searchable && (
@@ -69,10 +80,8 @@ export function SelectableList({
       )}
 
       <ListRoot>
-        {title && (
-          <ListHeader>{title}</ListHeader>
-        )}
-        
+        {title && <ListHeader>{title}</ListHeader>}
+
         {!filteredOptions.length ? (
           <ListEmpty>{emptyMessage}</ListEmpty>
         ) : (

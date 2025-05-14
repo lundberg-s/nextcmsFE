@@ -1,23 +1,21 @@
-"use client";
+import { getPageBySlug } from "@/shared/lib/api/ssg";
+import { notFound } from "next/navigation";
+import { BlockItem } from "@/cms/features/block/BlockItem";
 
-import { BlockProvider } from "@/cms/lib/providers/BlockProvider";
-import { usePage } from "@/cms/lib/hooks/usePage";
-import LoadingView from "@/cms/components/LoadingView";
+export const revalidate = 60;
 
-export default function Home() {
-  const { pages } = usePage();
+export default async function HomePage() {
+  const page = await getPageBySlug("home"); 
 
-  const homePage = pages?.find((page) => page.slug === "home");
+  if (!page) notFound();
 
   return (
-    <LoadingView>
-    <main>
-      <div>
-        {homePage?.blocks.map((block) => (
-          <BlockProvider key={block.id} block={block} />
+    <div className="min-h-screen bg-background">
+      <div className="container-fluid">
+        {page.blocks.map((block: Block) => (
+          <BlockItem key={block.id} block={block} />
         ))}
       </div>
-    </main>
-    </LoadingView>
+    </div>
   );
 }

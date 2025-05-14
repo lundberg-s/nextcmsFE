@@ -14,17 +14,17 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { Block } from "@/cms/lib/types/blocks";
+
 
 interface useDndProps {
   blocks: Block[];
-  pageId: string;
+  page: string;
   updateIndex: (blocks: Block[]) => void;
 }
 
 export function useDnd({
   blocks,
-  pageId,
+  page,
   updateIndex,
 }: useDndProps) {
   const queryClient = useQueryClient();
@@ -61,11 +61,11 @@ export function useDnd({
     const updatedBlocks = arrayMove([...blocks], oldIndex, newIndex).map(
       (block, index) => ({
         ...block,
-        drag_index: index + 1,
+        order: index + 1,
       })
     );
 
-    queryClient.setQueryData(["blocks", pageId], updatedBlocks);
+    queryClient.setQueryData(["blocks", page], updatedBlocks);
 
     setTimeout(() => {
       updateIndex(updatedBlocks);

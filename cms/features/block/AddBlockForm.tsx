@@ -5,7 +5,7 @@ import { useCmsContext } from "@/cms/lib/context/CmsContext";
 import { useForm } from "@/cms/lib/hooks/useForm";
 import { Form } from "@/cms/components/form/Form";
 
-const blockTypes = ["hero", "features"] as const;
+const blockTypes = ["hero", "experimental"] as const;
 
 interface AddBlockFormProps {
   formRef: React.RefObject<HTMLFormElement>;
@@ -20,6 +20,11 @@ export function AddBlockForm({
 }: AddBlockFormProps) {
   const { addBlock } = useBlock();
   const { selectedPage } = useCmsContext();
+
+  const newBlockValues = {
+    type: "",
+    page: selectedPage?.id || "",
+  };
   
   const {
     formValues,
@@ -30,10 +35,7 @@ export function AddBlockForm({
     queryFn: addBlock,
     onSuccess: onSubmitCallback,
     onCancel: onCancelCallback,
-    defaultValues: {
-      type: "",
-      pageId: selectedPage?.id || ""
-    },
+    defaultValues: newBlockValues
   });
 
   const formConfig = {

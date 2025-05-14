@@ -16,6 +16,11 @@ export function AddPageForm({
   onSubmitCallback,
 }: AddPageFormProps) {
   const { addPage } = usePage();
+
+  const newPagesValues = {
+    title: "",
+    slug: "",
+  };
   
   const {
     formValues,
@@ -26,10 +31,7 @@ export function AddPageForm({
     queryFn: addPage,
     onSuccess: onSubmitCallback,
     onCancel: onCancelCallback,
-    defaultValues: {
-      title: "",
-      slug: "",
-    },
+    defaultValues: newPagesValues
 
   });
 

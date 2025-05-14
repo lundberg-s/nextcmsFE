@@ -4,10 +4,6 @@ import { usePage } from "@/cms/lib/hooks/usePage";
 import { useCmsContext } from "@/cms/lib/context/CmsContext";
 import { useForm } from "@/cms/lib/hooks/useForm";
 import { Form } from "@/cms/components/form/Form";
-import { Trash2 } from "lucide-react";
-import { Button } from "@/cms/components/ui/button";
-import { ConfirmationModal } from "@/cms/components/modals/ConfirmationModal";
-import { Page } from "@/cms/lib/types/page";
 
 interface EditPageFormProps {
   formRef: React.RefObject<HTMLFormElement>;
@@ -27,6 +23,12 @@ export function EditPageForm({
   const { updatePage, removePage } = usePage();
   const { selectedPage, setSelectedPage } = useCmsContext();
   
+  const selectedPagesValues = {
+    id: selectedPage ? selectedPage.id : "",
+    title: selectedPage ? selectedPage.title : "",
+    slug: selectedPage ? selectedPage.slug : "",
+  };
+
   const {
     formValues,
     handleFieldChange,
@@ -40,13 +42,7 @@ export function EditPageForm({
     onSuccess: onSubmitCallback,
     onCancel: onCancelCallback,
     onDelete: onDeleteCallback,
-    defaultValues: selectedPage
-      ? {
-          id: selectedPage.id,
-          title: selectedPage.title,
-          slug: selectedPage.slug,
-        }
-      : {}
+    defaultValues: selectedPagesValues
   });
 
   if (setHandleDelete) {

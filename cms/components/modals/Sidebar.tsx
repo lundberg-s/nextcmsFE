@@ -1,5 +1,5 @@
 import { useSidebarContent } from "@/cms/lib/context/SidebarContext";
-import { useSidebar } from "@/cms/components/ui/sidebar";
+import { SidebarHeader, useSidebar } from "@/cms/components/ui/sidebar";
 import {
   Sidebar,
   SidebarContent,
@@ -11,11 +11,16 @@ import {
 import { Button } from "../ui/button";
 import React from "react";
 
+type BodyProps = {
+  id?: string;
+  onCancel?: () => void;
+};
+
 export function AppSidebar() {
   const { body, footer } = useSidebarContent();
 
-  const formId = React.isValidElement(body) ? body.props?.id : undefined;
-  const onCancel = React.isValidElement(body) ? body.props?.onCancel : undefined;
+  const formId = React.isValidElement(body) ? (body.props as BodyProps)?.id : undefined;
+  const onCancel = React.isValidElement(body) ? (body.props as BodyProps)?.onCancel : undefined;
 
   const handleClose = () => {
     if (formId) {
@@ -33,11 +38,7 @@ export function AppSidebar() {
   return (
     <Sidebar side="right">
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupContent>
             <SidebarMenu>{body}</SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
         <div className="flex justify-between gap-2">

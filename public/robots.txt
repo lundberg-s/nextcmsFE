@@ -1,0 +1,6 @@
+# Allow all user‑agents to crawl everything
+User-agent: *
+Disallow:
+
+# Sitemap location (optional)
+Sitemap: /sitemap.xml

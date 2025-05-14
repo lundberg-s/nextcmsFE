@@ -1,4 +1,4 @@
-import { Element } from "@/cms/lib/types/blocks";
+
 import { Input } from "@/cms/components/ui/input";
 import { cn } from "@/cms/lib/utils";
 import { Label } from "@/cms/components/ui/label";
@@ -6,6 +6,7 @@ import { Label } from "@/cms/components/ui/label";
 
 interface InputProps {
   data: Partial<Element>;
+  onChange: (key: string, value: string | string[]) => void;
 }
 
 export function EditInput({ data }: InputProps) {

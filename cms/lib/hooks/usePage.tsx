@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { api } from "@/cms/lib/api";
-import { Page } from "@/cms/lib/types/page";
+import { api } from "@/cms/lib/api/api";
+
 
 export function usePage() {
   const queryClient = useQueryClient();
@@ -11,7 +11,7 @@ export function usePage() {
     error: pagesError,
   } = useQuery({
     queryKey: ["pages"],
-    queryFn: api.pages.getAll,
+    queryFn: api.page.get.list,
     staleTime: Infinity,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
@@ -20,7 +20,7 @@ export function usePage() {
 
 
   const addPageMutation = useMutation({
-    mutationFn: api.pages.create,
+    mutationFn: api.page.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pages"] });
     },
@@ -29,18 +29,18 @@ export function usePage() {
   const updatePageMutation = useMutation({
     mutationFn: ({
       id,
-      page,
+      data,
     }: {
       id: string;
-      page: Partial<Omit<Page, "id" | "blocks">>;
-    }) => api.pages.update(id, page),
+      data: Partial<Omit<Page, "id" | "blocks">>;
+    }) => api.page.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pages"] });
     },
   });
 
   const removePageMutation = useMutation({
-    mutationFn: api.pages.delete,
+    mutationFn: api.page.delete,
     onSuccess: (_, deletedId) => {
       queryClient.invalidateQueries({ queryKey: ["pages"] });
     },
