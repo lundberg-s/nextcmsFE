@@ -43,7 +43,11 @@ export async function fetchWithAuthRetry(
     throw new Error(`Error ${response.status}: ${errorText || response.statusText}`);
   }
 
-  return response.json();
+  if (response.status !== 204 && response.headers.get("Content-Type")?.includes("application/json")) {
+    return response.json();
+  }
+
+  return null;
 }
 
 export function createOptions(

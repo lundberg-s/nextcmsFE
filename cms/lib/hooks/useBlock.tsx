@@ -34,7 +34,7 @@ export function useBlock() {
   });
 
   const removeBlockMutation = useMutation({
-    mutationFn: api.block.delete,
+    mutationFn: (id: string) => api.block.delete(id),
     onSuccess: (_, deletedId) => {
       queryClient.invalidateQueries({ queryKey: ["blocks"] });
     },

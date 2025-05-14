@@ -19,6 +19,5 @@ export const client = {
   delete: (url: string, headers?: HeadersInit) =>
     fetchWithAuthRetry(url, {
       method: "DELETE",
-      headers,
     }),
 };
