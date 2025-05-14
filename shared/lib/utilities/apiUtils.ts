@@ -22,6 +22,11 @@ export async function fetchWithAuthRetry(
 
     if (!refreshResponse.ok) {
       const errorData = await refreshResponse.json().catch(() => ({}));
+      
+      if (typeof window !== "undefined") {
+        window.location.href = "/login";
+      }
+
       throw new Error(errorData.error || "Failed to refresh token");
     }
 
