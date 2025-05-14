@@ -19,7 +19,7 @@ interface ConfirmationModalProps {
   trigger: ReactNode;
   confirmText?: string;
   cancelText?: string;
-  onConfirm: () => void;
+  onConfirm?: () => void;
   children?: ReactNode;
 }
 
