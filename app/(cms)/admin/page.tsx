@@ -1,6 +1,3 @@
-// app/admin/page.tsx
-"use client";
-
 import { PageList } from "@/cms/features/page/PageList";
 import { ScrollArea } from "@/cms/components/ui/scroll-area";
 
