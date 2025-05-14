@@ -5,8 +5,8 @@ import { Form } from "@/cms/components/form/Form";
 import { useAuth } from "@/shared/lib/hooks/useAuth";
 
 interface LoginFormProps {
-  formRef: React.RefObject<HTMLFormElement>;
-  onCancelCallback: () => void;
+  formRef?: React.RefObject<HTMLFormElement>;
+  onCancelCallback?: () => void;
   onSubmitCallback?: () => void;
 }
 

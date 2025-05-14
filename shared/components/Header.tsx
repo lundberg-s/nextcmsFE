@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/cms/components/ui/button";
 import { usePage } from "@/cms/lib/hooks/usePage";
-import { DialogModal } from "../components/modal/DialogModal";
+import { DialogModal } from "./modal/DialogModal";
 import { LoginForm } from "@/shared/features/auth/LoginForm";
 
 export default function PageNavigation() {
@@ -15,14 +15,16 @@ export default function PageNavigation() {
     button: {
       label: "Login",
       icon: "login",
-      variant: "defaultLeft",
+      variant: "default",
     },
   };
 
   return (
     <div className="absolute w-full">
       <nav className="container mx-auto flex justify-between items-center p-5">
-        <h1 className="text-xl font-bold text-gray-800 left-10">MyApp</h1>
+        <h1 className="text-xl font-bold text-gray-800 left-10">
+          <Link href="/">MyApp</Link></h1>
+
         <ul className="flex space-x-6 text-xl font-bold">
           {pages?.map((page) => (
             <li key={page.id}>
@@ -37,10 +39,7 @@ export default function PageNavigation() {
           content={login.form}
           button={login.button}
         />
-        <Link href="/login">
-          <Button>Login</Button>
-        </Link>
       </nav>
-    </div>
+    </div >
   );
 }
