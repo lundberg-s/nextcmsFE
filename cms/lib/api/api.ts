@@ -1,5 +1,5 @@
 // cmsApi.ts
-import { apiClient as http } from "@/shared/lib/api/apiClient";
+import { client as http } from "@/shared/lib/api/client";
 const API_BASE_URL = "/api/cms";
 
 export const api = {

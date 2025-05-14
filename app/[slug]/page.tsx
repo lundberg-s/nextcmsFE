@@ -1,41 +1,27 @@
-"use client";
-
-import { useEffect, useMemo, useState } from "react";
-import { usePage } from "@/cms/lib/hooks/usePage";
+import { getPageBySlug, getAllPages } from "@/shared/lib/api/ssg";
 import { BlockItem } from "@/cms/features/block/BlockItem";
-import { useCmsContext } from "@/cms/lib/context/CmsContext";
-import { useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 
-export default function Page({ params }: { params: { slug: string } }) {
-  const { pages, isLoadingPages } = usePage();
-  const { setSelectedPage, selectedPage } = useCmsContext();
-  const router = useRouter();
+export const revalidate = 60;
 
-  const foundPage = useMemo(
-    () => pages.find((p) => p.slug === params.slug),
-    [pages, params.slug]
-  );
+export async function generateStaticParams() {
+  const pages = await getAllPages();
+  return pages.map((page) => ({
+    slug: page.slug,
+  }));
+}
 
-  useEffect(() => {
-    if (pages.length === 0) {
-      return;
-    }
+export default async function Page({ params }: { params: { slug: string } }) {
+  const page = await getPageBySlug(params.slug);
 
-    if (foundPage) {
-      setSelectedPage(foundPage);
-    } else {
-      router.push("/404");
-    }
-  }, [foundPage, pages, router, setSelectedPage]);
-
-  // if (isLoadingPages) {
-  //   return <div>Loading...</div>;
-  // }
+  if (!page) {
+    notFound();
+  }
 
   return (
     <div className="min-h-screen bg-background">
       <div className="container-fluid">
-        {selectedPage?.blocks.map((block) => (
+        {page.blocks.map((block) => (
           <BlockItem key={block.id} block={block} />
         ))}
       </div>

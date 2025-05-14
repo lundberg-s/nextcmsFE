@@ -1,8 +1,6 @@
-// apiClient.ts
-
 const BASE_URL = process.env.API_BASE_URL || "http://localhost:8000";
 
-async function fetchWithAuthRetry(
+export async function fetchWithAuthRetry(
   url: string,
   options: RequestInit = {}
 ): Promise<any> {
@@ -43,7 +41,11 @@ async function fetchWithAuthRetry(
   return response.json();
 }
 
-function createOptions(method: string, body?: any, headers: HeadersInit = {}) {
+export function createOptions(
+  method: string,
+  body?: any,
+  headers: HeadersInit = {}
+): RequestInit {
   return {
     method,
     headers: {
@@ -53,26 +55,3 @@ function createOptions(method: string, body?: any, headers: HeadersInit = {}) {
     body: body ? JSON.stringify(body) : undefined,
   };
 }
-
-export const apiClient = {
-  get: (url: string, headers?: HeadersInit) =>
-    fetchWithAuthRetry(url, {
-      method: "GET",
-      headers,
-    }),
-
-  post: (url: string, data: any, headers?: HeadersInit) =>
-    fetchWithAuthRetry(url, createOptions("POST", data, headers)),
-
-  put: (url: string, data: any, headers?: HeadersInit) =>
-    fetchWithAuthRetry(url, createOptions("PUT", data, headers)),
-
-  patch: (url: string, data: any, headers?: HeadersInit) =>
-    fetchWithAuthRetry(url, createOptions("PATCH", data, headers)),
-
-  delete: (url: string, headers?: HeadersInit) =>
-    fetchWithAuthRetry(url, {
-      method: "DELETE",
-      headers,
-    }),
-};

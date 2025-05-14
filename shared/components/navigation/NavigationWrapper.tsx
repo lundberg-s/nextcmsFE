@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import PageNavigation from './PageNavigation';
+import PageNavigation from '../../features/Header';
 import { usePathname } from 'next/navigation';
 
 const NavigationWrapper: React.FC = () => {
