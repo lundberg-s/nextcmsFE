@@ -7,11 +7,11 @@ interface FeaturesProps {
 }
 
 export function Features({ block }: FeaturesProps) {
-  const { content, settings } = block;
+  const { content, config } = block;
 
   return (
     <div
-      className={`py-20 bg-${settings?.backgroundColor || 'bg-background'}`}
+      className={`py-20 bg-${config?.backgroundColor || 'bg-background'}`}
     >
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12">{content.title}</h2>

@@ -3,6 +3,8 @@ import { Button } from "@/cms/components/ui/button";
 import { usePage } from "@/cms/lib/hooks/usePage";
 import { DialogModal } from "./modal/DialogModal";
 import { LoginForm } from "@/shared/features/auth/LoginForm";
+import { Separator } from "@radix-ui/react-select";
+import { SelectSeparator } from "@/cms/components/ui/select";
 
 export default function PageNavigation() {
   const { pages } = usePage();
@@ -14,31 +16,41 @@ export default function PageNavigation() {
     form: LoginForm,
     button: {
       label: "Login",
-      icon: "login",
-      variant: "default",
+      variant: "ghost",
     },
   };
 
   return (
-    <div className="absolute w-full">
-      <nav className="container mx-auto flex justify-between items-center p-5">
-        <h1 className="text-xl font-bold text-gray-800 left-10">
-          <Link href="/">MyApp</Link></h1>
+    <div className="fixed bg-black bg-opacity-30 w-full text-white z-10 backdrop-blur-sm shadow-md">
+      <nav className="container mx-auto flex justify-between items-center p-3">
+        <h1 className="text-xl font-bold">
+          <Link href="/">
+            <span className="text-white">
+              MyApp
+            </span>
+          </Link>
+        </h1>
 
-        <ul className="flex space-x-6 text-xl font-bold">
-          {pages?.map((page) => (
-            <li key={page.id}>
-              <Link href={page.slug}>{page.title}</Link>
-            </li>
-          ))}
-        </ul>
-        <DialogModal
-          key={login.title}
-          title={login.title}
-          description={login.description}
-          content={login.form}
-          button={login.button}
-        />
+        <div className="flex items-center space-x-4">
+          <ul className="flex space-x-6 text-md font-normal pr-3">
+            {pages?.map((page) => (
+              <li key={page.id}>
+                <Link href={page.slug}>
+                  <span className="text-white">
+                    {page.title}
+                  </span></Link>
+              </li>
+            ))}
+          </ul>
+          <SelectSeparator className="w-0.5 h-8 bg-gray-200" />
+          <DialogModal
+            key={login.title}
+            title={login.title}
+            description={login.description}
+            content={login.form}
+            button={login.button}
+          />
+        </div>
       </nav>
     </div >
   );

@@ -8,6 +8,8 @@ const config: Config = {
 		'./cms/components/**/*.{js,ts,jsx,tsx,mdx}',
 		'./cms/features/**/*.{js,ts,jsx,tsx,mdx}',
 		'./cms/app/**/*.{js,ts,jsx,tsx,mdx}',
+		'./shared/components/**/*.{js,ts,jsx,tsx,mdx}',
+		'./shared/features/**/*.{js,ts,jsx,tsx,mdx}',
 	],
 	theme: {
 		extend: {

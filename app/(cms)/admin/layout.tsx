@@ -19,7 +19,6 @@ export default function AdminLayout({
           <SidebarProvider>
             {/* <AdminNavigation /> */}
             {children}
-
             <AppSidebar />
           </SidebarProvider>
         </SidebarContentProvider>
