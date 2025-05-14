@@ -15,7 +15,7 @@ import { DialogModal } from "@/cms/components/modals/DialogModal";
 export function PageList({ }) {
   const { pages, isLoadingPages } = usePage();
   const { selectedPage, setSelectedPage } = useCmsContext();
-
+  console.log("selectedPage", selectedPage);
   const initialPage = pages.find((page) => page.slug === "home");
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export function PageList({ }) {
     <div className="mx-auto p-4 h-full">
       <ScrollArea className="w-full h-full">
         <Tabs
-          defaultValue={initialPage?.id}
+          defaultValue={selectedPage?.id || undefined}
           onValueChange={(value) =>
             setSelectedPage(pages.find((page) => page.id === value) || null)
           }

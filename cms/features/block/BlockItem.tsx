@@ -1,5 +1,7 @@
 'use client';
 
+import { DraggableAttributes } from "@dnd-kit/core";
+import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { Hero } from '@/cms/features/block/blocks/Hero';
 import { Experimental } from '@/cms/features/block/blocks/Experimental';
 import { Features } from '@/cms/features/block/blocks/Features';
@@ -12,8 +14,8 @@ interface BlockItemProps {
   block: Block;
   onEdit?: () => void;
   onDelete?: () => void;
-  attributes?: any;
-  listeners?: any;
+  attributes?: DraggableAttributes;
+  listeners?: SyntheticListenerMap | undefined;
 }
 
 export function BlockItem({

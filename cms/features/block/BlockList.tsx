@@ -1,15 +1,11 @@
 "use client";
 import { BlockItem } from "@/cms/features/block/BlockItem";
-import { DragHandle } from "@/cms/components/ui/drag-handle";
-import { Button } from "@/cms/components/ui/button";
-import { ConfirmationModal } from "@/cms/components/modals/ConfirmationModal";
 import { EditBlockForm } from "@/cms/features/block/EditBlockForm";
 import { useCmsContext } from "@/cms/lib/context/CmsContext";
 import { useSidebar } from "@/cms/components/ui/sidebar";
 import { useSidebarContent } from "@/cms/lib/context/SidebarContext";
 import { useBlock } from "@/cms/lib/hooks/useBlock";
 import { useDnd } from "@/cms/lib/hooks/useDnd";
-import { getIcon } from "@/cms/lib/utilities/GetIcon";
 import { Draggable } from "@/cms/components/dnd/Draggable";
 import { useEffect } from "react";
 
@@ -86,32 +82,33 @@ export function BlockList() {
       {renderDndContext(
         <div className="space-y-4">
           {blocks.map((block) => {
-            const blockItemProps = {
-              onEdit: () => handleEditClick(block),
-              onDelete: () => removeBlock(block.id),
-            };
-
             return (
               <Draggable id={block.id} key={block.id} className="relative group">
-                {({ attributes, listeners }) => (
-                  <>
-                    {selectedBlock?.id === block.id ? (
-                      <BlockItem
-                        block={selectedBlock}
-                        attributes={attributes}
-                        listeners={listeners}
-                        {...blockItemProps}
-                      />
-                    ) : (
-                      <BlockItem
-                        block={block}
-                        attributes={attributes}
-                        listeners={listeners}
-                        {...blockItemProps}
-                      />
-                    )}
-                  </>
-                )}
+                {({ attributes, listeners }) => {
+                  const isEditing = selectedBlock?.id === block?.id
+
+                  const blockItemProps = {
+                    onEdit: () => handleEditClick(block),
+                    onDelete: () => removeBlock(block.id),
+                    attributes,
+                    listeners,
+                  };
+                  return (
+                    <>
+                      {isEditing ? (
+                        <BlockItem
+                          block={selectedBlock}
+                          {...blockItemProps}
+                        />
+                      ) : (
+                        <BlockItem
+                          block={block}
+                          {...blockItemProps}
+                        />
+                      )}
+                    </>
+                  );
+                }}
               </Draggable>
             );
           })}
