@@ -2,7 +2,7 @@ const BASE_URL = process.env.API_BASE_URL || "http://localhost:8000";
 
 export async function fetchWithAuthRetry(
   url: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
 ): Promise<any> {
   let response = await fetch(`${BASE_URL}${url}`, {
     ...options,
@@ -21,9 +21,9 @@ export async function fetchWithAuthRetry(
     });
 
     if (!refreshResponse.ok) {
-      const errorData = await refreshResponse.json().catch(() => ({}));
-      
-      if (typeof window !== "undefined") {
+      const errorData = await refreshResponse.json().catch(() => ({ error: "Unknown error" }));
+
+      if (typeof window !== "undefined" && window.location.pathname.startsWith("/admin")) {
         window.location.href = "/login";
       }
 

@@ -43,7 +43,7 @@ export async function middleware(request: NextRequest) {
         response.headers.set("Set-Cookie", newCookie);
         return response;
       }
-    }
+    } 
 
     console.warn("Both verify and refresh failed. Redirecting to login.");
     return NextResponse.redirect(new URL("/login", request.url));
