@@ -5,9 +5,11 @@ import { DialogModal } from "./modal/DialogModal";
 import { LoginForm } from "@/shared/features/auth/LoginForm";
 import { Separator } from "@radix-ui/react-select";
 import { SelectSeparator } from "@/cms/components/ui/select";
+import { useUser } from "../lib/hooks/useUser";
 
 export default function PageNavigation() {
   const { pages } = usePage();
+  const { user } = useUser();
 
   const login = {
     title: "Login",
@@ -25,9 +27,7 @@ export default function PageNavigation() {
       <nav className="container mx-auto flex justify-between items-center p-3">
         <h1 className="text-xl font-bold">
           <Link href="/">
-            <span className="text-white">
-              MyApp
-            </span>
+            <span className="text-white">MyApp</span>
           </Link>
         </h1>
 
@@ -36,22 +36,28 @@ export default function PageNavigation() {
             {pages?.map((page) => (
               <li key={page.id}>
                 <Link href={page.slug}>
-                  <span className="text-white">
-                    {page.title}
-                  </span></Link>
+                  <span className="text-white">{page.title}</span>
+                </Link>
               </li>
             ))}
           </ul>
           <SelectSeparator className="w-0.5 h-8 bg-gray-200" />
-          <DialogModal
-            key={login.title}
-            title={login.title}
-            description={login.description}
-            content={login.form}
-            button={login.button}
-          />
+          {user ? (
+            // <span>{user.first_name}</span>
+            <Link href="/admin">
+              <span className="text-white">Admin</span>
+            </Link>
+          ) : (
+            <DialogModal
+              key={login.title}
+              title={login.title}
+              description={login.description}
+              content={login.form}
+              button={login.button}
+            />
+          )}
         </div>
       </nav>
-    </div >
+    </div>
   );
 }
