@@ -10,6 +10,10 @@ export function useBlock() {
       queryKey: ["blocks", page],
       queryFn: () => api.block.get.list(page),
       enabled: !!page,
+      staleTime: 1000 * 60 * 5,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      refetchOnMount: false,
     });
   }
 
