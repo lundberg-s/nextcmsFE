@@ -4,7 +4,7 @@ import { api } from "@/shared/lib/api/api";
 export function useUser() {
   const { data: user, isLoading, error } = useQuery({
     queryKey: ["user"],
-    queryFn: api.user.getUser,
+    queryFn: api.user.get,
     staleTime: 1000 * 60 * 5,
   });
 
