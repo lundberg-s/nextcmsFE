@@ -18,12 +18,6 @@ export function BlockList() {
   const page = selectedPage?.id || '';
   const { data: blocks = [], isLoading } = useFilteredBlocks(page);
 
-  useEffect(() => {
-    if (blocks.length > 0) {
-      console.log("blocks updated", blocks);
-    }
-  }, [blocks]);
-
   const { activeBlock, renderDndContext } = useDnd({
     blocks,
     page,
@@ -90,6 +84,7 @@ export function BlockList() {
                   const blockItemProps = {
                     onEdit: () => handleEditClick(block),
                     onDelete: () => removeBlock(block.id),
+                    isEditing: true,
                     attributes,
                     listeners,
                   };
