@@ -56,7 +56,7 @@ export function Hero({ block }: HeroProps) {
       ) : (
         content &&
         Object.entries(content).map(([type, value]) => (
-          <Element type={type as ElementType} value={value} />
+          <Element key={type} type={type as ElementType} value={value} />
         ))
       )}
     </div>

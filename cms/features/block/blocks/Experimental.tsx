@@ -24,7 +24,6 @@ export function Experimental({ block }: ExperimentalProps) {
     setTargetPosition(position);
 
     const [type, component] = selectedComponent ? [selectedComponent.type, selectedComponent] : ["", null];
-    console.log("block", block);
     // Update the block with the new position for this component
     if (!component) return;
     updateBlock(

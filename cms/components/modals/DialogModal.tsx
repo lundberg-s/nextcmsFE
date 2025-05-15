@@ -131,7 +131,6 @@ export function DialogModal({
                     <ConfirmationModal
                       onConfirm={() => {
                         if (handleDeleteRef.current) {
-                          console.log("Delete action triggered");
                           handleDeleteRef.current();
                         }
                       }}
