@@ -11,7 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogFooter,
   AlertDialogTrigger,
-} from "@/cms/components/ui/alert-dialog";
+} from "@/shared/ui/alert-dialog";
 
 interface ConfirmationModalProps {
   title?: string;

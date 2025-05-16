@@ -5,8 +5,8 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/cms/components/ui/carousel";
-import { Card } from "@/cms/components/ui/card";
+} from "@/shared/ui/carousel";
+import { Card } from "@/shared/ui/card";
 import Image from "next/image";
 
 interface RenderCarouselProps {

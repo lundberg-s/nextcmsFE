@@ -1,5 +1,5 @@
-import { Textarea } from "@/cms/components/ui/textarea";
-import { Label } from "@/cms/components/ui/label";
+import { Textarea } from "@/shared/ui/textarea";
+import { Label } from "@/shared/ui/label";
 
 const TextareaField = ({ id, name, value, onChange, placeholder, label }) => (
   <>

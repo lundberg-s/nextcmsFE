@@ -3,7 +3,7 @@ import {
   TabsList,
   TabsTrigger,
   TabsContent,
-} from "@/cms/components/ui/tabs";
+} from "@/shared/ui/tabs";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import React from "react";
 

@@ -1,9 +1,9 @@
-import { Select } from "@/cms/components/ui/select";
-import { SelectTrigger, SelectValue } from "@/cms/components/ui/select";
-import { SelectItem } from "@/cms/components/ui/select";
-import { SelectContent } from "@/cms/components/ui/select";
-import { Label } from "@/cms/components/ui/label";
-import { Input } from "@/cms/components/ui/input";
+import { Select } from "@/shared/ui/select";
+import { SelectTrigger, SelectValue } from "@/shared/ui/select";
+import { SelectItem } from "@/shared/ui/select";
+import { SelectContent } from "@/shared/ui/select";
+import { Label } from "@/shared/ui/label";
+import { Input } from "@/shared/ui/input";
 
 import React from "react";
 

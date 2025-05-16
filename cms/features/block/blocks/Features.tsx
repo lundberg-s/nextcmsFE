@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/cms/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card';
 
 interface FeaturesProps {
   block: Block;

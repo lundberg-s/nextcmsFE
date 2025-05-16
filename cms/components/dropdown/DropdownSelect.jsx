@@ -4,7 +4,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/cms/components/ui/select";
+} from "@/shared/ui/select";
 
 export default function DropdownSelect({ data, onChange }) {
   const {

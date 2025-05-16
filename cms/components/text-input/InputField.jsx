@@ -1,5 +1,5 @@
-import { Input } from "@/cms/components/ui/input";
-import { Label } from "@/cms/components/ui/label";
+import { Input } from "@/shared/ui/input";
+import { Label } from "@/shared/ui/label";
 
 const InputField = ({ data, onChange }) => {
   const { id, name, value, placeholder, label } = data;

@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { Button } from "@/cms/components/ui/button";
+import { Button } from "@/shared/ui/button";
 import { usePage } from "@/cms/lib/hooks/usePage";
 import { DialogModal } from "./modal/DialogModal";
 import { LoginForm } from "@/shared/features/auth/LoginForm";
 import { Separator } from "@radix-ui/react-select";
-import { SelectSeparator } from "@/cms/components/ui/select";
+import { SelectSeparator } from "@/shared/ui/select";
 import { useUser } from "../lib/hooks/useUser";
 
 export default function PageNavigation() {

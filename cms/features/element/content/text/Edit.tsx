@@ -1,7 +1,7 @@
-import { Input } from "@/cms/components/ui/input";
-import { Label } from "@/cms/components/ui/label";
+import { Input } from "@/shared/ui/input";
+import { Label } from "@/shared/ui/label";
 import TextareaField from "@/cms/components/text-input/TextareaField";
-import { Select, SelectTrigger, SelectContent, SelectItem } from "@/cms/components/ui/select";
+import { Select, SelectTrigger, SelectContent, SelectItem } from "@/shared/ui/select";
 import React from "react";
 
 interface EditTextComponentProps {

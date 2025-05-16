@@ -1,7 +1,7 @@
 
-import { Input } from "@/cms/components/ui/input";
+import { Input } from "@/shared/ui/input";
 import { cn } from "@/cms/lib/utils";
-import { Label } from "@/cms/components/ui/label";
+import { Label } from "@/shared/ui/label";
 
 
 interface InputProps {

@@ -1,8 +1,8 @@
 import React from 'react'
 
 
-import { Label } from '@/cms/components/ui/label'
-import { Textarea } from '@/cms/components/ui/textarea'
+import { Label } from '@/shared/ui/label'
+import { Textarea } from '@/shared/ui/textarea'
 
 interface EditDescriptionComponentProps {
   data: Partial<Element>;

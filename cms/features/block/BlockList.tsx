@@ -2,7 +2,7 @@
 import { BlockItem } from "@/cms/features/block/BlockItem";
 import { EditBlockForm } from "@/cms/features/block/EditBlockForm";
 import { useCmsContext } from "@/cms/lib/context/CmsContext";
-import { useSidebar } from "@/cms/components/ui/sidebar";
+import { useSidebar } from "@/shared/ui/sidebar";
 import { useSidebarContent } from "@/cms/lib/context/SidebarContext";
 import { useBlock } from "@/cms/lib/hooks/useBlock";
 import { useDnd } from "@/cms/lib/hooks/useDnd";

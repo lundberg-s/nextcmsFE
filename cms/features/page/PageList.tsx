@@ -10,7 +10,7 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { AddPageForm } from "./AddPageForm";
 import { EditPageForm } from "./EditPageForm";
 import { DialogModal } from "@/cms/components/modals/DialogModal";
-import { Spinner } from "@/cms/components/ui/spinner";
+import { Spinner } from "@/shared/ui/spinner";
 import LoadingSpinner from "@/shared/components/loading/LoadingSpinner";
 
 export function PageList({}) {

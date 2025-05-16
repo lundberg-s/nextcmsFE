@@ -1,5 +1,5 @@
 
-import { Button } from "@/cms/components/ui/button";
+import { Button } from "@/shared/ui/button";
 import { cn } from "@/cms/lib/utils";
 
 interface ButtonProps {
