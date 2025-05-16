@@ -5,7 +5,6 @@ import { usePage } from "@/cms/lib/hooks/usePage";
 import { useCmsContext } from "@/cms/lib/context/CmsContext";
 import { BlockList } from "../block/BlockList";
 import { AddBlockForm } from "@/cms/features/block/AddBlockForm";
-import { PageTabs } from "./PageTabs";
 import { useEffect, useState } from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { AddPageForm } from "./AddPageForm";
