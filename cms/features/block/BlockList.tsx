@@ -7,7 +7,6 @@ import { useSidebarContent } from "@/cms/lib/context/SidebarContext";
 import { useBlock } from "@/cms/lib/hooks/useBlock";
 import { useDnd } from "@/cms/lib/hooks/useDnd";
 import { Draggable } from "@/cms/components/dnd/Draggable";
-import { useEffect } from "react";
 
 export function BlockList() {
   const { selectedPage, selectedBlock, setSelectedBlock } = useCmsContext();
@@ -15,7 +14,7 @@ export function BlockList() {
   const { toggleSidebar, setOpen, open } = useSidebar();
   const { setBody, clear } = useSidebarContent();
 
-  const page = selectedPage?.id || '';
+  const page = selectedPage?.id || "";
   const { data: blocks = [], isLoading } = useFilteredBlocks(page);
 
   const { activeBlock, renderDndContext } = useDnd({
@@ -63,10 +62,6 @@ export function BlockList() {
     openEditor(block);
   };
 
-  if (isLoading) {
-    return <div>Loading blocks...</div>;
-  }
-
   if (!blocks || blocks.length === 0) {
     return <div>No blocks found for this page.</div>;
   }
@@ -77,9 +72,13 @@ export function BlockList() {
         <div className="space-y-4">
           {blocks.map((block) => {
             return (
-              <Draggable id={block.id} key={block.id} className="relative group">
+              <Draggable
+                id={block.id}
+                key={block.id}
+                className="relative group"
+              >
                 {({ attributes, listeners }) => {
-                  const isEditing = selectedBlock?.id === block?.id
+                  const isEditing = selectedBlock?.id === block?.id;
 
                   const blockItemProps = {
                     onEdit: () => handleEditClick(block),
@@ -91,15 +90,9 @@ export function BlockList() {
                   return (
                     <>
                       {isEditing ? (
-                        <BlockItem
-                          block={selectedBlock}
-                          {...blockItemProps}
-                        />
+                        <BlockItem block={selectedBlock} {...blockItemProps} />
                       ) : (
-                        <BlockItem
-                          block={block}
-                          {...blockItemProps}
-                        />
+                        <BlockItem block={block} {...blockItemProps} />
                       )}
                     </>
                   );
@@ -108,11 +101,7 @@ export function BlockList() {
             );
           })}
         </div>,
-        activeBlock && (
-          <BlockItem
-            block={activeBlock}
-          />
-        )
+        activeBlock && <BlockItem block={activeBlock} />
       )}
     </>
   );

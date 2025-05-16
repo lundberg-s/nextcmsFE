@@ -18,6 +18,7 @@ interface UseFormProps<T = any> {
   defaultValues: Partial<Omit<Page, "id" | "blocks">>;
   queryFn: QueryFunction<T>;
   deleteFn?: (id: string, options?: { onSuccess?: () => void }) => void; // Add this
+  loading?: boolean;
   setState?: React.Dispatch<React.SetStateAction<T>> | any;
   onSuccess?: () => void;
   onCancel?: () => void;
@@ -28,6 +29,7 @@ export function useForm<T extends Partial<Omit<Page, "id" | "blocks">>>({
   defaultValues,
   queryFn,
   deleteFn,
+  loading,
   setState,
   onSuccess,
   onCancel,
@@ -46,6 +48,7 @@ export function useForm<T extends Partial<Omit<Page, "id" | "blocks">>>({
   };
 
   const handleFormSubmit = handleSubmit((data) => {
+    if (loading) return;
     const payload = id ? { id, data } : (data as T);
 
     queryFn(payload as T & { id: string; page: T }, {

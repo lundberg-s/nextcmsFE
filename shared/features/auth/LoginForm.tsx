@@ -15,7 +15,7 @@ export function LoginForm({
   onCancelCallback,
   onSubmitCallback,
 }: LoginFormProps) {
-  const { login } = useAuth();
+  const { login, isPending } = useAuth();
 
   const initialValues = {
     email: "",
@@ -29,10 +29,10 @@ export function LoginForm({
     handleFormCancel
   } = useForm({
     queryFn: login,
+    loading: isPending,
     onSuccess: onSubmitCallback,
     onCancel: onCancelCallback,
-    defaultValues: initialValues
-
+    defaultValues: initialValues,
   });
 
   const formConfig = {
@@ -62,6 +62,7 @@ export function LoginForm({
     <Form
       ref={formRef}
       config={formConfig}
+      loading={isPending}
       onChange={handleFieldChange}
       onSubmit={handleFormSubmit}
       onReset={handleFormCancel}
