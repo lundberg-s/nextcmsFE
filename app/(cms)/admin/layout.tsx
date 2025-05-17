@@ -17,7 +17,7 @@ export default function AdminLayout({
       <BlockPreviewProvider>
         <SidebarContentProvider>
           <SidebarProvider>
-            {/* <AdminNavigation /> */}
+            <AdminNavigation />
             {children}
             <AppSidebar />
           </SidebarProvider>
