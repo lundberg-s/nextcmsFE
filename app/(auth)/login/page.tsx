@@ -1,8 +1,8 @@
 'use client';
 
 import { useRef } from 'react';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/cms/components/ui/card';
-import { Button } from '@/cms/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/shared/ui/card';
+import { Button } from '@/shared/ui/button';
 import { LoginForm } from '@/shared/features/auth/LoginForm';
 
 

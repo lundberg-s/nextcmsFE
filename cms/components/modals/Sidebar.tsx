@@ -1,5 +1,5 @@
 import { useSidebarContent } from "@/cms/lib/context/SidebarContext";
-import { SidebarHeader, useSidebar } from "@/cms/components/ui/sidebar";
+import { SidebarHeader, useSidebar } from "@/shared/ui/sidebar";
 import {
   Sidebar,
   SidebarContent,
@@ -7,8 +7,8 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
-} from "@/cms/components/ui/sidebar";
-import { Button } from "../ui/button";
+} from "@/shared/ui/sidebar";
+import { Button } from "../../../shared/ui/button";
 import React from "react";
 
 type BodyProps = {

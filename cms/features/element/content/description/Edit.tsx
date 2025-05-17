@@ -1,8 +1,8 @@
 import React from 'react'
 
 
-import { Label } from '@/cms/components/ui/label'
-import { Textarea } from '@/cms/components/ui/textarea'
+import { Label } from '@/shared/ui/label'
+import { Textarea } from '@/shared/ui/textarea'
 
 interface EditDescriptionComponentProps {
   data: Partial<Element>;
@@ -13,10 +13,10 @@ interface EditDescriptionComponentProps {
 export function EditDescription({ data, onChange }: EditDescriptionComponentProps) {
   return (
     <>
-      <div className='flex items-center gap-2 py-2'>
+      {/* <div className='flex items-center gap-2 py-2'>
         <div className='h-6 w-6 border border-black' />
         <div className='h-6 w-6 border border-black' />
-      </div>
+      </div> */}
         <Label>Description</Label>
         <Textarea
             value={data?.content || ""}

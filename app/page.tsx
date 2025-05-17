@@ -1,11 +1,11 @@
-import { getPageBySlug } from "@/shared/lib/api/ssg";
 import { notFound } from "next/navigation";
 import { BlockItem } from "@/cms/features/block/BlockItem";
+import { api } from "@/shared/lib/api/api";
 
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const page = await getPageBySlug("home"); 
+  const page = await api.pages.get.item("home"); 
 
   if (!page) notFound();
 

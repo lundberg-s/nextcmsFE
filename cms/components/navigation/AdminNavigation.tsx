@@ -1,36 +1,23 @@
-'use client';
+"use client";
 
-import { useUserStore } from '@/cms/lib/store/user-store';
-import { Button } from '@/cms/components/ui/button';
-import { useRouter } from 'next/navigation';
-import LoadingView from '../LoadingView';
+import { useRouter } from "next/navigation";
+import { getIcon } from "@/cms/lib/utilities/GetIcon";
+import { useAuth } from "@/shared/lib/hooks/useAuth";
 
 export function AdminNavigation() {
-  const { user, logout } = useUserStore();
-  const router = useRouter();
-
-  const handleLogout = () => {
-    logout();
-    router.push('/');
-  };
+  const MenuIcon = getIcon("chevron-down");
+  const { logout } = useAuth();
 
   return (
-    <LoadingView>
-    <nav className="border-b">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="font-semibold">CMS</div>
-        {user ? (
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-muted-foreground">
-              Welcome, {user.name}
-            </span>
-            <Button variant="outline" onClick={handleLogout}>
-              Logout
-            </Button>
-          </div>
-        ) : null}
+    <nav className="fixed z-10 top-0 left-1/2 transform -translate-x-1/2 px-10 bg-white bg-opacity-70 backdrop-blur-sm rounded-b-lg">
+      <div className="flex items-center p-2 gap-10">
+        <span className="text-sm font-semibold	text-black">
+          Moderator: User not found
+        </span>
+
+        {/* <div>{MenuIcon}</div> */}
+        <button onClick={() => logout()}>Logout</button>
       </div>
     </nav>
-    </LoadingView>
   );
 }

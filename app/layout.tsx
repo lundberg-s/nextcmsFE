@@ -1,13 +1,11 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-import NavigationWrapper from "@/shared/components/navigation/NavigationWrapper";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+import Header from "@/shared/components/navigation/Header";
 import QueryProvider from "@/cms/lib/providers/QueryProvider";
 import { CmsProvider } from "@/cms/lib/context/CmsContext";
-import LoadingView from "@/cms/components/LoadingView";
-
-
+import { AuthProvider } from "@/shared/contexts/AuthContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,16 +17,19 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body>
-        <QueryProvider>
-        <CmsProvider>
-          <NavigationWrapper />
-          {children}
-        </CmsProvider>
-        </QueryProvider>
+        <AuthProvider>
+          <QueryProvider>
+            <CmsProvider>
+              <header>
+                <Header />
+              </header>
+              <main>{children}</main>
+            </CmsProvider>
+          </QueryProvider>
+        </AuthProvider>
       </body>
     </html>
   );

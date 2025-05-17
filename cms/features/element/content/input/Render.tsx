@@ -1,7 +1,7 @@
 
 
-import { Label } from "@/cms/components/ui/label";
-import { Input as InputField } from "@/cms/components/ui/input";
+import { Label } from "@/shared/ui/label";
+import { Input as InputField } from "@/shared/ui/input";
 
 interface RenderInputComponentProps {
   data: Partial<Element>;

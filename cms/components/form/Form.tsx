@@ -2,6 +2,7 @@ import React, { FormEvent, forwardRef } from "react";
 import DropdownSelect from "@/cms/components/dropdown/DropdownSelect";
 import InputField from "@/cms/components/text-input/InputField";
 import { SelectableList } from "../list/List";
+import LoadingSpinner from "@/shared/components/loading/LoadingSpinner";
 
 const FORM_FIELDS = {
   inputfield: InputField,
@@ -14,6 +15,7 @@ interface FormProps {
   onChange?: (name: string, value: any) => void;
   onSubmit: (e: FormEvent) => void;
   onReset: (e: FormEvent) => void;
+  loading?: boolean;
   children?: React.ReactNode;
   ref?: React.Ref<HTMLFormElement>;
   options?: Array<{ label?: string; value: string }>;
@@ -47,7 +49,7 @@ interface FormProps {
 }
 
 export const Form = forwardRef<HTMLFormElement, FormProps>(
-  ({ id, onChange, onSubmit, onReset, config, children }: FormProps, ref: React.Ref<HTMLFormElement>) => {
+  ({ id, loading, onChange, onSubmit, onReset, config, children }: FormProps, ref: React.Ref<HTMLFormElement>) => {
     const fieldHandlers = {
       inputfield: (name: string, value: any) => {
         onChange?.(name, value.target?.value || value);
@@ -59,6 +61,10 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
         onChange?.(name, value);
       },
     };
+
+    if (loading) {
+      return <LoadingSpinner />;
+    }
 
     return (
       <form id={id} ref={ref} onSubmit={onSubmit} onReset={onReset} className="space-y-4">

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Input } from "@/cms/components/ui/input";
+import { Input } from "@/shared/ui/input";
 import {
   ListRoot,
   ListHeader,
@@ -9,7 +9,7 @@ import {
   ListItem,
   ListEmpty,
   ListItemButton,
-} from "@/cms/components/ui/list";
+} from "@/shared/ui/list";
 
 interface SelectableListProps {
   options?: Array<{ label?: string; value: string }>;

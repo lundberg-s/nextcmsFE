@@ -1,5 +1,5 @@
 
-import { Card as UICard, CardHeader, CardTitle, CardContent } from "@/cms/components/ui/card";
+import { Card as UICard, CardHeader, CardTitle, CardContent } from "@/shared/ui/card";
 import { cn } from "@/cms/lib/utils";
 
 interface RenderCardProps {

@@ -1,6 +1,6 @@
 import React from "react";
 import { ConfirmationModal } from "../modals/ConfirmationModal";
-import { Button } from "../ui/button";
+import { Button } from "../../../shared/ui/button";
 import { Trash2 } from "lucide-react";
 
 interface SidebarItemCardProps {

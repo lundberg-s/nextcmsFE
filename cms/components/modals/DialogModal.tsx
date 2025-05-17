@@ -8,8 +8,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/cms/components/ui/dialog";
-import { Button } from "@/cms/components/ui/button";
+} from "@/shared/ui/dialog";
+import { Button } from "@/shared/ui/button";
 import { getIcon } from "@/cms/lib/utilities/GetIcon";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { Trash2 } from "lucide-react";
@@ -131,7 +131,6 @@ export function DialogModal({
                     <ConfirmationModal
                       onConfirm={() => {
                         if (handleDeleteRef.current) {
-                          console.log("Delete action triggered");
                           handleDeleteRef.current();
                         }
                       }}

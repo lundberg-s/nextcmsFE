@@ -1,9 +1,9 @@
-import { Select } from "@/cms/components/ui/select";
-import { SelectTrigger, SelectValue } from "@/cms/components/ui/select";
-import { SelectContent, SelectItem } from "@/cms/components/ui/select";
+import { Select } from "@/shared/ui/select";
+import { SelectTrigger, SelectValue } from "@/shared/ui/select";
+import { SelectContent, SelectItem } from "@/shared/ui/select";
 
 
-import { Label } from "@/cms/components/ui/label";
+import { Label } from "@/shared/ui/label";
 
 interface EditSeparatorComponentProps {
   data: Partial<Element>;

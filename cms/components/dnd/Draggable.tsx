@@ -1,10 +1,12 @@
+import { DraggableAttributes } from "@dnd-kit/core";
+import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import React from "react";
 
 interface DraggableProps {
   id: string;
-  children: (props: { attributes: any; listeners: any }) => React.ReactNode;
+  children: (props: { attributes: DraggableAttributes; listeners: SyntheticListenerMap | undefined }) => React.ReactNode;
   className?: string;
 }
 

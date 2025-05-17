@@ -1,5 +1,5 @@
 
-import { Separator } from "@/cms/components/ui/separator";
+import { Separator } from "@/shared/ui/separator";
 import { cn } from "@/cms/lib/utils";
 
 interface SeparatorProps {

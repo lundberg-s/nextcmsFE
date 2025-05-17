@@ -8,9 +8,9 @@ export function useAuth() {
 
   const {
     mutate: login,
-    status: isLoading,
-    error: loginError,
-    isSuccess: isLoginSuccessful,
+    isPending,
+    error,
+    isSuccess,
   } = useMutation({
     mutationFn: api.auth.login,
     onSuccess: () => {
@@ -21,10 +21,30 @@ export function useAuth() {
     },
   });
 
+  const {
+    mutate: logout,
+    isPending: isLogoutPending,
+    error: logoutError,
+    isSuccess: isLogoutSuccess,
+  } = useMutation({
+    mutationFn: api.auth.logout,
+    onSuccess: () => {
+      router.push("/");
+    },
+    onError: (error) => {
+      console.error("Logout failed:", error);
+    },
+  });
+
   return {
     login,
-    isLoading,
-    loginError,
-    isLoginSuccessful, 
+    isPending,
+    error,
+    isSuccess,
+
+    logout,
+    isLogoutPending,
+    logoutError,
+    isLogoutSuccess,
   };
 }

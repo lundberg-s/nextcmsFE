@@ -1,25 +1,23 @@
+const API_URL = "http://localhost:8000/";
+const DEFAULT_REVALIDATE = 60;
 
-const API_URL = "http://localhost:8000/api/cms";
+export const ssg = {
+  get: async <T>(
+    endpoint: string,
+    revalidate: number = DEFAULT_REVALIDATE,
+    options: RequestInit = {}
+  ): Promise<T> => {
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      ...options,
+      method: "GET",
+      next: { revalidate },
+    });
 
-export async function getAllPages(): Promise<Page[]> {
-  const response = await fetch(`${API_URL}/pages`, { next: { revalidate } });
-  
-  if (!response.ok) {
-    throw new Error("Failed to fetch pages");
-  }
-  
-  return response.json();
-}
+    if (!response.ok) {
+      if (response.status === 404) return null as unknown as T;
+      throw new Error(`Failed to fetch ${endpoint}`);
+    }
 
-export async function getPageBySlug(slug: string): Promise<Page | null> {
-  const response = await fetch(`${API_URL}/pages/${slug}`, { next: { revalidate } });
-  
-  if (!response.ok) {
-    if (response.status === 404) return null;
-    throw new Error("Failed to fetch page");
-  }
-  
-  return response.json();
-}
-
-const revalidate = 60;
+    return response.json();
+  },
+};

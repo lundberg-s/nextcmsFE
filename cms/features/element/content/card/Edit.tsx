@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { Label } from '@/cms/components/ui/label'
-import { Input } from '@/cms/components/ui/input'
-import { Textarea } from '@/cms/components/ui/textarea'
+import { Label } from '@/shared/ui/label'
+import { Input } from '@/shared/ui/input'
+import { Textarea } from '@/shared/ui/textarea'
 
 interface EditCardComponentProps {
   data: Partial<Element>;

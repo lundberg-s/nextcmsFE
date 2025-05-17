@@ -5,22 +5,22 @@ const config: Config = {
 	content: [
 		'./pages/**/*.{js,ts,jsx,tsx,mdx}',
 		'./app/**/*.{js,ts,jsx,tsx,mdx}',
-		'./cms/components/**/*.{js,ts,jsx,tsx,mdx}',
-		'./cms/features/**/*.{js,ts,jsx,tsx,mdx}',
-		'./cms/app/**/*.{js,ts,jsx,tsx,mdx}',
+		'./cms/**/*.{js,ts,jsx,tsx,mdx}',
+		'./shared/**/*.{js,ts,jsx,tsx,mdx}'
+
 	],
 	theme: {
 		extend: {
 			fontFamily: {
 				sans: ['var(--font-geist-sans)'],
 				mono: ['var(--font-geist-mono)'],
-			  },
+			},
 			fontSize: {
 				'4xl': ['2.25rem', { lineHeight: '2.5rem', fontWeight: '700' }],
 				'3xl': ['1.875rem', { lineHeight: '2.25rem', fontWeight: '600' }],
 				'2xl': ['1.5rem', { lineHeight: '2rem', fontWeight: '500' }],
 				base: ['1.05rem', { lineHeight: '1.2rem', fontWeight: '400' }],
-			  },
+			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 				'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'

@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Input } from "@/cms/components/ui/input";
-import { Label } from "@/cms/components/ui/label";
+import { Input } from "@/shared/ui/input";
+import { Label } from "@/shared/ui/label";
 
 interface BackgroundImageComponentProps {
   value: string;

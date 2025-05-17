@@ -1,4 +1,4 @@
-import { Carousel } from "@/cms/components/ui/carousel";
+import { Carousel } from "@/shared/ui/carousel";
 
 export function PreviewCarousel() {
     return (
