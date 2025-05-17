@@ -10,16 +10,16 @@ nextcmsfe/
 │   ├── layout.tsx
 │   └── page.tsx
 │
-├── auth/                     # Auth domain
+├── shared/                   # Shared domain
 │   ├── components/
 │   ├── features/
 │   │   ├── login/
 │   │   ├── register/
 │   │   └── user/
-│   └── lib/                  # Auth-specific utilities and logic
-│       ├── hooks/            # Custom hooks for auth
+│   └── lib/                  # Shared hooks, logic and styling
+│       ├── hooks/            # Auth-related hooks
 │       ├── helpers/          # Helper functions (e.g., validation)
-│       └── context/          # Context for auth state management
+│       └── context/          # UI components
 │
 ├── cms/                      # CMS domain
 │   ├── components/
@@ -32,13 +32,7 @@ nextcmsfe/
 │       ├── helpers/          # Helper functions for CMS
 │       └── context/          # Context for CMS state management
 │
-├── shared/                   # Shared code
-│   ├── components/
-│   ├── hooks/
-│   ├── styles/
-│   └── utils/
-│
-|
+├── middleware.ts
 ├── .eslintrc.json
 ├── .gitignore
 ├── components.json
