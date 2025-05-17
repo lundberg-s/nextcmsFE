@@ -5,14 +5,12 @@ import { usePage } from "@/cms/lib/hooks/usePage";
 import { useCmsContext } from "@/cms/lib/context/CmsContext";
 import { BlockList } from "../block/BlockList";
 import { AddBlockForm } from "@/cms/features/block/AddBlockForm";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { AddPageForm } from "./AddPageForm";
 import { EditPageForm } from "./EditPageForm";
 import { DialogModal } from "@/cms/components/modals/DialogModal";
-import { Spinner } from "@/shared/ui/spinner";
 import LoadingSpinner from "@/shared/components/loading/LoadingSpinner";
-import { Button } from "@/shared/ui/button";
 
 export function PageList({}) {
   const { pages, isLoadingPages } = usePage();

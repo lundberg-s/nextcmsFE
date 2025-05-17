@@ -101,7 +101,7 @@ export function BlockList() {
             );
           })}
         </div>,
-        activeBlock && <BlockItem block={activeBlock} />
+        activeBlock && <BlockItem block={activeBlock} isEditing />
       )}
     </>
   );

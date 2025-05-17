@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { usePage } from "@/cms/lib/hooks/usePage";
 import { useCmsContext } from "@/cms/lib/context/CmsContext";
 import { useForm } from "@/cms/lib/hooks/useForm";
