@@ -1,15 +1,19 @@
-import Link from "next/link";
-import { Button } from "@/shared/ui/button";
-import { usePage } from "@/cms/lib/hooks/usePage";
-import { DialogModal } from "./modal/DialogModal";
-import { LoginForm } from "@/shared/features/auth/LoginForm";
-import { Separator } from "@radix-ui/react-select";
-import { SelectSeparator } from "@/shared/ui/select";
-import { useUser } from "../lib/hooks/useUser";
+"use client";
 
-export default function PageNavigation() {
-  const { pages } = usePage();
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { DialogModal } from "../modal/DialogModal";
+import { LoginForm } from "@/shared/features/auth/LoginForm";
+import { SelectSeparator } from "@/shared/ui/select";
+import { useUser } from "../../lib/hooks/useUser";
+
+export default function PageNavigation({ pages }: { pages: Page[] }) {
+  const pathname = usePathname();
+  const isAdminRoute = pathname.startsWith("/admin");
+
   const { user } = useUser();
+
+  if (isAdminRoute) return null;
 
   const login = {
     title: "Login",
@@ -43,7 +47,6 @@ export default function PageNavigation() {
           </ul>
           <SelectSeparator className="w-0.5 h-8 bg-gray-200" />
           {user ? (
-            // <span>{user.first_name}</span>
             <Link href="/admin">
               <span className="text-white">Admin</span>
             </Link>

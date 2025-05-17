@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-import NavigationWrapper from "@/shared/components/navigation/NavigationWrapper";
+import Header from "@/shared/components/navigation/Header";
 import QueryProvider from "@/cms/lib/providers/QueryProvider";
 import { CmsProvider } from "@/cms/lib/context/CmsContext";
 import { AuthProvider } from "@/shared/contexts/AuthContext";
@@ -23,8 +23,10 @@ export default function RootLayout({
         <AuthProvider>
           <QueryProvider>
             <CmsProvider>
-              <NavigationWrapper />
-              {children}
+              <header>
+                <Header />
+              </header>
+              <main>{children}</main>
             </CmsProvider>
           </QueryProvider>
         </AuthProvider>
