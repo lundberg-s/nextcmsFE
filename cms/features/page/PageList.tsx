@@ -12,6 +12,7 @@ import { EditPageForm } from "./EditPageForm";
 import { DialogModal } from "@/cms/components/modals/DialogModal";
 import { Spinner } from "@/shared/ui/spinner";
 import LoadingSpinner from "@/shared/components/loading/LoadingSpinner";
+import { Button } from "@/shared/ui/button";
 
 export function PageList({}) {
   const { pages, isLoadingPages } = usePage();
@@ -53,6 +54,7 @@ export function PageList({}) {
       description: "Edit the selected page",
       icon: "edit",
       form: EditPageForm,
+      showDelete: true,
       button: {
         icon: "settings",
         variant: "defaultRight",
@@ -100,7 +102,7 @@ export function PageList({}) {
                       description={setting.description}
                       content={setting.form}
                       button={setting.button}
-                      showDelete
+                      showDelete={setting.showDelete}
                     />
                   ))}
                 </div>
