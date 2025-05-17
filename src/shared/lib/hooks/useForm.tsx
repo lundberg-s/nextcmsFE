@@ -1,5 +1,4 @@
 import { useForm as useReactHookForm } from "react-hook-form";
-import { FormEvent } from "react";
 
 type Page = {
   id: string;
