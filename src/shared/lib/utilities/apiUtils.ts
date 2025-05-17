@@ -1,4 +1,5 @@
-const BASE_URL = process.env.API_BASE_URL || "http://localhost:8000";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8000";
+const REFRESH_URL = process.env.NEXT_PUBLIC_REFRESH_URL || "http://localhost:8000/api/refresh/";
 
 export async function fetchWithAuthRetry(
   url: string,
@@ -12,7 +13,7 @@ export async function fetchWithAuthRetry(
   if (response.status === 401) {
     console.warn("Access token expired. Attempting to refresh...");
 
-    const refreshResponse = await fetch(`${BASE_URL}/api/refresh/`, {
+    const refreshResponse = await fetch(`${REFRESH_URL}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

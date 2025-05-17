@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000/";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8000";
 const DEFAULT_REVALIDATE = 60;
 
 export const ssg = {
@@ -7,7 +7,7 @@ export const ssg = {
     revalidate: number = DEFAULT_REVALIDATE,
     options: RequestInit = {}
   ): Promise<T> => {
-    const response = await fetch(`${API_URL}${endpoint}`, {
+    const response = await fetch(`${BASE_URL}${endpoint}`, {
       ...options,
       method: "GET",
       next: { revalidate },
