@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/shared/lib/api/api";
-import { hasRefreshToken } from "../utilities/checkToken";
+import { useAuth } from "./useAuth";
 
 export function useUser() {
+    const { isAuthenticated, isAuthLoading } = useAuth();
+
   const { data: user, isLoading, error } = useQuery({
     queryKey: ["user"],
     queryFn: api.user.get,
-    staleTime: 1000 * 60 * 5,
-    enabled: hasRefreshToken(),
+    enabled: !!isAuthenticated && !isAuthLoading,
   });
 
   return { user, isLoading, error };

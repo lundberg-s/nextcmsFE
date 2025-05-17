@@ -1,10 +1,25 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/shared/lib/api/api";
-import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
 
 export function useAuth() {
   const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const {
+    data: isAuthenticated,
+    isLoading: isAuthLoading,
+    refetch: refetchAuthStatus,
+  } = useQuery({
+    queryKey: ["authStatus"],
+    queryFn: async () => {
+      const res = await fetch("/api/auth/status", { credentials: "include" });
+      const json = await res.json();
+      return !!json.authenticated;
+    },
+    staleTime: 60 * 1000,
+    retry: false,
+  });
 
   const {
     mutate: login,
@@ -14,6 +29,7 @@ export function useAuth() {
   } = useMutation({
     mutationFn: api.auth.login,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["authStatus"] });
       router.push("/admin");
     },
     onError: (error) => {
@@ -29,6 +45,8 @@ export function useAuth() {
   } = useMutation({
     mutationFn: api.auth.logout,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["authStatus"] });
+      queryClient.setQueryData(["user"], null);
       router.push("/");
     },
     onError: (error) => {
@@ -46,5 +64,9 @@ export function useAuth() {
     isLogoutPending,
     logoutError,
     isLogoutSuccess,
+
+    isAuthenticated,
+    isAuthLoading,
+    refetchAuthStatus,
   };
 }
