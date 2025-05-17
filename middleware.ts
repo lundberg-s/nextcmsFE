@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const VERIFY_URL = process.env.NEXT_PUBLIC_VERIFY_URL || "http://localhost:8000/api/verify/";
-const REFRESH_URL = process.env.NEXT_PUBLIC_REFRESH_URL || "http://localhost:8000/api/refresh/";
+const VERIFY_URL = process.env.VERIFY_URL || "http://localhost:8000/api/verify/";
+const REFRESH_URL = process.env.REFRESH_URL || "http://localhost:8000/api/refresh/";
 
 export async function middleware(request: NextRequest) {
   const cookie = request.headers.get("cookie") || "";

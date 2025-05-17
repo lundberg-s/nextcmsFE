@@ -5,6 +5,7 @@ import { GeistMono } from "geist/font/mono";
 import Header from "@/shared/components/navigation/Header";
 import QueryProvider from "@/cms/lib/providers/QueryProvider";
 import { CmsProvider } from "@/cms/lib/context/CmsContext";
+import { AuthProvider } from "@/shared/contexts/AuthContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,6 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body>
+        <AuthProvider>
           <QueryProvider>
             <CmsProvider>
               <header>
@@ -27,6 +29,7 @@ export default function RootLayout({
               <main>{children}</main>
             </CmsProvider>
           </QueryProvider>
+        </AuthProvider>
       </body>
     </html>
   );

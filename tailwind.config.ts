@@ -5,8 +5,8 @@ const config: Config = {
 	content: [
 		'./pages/**/*.{js,ts,jsx,tsx,mdx}',
 		'./app/**/*.{js,ts,jsx,tsx,mdx}',
-		'./src/cms/**/*.{js,ts,jsx,tsx,mdx}',
-		'./src/shared/**/*.{js,ts,jsx,tsx,mdx}'
+		'./cms/**/*.{js,ts,jsx,tsx,mdx}',
+		'./shared/**/*.{js,ts,jsx,tsx,mdx}'
 
 	],
 	theme: {

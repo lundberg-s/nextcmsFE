@@ -22,12 +22,23 @@
         "name": "next"
       }
     ],
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@/cms/*": ["src/cms/*"],
-      "@/shared/*": ["src/shared/*"],
-    },
+      "@/*": [
+        "./*"
+      ],
+      "@/cms/*": [
+        "./cms/*"
+      ],
+      "@/shared/*": [
+        "./shared/*"
+      ],
+      "@/auth/*": [
+        "./auth/*"
+      ],
+      "@/ecommerce/*": [
+        "./ecommerce/*"
+      ]
+    }
   },
   "include": [
     "next-env.d.ts",
