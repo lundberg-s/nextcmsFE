@@ -1,8 +1,8 @@
-import { EditContentItem } from "./content/Edit";
-import { EditConfigItem } from "./config/Edit";
-import { PreviewContentItem } from "./content/Preview";
-import { PreviewConfigItem } from "./config/Preview";
-import { RenderContentItem } from "./content/Render";
+import { EditContentItem } from "@/cms/components/content/Edit";
+import { EditConfigItem } from "@/cms/components/config/Edit";
+import { PreviewContentItem } from "@/cms/components/content/Preview";
+import { PreviewConfigItem } from "@/cms/components/config/Preview";
+import { RenderContentItem } from "@/cms/components/content/Render";
 
 interface ElementItemProps {
   type: ElementType;

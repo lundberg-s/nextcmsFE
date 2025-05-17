@@ -2,9 +2,9 @@
 
 import { DraggableAttributes } from "@dnd-kit/core";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
-import { Hero } from "@/cms/features/block/blocks/Hero";
-import { Experimental } from "@/cms/features/block/blocks/Experimental";
-import { Features } from "@/cms/features/block/blocks/Features";
+import { Hero } from "@/cms/components/blocks/Hero";
+import { Experimental } from "@/cms/components/blocks/Experimental";
+import { Features } from "@/cms/components/blocks/Features";
 import { DragHandle } from "@/shared/ui/drag-handle";
 import { Button } from "@/shared/ui/button";
 import { ConfirmationModal } from "@/cms/components/modals/ConfirmationModal";
