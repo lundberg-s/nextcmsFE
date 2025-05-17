@@ -9,7 +9,7 @@ import { useUser } from "../../lib/hooks/useUser";
 
 export default function PageNavigation({ pages }: { pages: Page[] }) {
   const pathname = usePathname();
-  const isAdminRoute = pathname.startsWith("/admin");
+  const isAdminRoute = pathname?.startsWith("/admin") ?? false;
 
   const { user } = useUser();
 
