@@ -3,12 +3,16 @@ import { Label } from "@/shared/ui/label";
 import TextareaField from "@/cms/components/text-input/TextareaField";
 import { Select, SelectTrigger, SelectContent, SelectItem } from "@/shared/ui/select";
 import React from "react";
+import { Slider } from "@/shared/ui/slider";
+import { useState } from "react";
+import { Tabs } from "@/cms/components/tabs/Tabs";
 
 interface EditTextComponentProps {
   data: {
     title?: string;
     titleTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     description?: string;
+    opacity?: number;
     cta1?: { label: string; link: string };
     cta2?: { label: string; link: string };
   };
@@ -47,6 +51,14 @@ export function EditText({ data, onChange }: EditTextComponentProps) {
         value={data.description || ""}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange("description", e.target.value)}
         placeholder="Enter description"
+      />
+      <Label>Background Opacity  <div>Value: {[Number(data.opacity) || 0]}</div></Label>
+      <Slider
+        min={0}
+        max={1}
+        step={0.01}
+        value={[Number(data.opacity) || 0]}
+        onValueChange={(value: number[]) => onChange("opacity", value[0])}
       />
       <Label>CTA 1 Label</Label>
       <Input

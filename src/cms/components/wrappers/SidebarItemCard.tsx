@@ -2,6 +2,7 @@ import React from "react";
 import { ConfirmationModal } from "../modals/ConfirmationModal";
 import { Button } from "../../../shared/ui/button";
 import { Trash2 } from "lucide-react";
+import { getIcon } from "@/cms/lib/utilities/GetIcon";
 
 interface SidebarItemCardProps {
   onRemove: (type: ElementType, kind: ElementKind) => void;
@@ -16,9 +17,21 @@ export default function SidebarItemCard({
   type,
   kind,
 }: SidebarItemCardProps) {
+  const [isOpen, setIsOpen] = React.useState(true);
   return (
-    <div className="border rounded-lg p-4 space-y-2">
-      <div className="absolute right-10 -mt-2">
+    <div className="">
+      <div onClick={() => setIsOpen(!isOpen)} className="flex items-center justify-between border-b border-t p-2">
+        <div className="flex items-center gap-4">
+          <span
+            className={`transition-transform duration-200 ${isOpen ? "rotate-90" : ""}`}
+          >
+            {getIcon("chevron-right")}
+          </span>
+
+          <p className="text-md font-medium">
+            {type.charAt(0).toUpperCase() + type.slice(1)}
+          </p>
+        </div>
         <ConfirmationModal
           onConfirm={() => onRemove(type, kind)}
           title="Are you sure you want to delete this component?"
@@ -32,7 +45,13 @@ export default function SidebarItemCard({
           }
         />
       </div>
-      {children}
+      <div className={`grid-rows-transition ${isOpen ? 'grid-rows-expanded' : ''}`}>
+        <div className="overflow-hidden">
+          <div className="p-4">
+          {children}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

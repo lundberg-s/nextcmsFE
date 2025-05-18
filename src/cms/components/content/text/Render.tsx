@@ -5,6 +5,7 @@ interface RenderTextProps {
     title?: string;
     titleTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     description?: string;
+    opacity?: number;
     cta1?: { label: string; link: string };
     cta2?: { label: string; link: string };
   };
@@ -12,9 +13,13 @@ interface RenderTextProps {
 
 export function RenderText({ data }: RenderTextProps) {
   const TitleTag = data.titleTag || "h1";
+  
+  const textBackground = {
+    backgroundColor: `hsl(from #fff h s 50% / ${data.opacity || 0})`,
+  }
 
   return (
-    <div className="h-full text-left flex flex-col justify-center p-8">
+    <div style={{...textBackground}} className="h-full w-full text-left flex flex-col justify-center p-8">
       <div className="space-y-2">
       {data.title && <TitleTag>{data.title}</TitleTag>}
 

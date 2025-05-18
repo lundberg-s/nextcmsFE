@@ -8,6 +8,17 @@ html {
 
 }
 
+.grid-rows-transition {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.2s ease;
+}
+
+.grid-rows-expanded {
+    display: grid;
+    grid-template-rows: 1fr;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

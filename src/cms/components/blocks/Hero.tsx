@@ -10,11 +10,20 @@ export function Hero({ block }: HeroProps) {
   const colours = {
     backgroundColor: config?.backgroundColor || "",
     color: config?.textColor || "",
+    mask: config?.mask
+      ? `linear-gradient(red calc(100% - ${config.mask}), transparent)`
+      : undefined,
   };
+
+  const overlayAlpha = config?.overlayAlpha ?? 0
+
+  const coloredOverlay = "backgrund-color: hsl(from #ff0000 h s 30% / 1);";
 
   const backgroundImage = config?.backgroundImage
     ? {
-      backgroundImage: `url(${config?.backgroundImage})`,
+      backgroundImage: `
+      conic-gradient(hsl(0 0% 100% / ${overlayAlpha}) 0 0),
+      url(${config?.backgroundImage})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
     }
