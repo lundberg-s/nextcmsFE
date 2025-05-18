@@ -1,4 +1,4 @@
-import { fetchWithAuthRetry, createOptions } from "@/shared/lib/utilities/apiUtils";
+import { fetchWithAuthRetry, createOptions } from "@/shared/lib/services/fetchServuce";
 
 export const client = {
   get: (url: string, headers?: HeadersInit) =>
