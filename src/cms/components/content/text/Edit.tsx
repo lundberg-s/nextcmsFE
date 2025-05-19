@@ -52,14 +52,6 @@ export function EditText({ data, onChange }: EditTextComponentProps) {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange("description", e.target.value)}
         placeholder="Enter description"
       />
-      <Label>Background Opacity  <div>Value: {[Number(data.opacity) || 0]}</div></Label>
-      <Slider
-        min={0}
-        max={1}
-        step={0.01}
-        value={[Number(data.opacity) || 0]}
-        onValueChange={(value: number[]) => onChange("opacity", value[0])}
-      />
       <Label>CTA 1 Label</Label>
       <Input
         value={data.cta1?.label || ""}
@@ -93,6 +85,19 @@ export function EditText({ data, onChange }: EditTextComponentProps) {
         }
         placeholder="Enter CTA 2 link"
       />
+        <div className="pt-2 flex justify-between">
+      <Label>Background Opacity </Label>
+      <Label>{[Number(data.opacity) || 0]}</Label>
+      </div>
+      <div className="py-4">
+      <Slider
+        min={0}
+        max={1}
+        step={0.01}
+        value={[Number(data.opacity) || 0]}
+        onValueChange={(value: number[]) => onChange("opacity", value[0])}
+      />
+      </div>
     </>
   );
 }
