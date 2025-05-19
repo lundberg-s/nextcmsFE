@@ -14,6 +14,7 @@ type ElementType =
   | "backgroundColor"
   | "backgroundImage"
   | "textColor"
+  | "height"
   | "carousel"
   | "image"
   | "text";

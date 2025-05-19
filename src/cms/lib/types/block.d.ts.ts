@@ -36,6 +36,7 @@ declare global {
       backgroundImage?: string;
       textColor?: string;
       layout?: "left" | "right" | "center";
+      height?: number;
     };
   }
 }

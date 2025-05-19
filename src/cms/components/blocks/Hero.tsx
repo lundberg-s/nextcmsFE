@@ -15,6 +15,10 @@ export function Hero({ block }: HeroProps) {
       : undefined,
   };
 
+  const size = {
+    height: config?.height ? `${config.height}px` : "600px",
+  }
+
   const overlayAlpha = config?.overlayAlpha ?? 0
 
   const coloredOverlay = "backgrund-color: hsl(from #ff0000 h s 30% / 1);";
@@ -48,8 +52,8 @@ export function Hero({ block }: HeroProps) {
 
   return (
     <div
-      className={`min-h-[600px] w-full h-full flex items-center justify-center`}
-      style={{ ...colours, ...backgroundImage }}
+      className={`w-full h-full flex items-center justify-center overflow-hidden`}
+      style={{ ...colours, ...backgroundImage, ...size }}
     >
       {imageWithText.length > 0 ? (
         <div className="container flex flex-col lg:flex-row">

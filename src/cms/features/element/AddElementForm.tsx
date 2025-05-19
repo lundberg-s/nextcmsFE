@@ -36,6 +36,12 @@ const CONFIG_OPTIONS = [
     description: "Set the color for text elements",
     kind: "config" as ElementKind,
   },
+  {
+    type: "height",
+    label: "Height",
+    description: "Set the height of the block",
+    kind: "config" as ElementKind,
+  }
 ];
 
 const CONTENT_OPTIONS = [

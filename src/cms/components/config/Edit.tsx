@@ -13,6 +13,7 @@ const CONFIGURATIONS_LIST = {
   backgroundImage: Edit.BackgroundImage,
   textColor: Edit.TextColor,
   layout: Edit.ContainerLayout,
+  height: Edit.Height,
 } as const;
 
 export function EditConfigItem({
