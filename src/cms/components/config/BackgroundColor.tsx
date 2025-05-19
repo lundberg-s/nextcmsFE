@@ -23,7 +23,7 @@ export function BackgroundColor({
         onChange={(e) => onChange(e.target.value)}
         placeholder="Background color"
       />
-      <div className="flex justify-evenly">
+      <div className="w-full flex justify-evenly pt-2">
         {colors.map((color) => (
           <button
             type="button"
