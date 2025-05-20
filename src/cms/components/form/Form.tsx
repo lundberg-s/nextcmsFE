@@ -62,10 +62,6 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
       },
     };
 
-    if (loading) {
-      return <LoadingSpinner />;
-    }
-
     return (
       <form id={id} ref={ref} onSubmit={onSubmit} onReset={onReset} className="space-y-4">
         {config?.fields.map((field) => {
@@ -73,6 +69,12 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
           const handleFieldChange = (value: any) => {
             fieldHandlers[field.type](field.name, value);
           };
+
+          {
+            loading && (
+              <LoadingSpinner />
+            )
+          }
 
           return FormField ? (
             <div key={field.id} className="space-y-2">
