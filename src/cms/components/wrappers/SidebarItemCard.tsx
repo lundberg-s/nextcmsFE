@@ -3,6 +3,7 @@ import { ConfirmationModal } from "../modals/ConfirmationModal";
 import { Button } from "../../../shared/ui/button";
 import { Trash2 } from "lucide-react";
 import { getIcon } from "@/cms/lib/utilities/GetIcon";
+import { ExpandableSection } from "@/shared/components/expandable/ExpandableSection";
 
 interface SidebarItemCardProps {
   onRemove: (type: ElementType, kind: ElementKind) => void;
@@ -45,13 +46,12 @@ export default function SidebarItemCard({
           }
         />
       </div>
-      <div className={`grid-rows-transition ${isOpen ? 'grid-rows-expanded' : ''}`}>
-        <div className="overflow-hidden">
-          <div className="p-4">
+      <ExpandableSection isOpen={isOpen}>
+        <div className="p-4">
           {children}
-          </div>
         </div>
-      </div>
+      </ExpandableSection>
+
     </div>
   );
 }
