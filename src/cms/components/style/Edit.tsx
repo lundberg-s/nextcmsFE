@@ -16,6 +16,7 @@ const STYLE_LIST = {
   layout: Edit.ContainerLayout,
   height: Edit.Height,
   waveOverlay: WaveOverlay,
+  backgroundOverlay: Edit.BackgroundOverlay,
 } as const;
 
 export function EditstyleItem({

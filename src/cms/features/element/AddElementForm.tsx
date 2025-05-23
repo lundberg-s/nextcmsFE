@@ -53,6 +53,12 @@ const style_OPTIONS: Array<{
     description: "Add a wave overlay to the block bottom",
     kind: "style",
   },
+  {
+    type: "backgroundOverlay",
+    label: "Background Overlay",
+    description: "Add a background overlay to the block",
+    kind: "style",
+  },
 ];
 
 const CONTENT_OPTIONS = [

@@ -1,10 +1,11 @@
 import React, { FormEvent, forwardRef } from "react";
-import DropdownSelect from "@/cms/components/dropdown/DropdownSelect";
 import InputField from "@/cms/components/text-input/InputField";
+import LoadingSpinner from "@/shared/components/loading/LoadingSpinner";
+import PasswordField from "../input/PasswordField";
 
 const FORM_FIELDS = {
   inputfield: InputField,
-  dropdown: DropdownSelect,
+  password: PasswordField
 } as const;
 
 interface FormProps {
@@ -12,6 +13,7 @@ interface FormProps {
   onChange?: (name: string, value: any) => void;
   onSubmit: (e: FormEvent) => void;
   onReset: (e: FormEvent) => void;
+  loading?: boolean;
   children?: React.ReactNode;
   ref?: React.Ref<HTMLFormElement>;
   options?: Array<{ label?: string; value: string }>;
@@ -27,7 +29,7 @@ interface FormProps {
     maxHeight?: string | number;
     className?: string;
   };
-  style?: {
+  config?: {
     fields: Array<{
       id: string;
       name: string;
@@ -45,35 +47,40 @@ interface FormProps {
 }
 
 export const Form = forwardRef<HTMLFormElement, FormProps>(
-  ({ id, onChange, onSubmit, onReset, style, children }: FormProps, ref: React.Ref<HTMLFormElement>) => {
+  ({ id, loading, onChange, onSubmit, onReset, config, children }: FormProps, ref: React.Ref<HTMLFormElement>) => {
     const fieldHandlers = {
       inputfield: (name: string, value: any) => {
-        onChange?.(name, value.target?.value || value);
+        onChange?.(name, value.target?.value ?? value);
       },
-      dropdown: (name: string, value: any) => {
-        onChange?.(name, value);
+      password: (name: string, value: any) => {
+        onChange?.(name, value.target?.value ?? value);
       },
     };
 
     return (
-      <form id={id} ref={ref} onSubmit={onSubmit} onReset={onReset} className="space-y-4">
-        {style?.fields.map((field) => {
+      <form id={id} ref={ref} onSubmit={onSubmit} onReset={onReset} className="relative space-y-4">
+        {config?.fields.map((field) => {
           const FormField = FORM_FIELDS[field.type];
           const handleFieldChange = (value: any) => {
             fieldHandlers[field.type](field.name, value);
           };
-
           return FormField ? (
             <div key={field.id} className="space-y-2">
               <FormField
-                data={{ ...field, value: field.value }}
+                data={field}
                 onChange={handleFieldChange}
               />
             </div>
           ) : null;
         })}
         {children}
+        {loading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white/60 z-10">
+            <LoadingSpinner />
+          </div>
+        )}
       </form>
+
     );
   }
 );

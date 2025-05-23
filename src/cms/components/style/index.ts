@@ -4,6 +4,7 @@ import { TextColor } from "./TextColor";
 import { ContainerLayout } from "./ContainerLayout"
 import  { Height } from "./Height";
 import { WaveOverlay } from "./WaveOverlay";
+import { BackgroundOverlay } from "./BackgroundOverlay";
 
 
 export const Edit = {
@@ -13,4 +14,5 @@ export const Edit = {
     ContainerLayout,
     Height,
     WaveOverlay,
+    BackgroundOverlay
     } as const;

@@ -20,6 +20,7 @@ declare global {
       layout?: "left" | "right" | "center";
       height?: number;
       waveOverlay?: number;
+      backgroundOverlay?: boolean;
     };
   }
 }

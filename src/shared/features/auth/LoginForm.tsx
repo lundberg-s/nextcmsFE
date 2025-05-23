@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useForm } from "@/cms/lib/hooks/useForm";
-import { Form } from "@/cms/components/form/Form";
+import { Form } from "@/shared/components/form/Form";
 import { useAuth } from "@/shared/lib/hooks/useAuth";
 
 interface LoginFormProps {
@@ -50,7 +50,7 @@ export function LoginForm({
         id: "password",
         name: "password",
         label: "Password",
-        type: "inputfield" as const,
+        type: "password" as const,
         value: formValues.password,
         required: true,
         placeholder: "Enter password"

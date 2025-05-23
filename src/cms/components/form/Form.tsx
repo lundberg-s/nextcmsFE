@@ -50,7 +50,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
   ({ id, loading, onChange, onSubmit, onReset, config, children }: FormProps, ref: React.Ref<HTMLFormElement>) => {
     const fieldHandlers = {
       inputfield: (name: string, value: any) => {
-        onChange?.(name, value.target?.value || value);
+        onChange?.(name, value.target?.value ?? value);
       },
       list: (name: string, value: any) => {
         onChange?.(name, value);

@@ -19,7 +19,7 @@ export function Hero({ block }: HeroProps) {
   const backgroundImage = style?.backgroundImage
     ? {
         backgroundImage: `
-         conic-gradient(rgba(0, 0, 255, 0.6) 0 100%),
+         ${style?.backgroundOverlay ? `conic-gradient(rgba(0, 0, 255, 0.${style?.backgroundOverlay}) 0 100%),` : ""}
       url(${style?.backgroundImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",

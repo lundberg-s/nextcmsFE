@@ -9,8 +9,6 @@ export function RenderImage({ data }: RenderImageProps) {
   if (!data?.src) {
     return <p>No image source provided</p>;
   }
-  console.log("RenderImage data:", data);
-
   return (
     <Image
       src={data.src}

@@ -3,6 +3,7 @@ declare global {
     type StyleType =
         | "backgroundColor"
         | "backgroundImage"
+        | "backgroundOverlay"
         | "textColor"
         | "height"
         | "layout"
@@ -41,6 +42,10 @@ declare global {
     }
     interface WaveOverlayElement extends BasestyleElement {
         type: "waveOverlay";
+    }
+
+    interface BackgroundOverlayElement extends BasestyleElement {
+        type: "backgroundOverlay";
     }
 }
 
