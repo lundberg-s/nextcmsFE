@@ -36,7 +36,7 @@ export function EditFeatures({ data, onChange }: EditFeaturesComponentProps) {
   return (
     <>
       {features.map((feature, idx) => (
-        <div key={idx} className="mb-4 border p-2 rounded space-y-2">
+        <div key={idx} className="border-b-4 pb-4 mb-2">
           <Label>Icon</Label>
           <Input
             value={feature.icon}
