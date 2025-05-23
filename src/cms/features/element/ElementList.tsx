@@ -112,23 +112,23 @@ export function ElementList({ setValue, watch, reset }: ElementListProps) {
           return (
             <>
             {section.kind === "content"
-              ? Object.entries(section.value || {}).map(([key, value]) => (
+              ? Object.entries(section.value || {}).map(([type, value]) => (
                   <ElementItem
-                    key={key}
+                    key={type}
                     mode="edit"
                     label={section.title}
-                    type={key as ContentType}
+                    type={type as ContentType}
                     kind="content"
                     value={value}
                     onChange={section.onChange}
                     onRemove={section.onRemove}
                   />
                 ))
-              : Object.entries(section.value || {}).map(([key, value]) => (
+              : Object.entries(section.value || {}).map(([type, value]) => (
                   <ElementItem
-                    key={key}
+                    key={type}
                     mode="edit"
-                    type={key as StyleType}
+                    type={type as StyleType}
                     kind="style"
                     value={value}
                     onChange={section.onChange}
