@@ -3,7 +3,7 @@ import { Input } from "@/shared/ui/input";
 
 
 interface TitleProps {
-  data: Partial<Element>;
+  data: TitleElement;
   onChange: (key: string, value: string | string[]) => void;
 }
 

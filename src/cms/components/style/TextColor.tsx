@@ -3,22 +3,22 @@ import React from "react";
 import { Input } from "@/shared/ui/input";
 import { Label } from "@/shared/ui/label";
 
-interface TextColorComponentProps {
-  value: string;
-  onChange: (value: string) => void;
+interface EditStyleProps {
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
 export function TextColor({
   value,
   onChange,
-}: TextColorComponentProps) {
+}: EditStyleProps) {
 
   return (
     <>
       <Label>Text Color</Label>
       <Input
         value={value || ""}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onChange?.(e.target.value)}
         placeholder="Text color"
       />
     </>

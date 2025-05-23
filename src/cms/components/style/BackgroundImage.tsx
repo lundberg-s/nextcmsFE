@@ -3,21 +3,21 @@ import React from "react";
 import { Input } from "@/shared/ui/input";
 import { Label } from "@/shared/ui/label";
 
-interface BackgroundImageComponentProps {
-  value: string;
-  onChange: (value: string) => void;
+interface EditStyleProps {
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
 export function BackgroundImage({
   value,
   onChange,
-}: BackgroundImageComponentProps) {
+}: EditStyleProps) {
   return (
     <>
       <Label>Background Image</Label>
       <Input
         value={value || ""}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onChange?.(e.target.value)}
         placeholder="Background image"
       />
     </>

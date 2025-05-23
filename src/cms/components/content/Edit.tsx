@@ -1,17 +1,30 @@
 import SidebarItemCard from "@/cms/components/wrappers/SidebarItemCard";
 import { Edit } from ".";
 
-interface EditContentItemProps {
-  type: ElementType;
-  component: Partial<Element>;
+interface EditContentItemProps<T extends keyof typeof CONTENT_LIST> {
+  type: T;
+  value?: ContentElementMap[T];
   kind: ElementKind;
   onChange: (
-    type: ElementType,
-    component: Partial<Element>,
+    type: T,
+    value: ContentElementMap[T],
     kind: ElementKind
   ) => void;
-  onRemove: (type: ElementType, kind: ElementKind) => void;
+  onRemove: (type: T, kind: ElementKind) => void;
 }
+
+type ContentElementMap = {
+  title: TitleElement;
+  description: DescriptionElement;
+  button: ButtonElement;
+  input: InputElement;
+  separator: SeparatorElement;
+  card: CardElement;
+  carousel: CarouselElement;
+  image: ImageElement;
+  text: TextElement;
+  features: FeaturesElement;
+};
 
 const CONTENT_LIST = {
   title: Edit.Title,
@@ -23,23 +36,41 @@ const CONTENT_LIST = {
   carousel: Edit.Carousel,
   image: Edit.Image,
   text: Edit.Text,
+  features: Edit.Features,
 } as const;
 
-export function EditContentItem({
+export function EditContentItem<T extends keyof typeof CONTENT_LIST>({
   type,
-  component: data,
+  value: data,
   kind,
   onChange,
   onRemove,
-}: Omit<EditContentItemProps, "type"> & { type: keyof typeof CONTENT_LIST }) {
-  const handleValueChange = (key: string, value: string | string[] | number) => {
-    onChange(type, { ...data, [key]: value }, kind);
+}: EditContentItemProps<T>) {
+  const resolvedData = data ?? ({} as ContentElementMap[T]);
+
+if (!type) {
+    console.error("Type is undefined");
+    return null; // Prevent rendering if type is undefined
+  }
+
+  const handleValueChange = (
+    key: keyof ContentElementMap[T],
+    value: any
+  ) => {
+    onChange(type, { ...resolvedData, [key]: value } as ContentElementMap[T], kind);
   };
 
-  const ContentItem = CONTENT_LIST[type];
+  const ContentItem = CONTENT_LIST[type] as React.ComponentType<{
+    data: ContentElementMap[T];
+    onChange: (
+      key: keyof ContentElementMap[T],
+      value: any
+    ) => void;
+  }>;
 
-  if (!ContentItem) {
-    return null;
+  if (!CONTENT_LIST[type]) {
+    console.error(`Invalid type: ${type}`);
+    return null; // Prevent rendering if type is invalid
   }
 
   return (
@@ -48,7 +79,10 @@ export function EditContentItem({
       type={type}
       kind={kind}
     >
-      <ContentItem data={data} onChange={handleValueChange} />
+      <ContentItem
+        data={data ?? ({} as ContentElementMap[T])} // Provide an empty object if `data` is undefined
+        onChange={handleValueChange}
+      />
     </SidebarItemCard>
   );
 }

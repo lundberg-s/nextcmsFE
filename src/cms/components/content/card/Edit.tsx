@@ -5,7 +5,7 @@ import { Input } from '@/shared/ui/input'
 import { Textarea } from '@/shared/ui/textarea'
 
 interface EditCardComponentProps {
-  data: Partial<Element>;
+  data: CardElement;
   onChange: (key: string, value: string) => void;
 }
 export function EditCard({ data, onChange }: EditCardComponentProps) {
@@ -19,13 +19,12 @@ export function EditCard({ data, onChange }: EditCardComponentProps) {
         />
         <Label>Card Content</Label>
         <Textarea
-            value={data.content || ""}
+            value={data.description || ""}
             onChange={(e) => onChange("content", e.target.value)}
             placeholder="Enter card content"
         />
     </>
 
   )
-
 }
 

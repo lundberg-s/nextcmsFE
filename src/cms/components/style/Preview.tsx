@@ -1,21 +1,21 @@
 
-interface PreviewConfigItemProps {
+interface PreviewstyleItemProps {
   type: ElementType;
-  label: string;
-  description: string;
+  label?: string;
+  description?: string;
   kind: ElementKind;
-  isSelected: boolean;
-  onSelect: (type: ElementType) => void;
+  isSelected?: boolean;
+  onSelect?: (type: ElementType) => void;
 }
 
-export function PreviewConfigItem({
+export function PreviewstyleItem({
   type,
   label,
   description,
   kind,
   isSelected,
   onSelect,
-}: PreviewConfigItemProps) {
+}: PreviewstyleItemProps) {
   return (
     <label
       key={type}
@@ -30,7 +30,7 @@ export function PreviewConfigItem({
         className="mt-1 mr-3"
         value={type}
         checked={isSelected}
-        onChange={() => onSelect(type as ElementType)}
+        onChange={() => onSelect && onSelect(type as ElementType)}
         name="elementType"
       />
       <div className="flex-1">

@@ -1,37 +1,39 @@
+import React from "react";
 import { ElementItem } from "./ElementItem";
 import { useElement } from "@/cms/lib/hooks/useElement";
 import { AddElementForm } from "./AddElementForm";
 import { DialogModal } from "@/cms/components/modals/DialogModal";
 import { Tabs } from "@/cms/components/tabs/Tabs";
 import { UseFormWatch } from "react-hook-form";
-import React from "react";
 
 interface ElementListProps {
-  content?: Record<string, any>;
-  config?: Record<string, string>;
-
   setValue: (name: string, value: any) => void;
   watch: UseFormWatch<any>;
   reset: (values?: Record<string, any>) => void;
+}
 
-  updateContent?: (type: ElementType, value: any, kind: ElementKind) => void;
-  updateConfig?: (type: ElementType, value: string, kind: ElementKind) => void;
-  removeContent?: (type: ElementType, kind: ElementKind) => void;
-  removeConfig?: (type: ElementType, kind: ElementKind) => void;
+interface SectionBase<T> {
+  id: string;
+  title: string;
+  description?: string;
+  kind: ElementKind;
+  value?: T;
+  onChange: (type: ElementType, value: T, kind: ElementKind) => void;
+  onRemove: (type: ElementType, kind: ElementKind) => void;
 }
 
 export function ElementList({ setValue, watch, reset }: ElementListProps) {
   const {
     addContent,
-    addConfig,
+    addstyle,
     updateContent,
-    updateConfig,
+    updatestyle,
     removeContent,
-    removeConfig,
+    removestyle,
   } = useElement(setValue, watch, reset);
 
-  const config = watch("config");
-  const content = watch("content");
+  const style = (watch("style") as string);
+  const content = (watch("content") as Record<string, ContentElement>) || {};
 
   const buttons = {
     addContentButton: {
@@ -39,9 +41,9 @@ export function ElementList({ setValue, watch, reset }: ElementListProps) {
       label: "Add Content",
       variant: "outline",
     },
-    addConfigButton: {
+    addstyleButton: {
       icon: "plus",
-      label: "Add Config",
+      label: "Add Style",
       variant: "outline",
     },
   };
@@ -53,43 +55,39 @@ export function ElementList({ setValue, watch, reset }: ElementListProps) {
         "Select a component to add to your block. You can customize its properties after adding.",
       content: AddElementForm,
       formFn: addContent,
-      kind: "content",
+      kind: "content" as const,
       button: buttons.addContentButton,
     },
     {
-      title: "Add Config",
-      description: "Select a Config to customize the appearance of your block.",
+      title: "Add Style",
+      description: "Select a style to customize the appearance of your block.",
       content: AddElementForm,
-      formFn: addConfig,
-      kind: "config",
-      button: buttons.addConfigButton,
+      formFn: addstyle,
+      kind: "style" as const,
+      button: buttons.addstyleButton,
     },
   ];
+  const contentSection: SectionBase<Record<string, ContentElement>> = {
+    id: "content",
+    title: "Content",
+    kind: "content",
+    value: content || {},
+    onChange: updateContent,
+    onRemove: removeContent,
+  };
 
-  const sections = [
-    {
-      id: "content",
-      title: "Content",
-      kind: "content" as ElementKind,
-      data: content || {},
-      onChange: updateContent,
-      onRemove: removeContent,
-      getProps: (value: any) => ({ component: value as Element }),
-    },
-    {
-      id: "config",
-      title: "Config",
-      kind: "config" as ElementKind,
-      data: config || {},
-      onChange: updateConfig,
-      onRemove: removeConfig,
-      getProps: (value: any) => ({ value }),
-    },
-  ];
+  const styleSection: SectionBase<string> = {
+    id: "style",
+    title: "Style",
+    kind: "style",
+    value: style,
+    onChange: updatestyle,
+    onRemove: removestyle,
+  };
 
+  const sections = [contentSection, styleSection];
   return (
     <div className="p-2 space-y-4">
-
       <div className="flex flex-col gap-3">
         {addElementModals.map((form) => (
           <React.Fragment key={form.kind}>
@@ -113,17 +111,30 @@ export function ElementList({ setValue, watch, reset }: ElementListProps) {
 
           return (
             <>
-              {Object.entries(section.data).map(([type, value]) => (
-                <ElementItem
-                  mode="edit"
-                  key={`${section.kind}-${type}`}
-                  type={type as ElementType}
-                  kind={section.kind}
-                  onChange={section.onChange}
-                  onRemove={section.onRemove}
-                  {...section.getProps(value)}
-                />
-              ))}
+            {section.kind === "content"
+              ? Object.entries(section.value || {}).map(([key, value]) => (
+                  <ElementItem
+                    key={key}
+                    mode="edit"
+                    label={section.title}
+                    type={key as ContentType}
+                    kind="content"
+                    value={value}
+                    onChange={section.onChange}
+                    onRemove={section.onRemove}
+                  />
+                ))
+              : Object.entries(section.value || {}).map(([key, value]) => (
+                  <ElementItem
+                    key={key}
+                    mode="edit"
+                    type={key as StyleType}
+                    kind="style"
+                    value={value}
+                    onChange={section.onChange}
+                    onRemove={section.onRemove}
+                  />
+                ))}
             </>
           );
         }}

@@ -10,7 +10,7 @@ import { Card } from "@/shared/ui/card";
 import Image from "next/image";
 
 interface RenderCarouselProps {
-  data: Partial<Element>;
+  data: CarouselElement;
 }
 
 export function RenderCarousel({ data }: RenderCarouselProps) {

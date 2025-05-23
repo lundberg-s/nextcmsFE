@@ -3,7 +3,7 @@ import { Label } from "@/shared/ui/label";
 import React from "react";
 
 interface EditImageComponentProps {
-  data: Partial<Element>;
+  data: ImageElement;
   onChange: (key: string, value: string | number) => void;
 }
 

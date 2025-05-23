@@ -4,7 +4,7 @@ import { Label } from "@/shared/ui/label";
 import { Input as InputField } from "@/shared/ui/input";
 
 interface RenderInputComponentProps {
-  data: Partial<Element>;
+  data: InputElement;
 }
 
 export function RenderInput({ data }: RenderInputComponentProps) {

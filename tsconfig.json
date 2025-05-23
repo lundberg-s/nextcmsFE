@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "composite": false,
     "target": "es5",
     "lib": [
       "dom",
@@ -10,9 +11,10 @@
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
+    "pretty": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -24,20 +26,24 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@/cms/*": ["src/cms/*"],
-      "@/shared/*": ["src/shared/*"],
-    },
+      "@/*": [
+        "src/*"
+      ],
+      "@/cms/*": [
+        "src/cms/*"
+      ],
+      "@/shared/*": [
+        "src/shared/*"
+      ]
+    }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts,",
+    ".next/types/**/*.ts",
     "cms/lib/types/page.d.ts",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+   "exclude": ["node_modules"]
 }

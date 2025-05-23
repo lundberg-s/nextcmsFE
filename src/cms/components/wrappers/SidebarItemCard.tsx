@@ -29,7 +29,7 @@ export default function SidebarItemCard({
           </span>
 
           <p className="text-md font-medium">
-            {type.charAt(0).toUpperCase() + type.slice(1)}
+            {type?.charAt(0).toUpperCase() + type?.slice(1)}
           </p>
         </div>
         <ConfirmationModal

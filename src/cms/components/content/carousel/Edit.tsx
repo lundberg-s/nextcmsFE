@@ -5,7 +5,7 @@ import { Input } from "@/shared/ui/input";
 import { Button } from "@/shared/ui/button";
 import { PlusCircle } from "lucide-react";
 interface EditCarouselComponentProps {
-  data: Partial<Element>;
+  data: CarouselElement;
   onChange: (key: string, value: string | string[]) => void;
 }
 

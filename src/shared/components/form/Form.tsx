@@ -27,7 +27,7 @@ interface FormProps {
     maxHeight?: string | number;
     className?: string;
   };
-  config?: {
+  style?: {
     fields: Array<{
       id: string;
       name: string;
@@ -45,7 +45,7 @@ interface FormProps {
 }
 
 export const Form = forwardRef<HTMLFormElement, FormProps>(
-  ({ id, onChange, onSubmit, onReset, config, children }: FormProps, ref: React.Ref<HTMLFormElement>) => {
+  ({ id, onChange, onSubmit, onReset, style, children }: FormProps, ref: React.Ref<HTMLFormElement>) => {
     const fieldHandlers = {
       inputfield: (name: string, value: any) => {
         onChange?.(name, value.target?.value || value);
@@ -57,7 +57,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
 
     return (
       <form id={id} ref={ref} onSubmit={onSubmit} onReset={onReset} className="space-y-4">
-        {config?.fields.map((field) => {
+        {style?.fields.map((field) => {
           const FormField = FORM_FIELDS[field.type];
           const handleFieldChange = (value: any) => {
             fieldHandlers[field.type](field.name, value);

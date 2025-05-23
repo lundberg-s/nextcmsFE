@@ -1,13 +1,13 @@
 
 
 interface RenderDescriptionProps {
-  data: Partial<Element>;
+  data: DescriptionElement;
 }
 
 export function RenderDescription({ data }: RenderDescriptionProps) {
   return (
     <p className="text-sm text-muted-foreground">
-      {data.content || data.placeholder || "Description text"}
+      {data.description || "Description text"}
     </p>
   );
 }

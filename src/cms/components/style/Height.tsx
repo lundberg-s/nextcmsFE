@@ -2,18 +2,17 @@ import React from "react";
 
 import { Input } from "@/shared/ui/input";
 import { Label } from "@/shared/ui/label";
-import DropdownSelect from "../dropdown/DropdownSelect";
 import { Slider } from "@/shared/ui/slider";
 
-interface HeightComponentProps {
-    value: string;
-    onChange: (value: string) => void;
-}
+interface EditStyleProps {
+    value?: string;
+    onChange?: (value: string) => void;
+  }
 
 export function Height({
     value,
     onChange,
-}: HeightComponentProps) {
+}: EditStyleProps) {
     const displayValue = value && value !== "" ? value : "600";
 
     return (
@@ -26,7 +25,7 @@ export function Height({
                 <Slider
                     value={[parseInt(displayValue)]}
                     onValueChange={(value) => {
-                        onChange(value[0].toString());
+                        onChange?.(value[0].toString());
                     }}
                     min={0}
                     max={1000}

@@ -1,7 +1,19 @@
 import { Input } from "@/shared/ui/input";
 import { Label } from "@/shared/ui/label";
 
-const InputField = ({ data, onChange }) => {
+interface InputFieldProps {
+  data: {
+    id: string;
+    name: string;
+    value?: string;
+    placeholder?: string;
+    label: string;
+    required?: boolean;
+  };
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const InputField = ({ data, onChange }: InputFieldProps) => {
   const { id, name, value, placeholder, label } = data;
   return (
     <>
@@ -11,7 +23,6 @@ const InputField = ({ data, onChange }) => {
       <Input
         id={id}
         name={name}
-        variant="grey"
         value={value}
         onChange={onChange}
         placeholder={placeholder}

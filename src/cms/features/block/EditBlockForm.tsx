@@ -22,7 +22,7 @@ export function EditBlockForm({
     type: selectedBlock ? selectedBlock.type : "",
     page: selectedBlock ? selectedBlock.page : "",
     content: selectedBlock ? selectedBlock.content : [],
-    config: selectedBlock ? selectedBlock.config : {},
+    style: selectedBlock ? selectedBlock.style : {},
   };
 
   const { handleFormSubmit, handleFormCancel, reset, setValue, watch } =

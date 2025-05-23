@@ -1,37 +1,39 @@
 import SidebarItemCard from "@/cms/components/wrappers/SidebarItemCard";
 import { Edit } from ".";
-interface EditConfigItemProps {
-  type: ElementType;
-  value: string;
+import { WaveOverlay } from "./WaveOverlay";
+interface EditstyleItemProps {
+  type: StyleType;
+  value?: string;
   kind: ElementKind;
-  onChange: (type: ElementType, value: string, kind: ElementKind) => void;
+  onChange: (type: StyleType, value: string, kind: ElementKind) => void;
   onRemove: (type: ElementType, kind: ElementKind) => void;
 }
 
-const CONFIGURATIONS_LIST = {
+const STYLE_LIST = {
   backgroundColor: Edit.BackgroundColor,
   backgroundImage: Edit.BackgroundImage,
   textColor: Edit.TextColor,
   layout: Edit.ContainerLayout,
   height: Edit.Height,
+  waveOverlay: WaveOverlay,
 } as const;
 
-export function EditConfigItem({
+export function EditstyleItem({
   type,
   value,
   kind,
   onChange,
   onRemove,
-}: Omit<EditConfigItemProps, "type"> & {
-  type: keyof typeof CONFIGURATIONS_LIST;
+}: Omit<EditstyleItemProps, "type"> & {
+  type: keyof typeof STYLE_LIST;
 }) {
   const handlePropChange = (value: string) => {
     onChange(type, value, kind);
   };
 
-  const ConfigItem = CONFIGURATIONS_LIST[type];
+  const StyleItem = STYLE_LIST[type];
 
-  if (!ConfigItem) {
+  if (!StyleItem) {
     return null;
   }
 
@@ -41,7 +43,7 @@ export function EditConfigItem({
       type={type}
       kind={kind}
     >
-      <ConfigItem value={value} onChange={handlePropChange} />
+      <StyleItem value={value} onChange={handlePropChange} />
     </SidebarItemCard>
   );
 }

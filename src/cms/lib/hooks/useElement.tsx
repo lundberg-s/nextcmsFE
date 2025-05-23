@@ -4,17 +4,16 @@ import { isEqual } from "lodash";
 import { useCmsContext } from "@/cms/lib/context/CmsContext";
 
 interface FormHelpers {
-  // Existing methods
   addContent: (type: ElementType, kind: ElementKind) => void;
-  addConfig: (type: ElementType, kind: ElementKind) => void;
+  addstyle: (type: ElementType, kind: ElementKind) => void;
   updateContent: (
     type: ElementType,
-    content: Partial<Element>,
+    content: Record<string, ContentElement>,
     kind: ElementKind
   ) => void;
-  updateConfig: (type: ElementType, value: string, kind: ElementKind) => void;
+  updatestyle: (type: ElementType, value: string, kind: ElementKind) => void;
   removeContent: (type: ElementType, kind: ElementKind) => void;
-  removeConfig: (type: ElementType, kind: ElementKind) => void;
+  removestyle: (type: ElementType, kind: ElementKind) => void;
 
   prevFormValues: React.MutableRefObject<Block | null>;
 }
@@ -41,14 +40,14 @@ export function useElement(
     }
   }, [selectedBlock, reset]);
 
-  // Content methods
+
   const addContent = (
     type: ElementType,
     kind: ElementKind,
     options?: { onSuccess?: () => void }
   ) => {
     if (kind === "content") {
-      const newContent: Partial<Element> = {
+      const newContent = {
         type,
         kind,
         position: "bottom",
@@ -64,19 +63,19 @@ export function useElement(
     }
   };
 
-  const addConfig = (
+  const addstyle = (
     type: ElementType,
     kind: ElementKind,
     options?: { onSuccess?: () => void }
   ) => {
-    if (kind === "config") {
-      const newConfig = {
+    if (kind === "style") {
+      const newstyle = {
         [type]: "",
       };
 
-      setValue("config", {
-        ...watch("config"),
-        ...newConfig,
+      setValue("style", {
+        ...watch("style"),
+        ...newstyle,
       });
       
       if (options?.onSuccess) {
@@ -87,7 +86,7 @@ export function useElement(
 
   const updateContent = (
     type: ElementType,
-    content: Partial<Element>,
+    content: Record<string, ContentElement>,
     kind: ElementKind
   ) => {
     if (kind === "content") {
@@ -98,14 +97,14 @@ export function useElement(
     }
   };
 
-  const updateConfig = (
+  const updatestyle = (
     type: ElementType,
     value: string,
     kind: ElementKind
   ) => {
-    if (kind === "config") {
-      setValue("config", {
-        ...watch("config"),
+    if (kind === "style") {
+      setValue("style", {
+        ...watch("style"),
         [type]: value,
       });
     }
@@ -120,22 +119,22 @@ export function useElement(
     }
   };
 
-  const removeConfig = (type: ElementType, kind: ElementKind) => {
-    if (kind === "config") {
-      const currentConfigs: Record<string, string> = watch("config") || {};
-      const newConfig = { ...currentConfigs };
-      delete newConfig[type as keyof typeof newConfig];
-      setValue("config", newConfig);
+  const removestyle = (type: ElementType, kind: ElementKind) => {
+    if (kind === "style") {
+      const currentstyles = watch("style") || {};
+      const newstyle = { ...currentstyles };
+      delete newstyle[type as keyof typeof newstyle];
+      setValue("style", newstyle);
     }
   };
 
   return {
     addContent,
-    addConfig,
+    addstyle,
     updateContent,
-    updateConfig,
+    updatestyle,
     removeContent,
-    removeConfig,
+    removestyle,
     prevFormValues,
   };
 }

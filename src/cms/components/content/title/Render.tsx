@@ -1,7 +1,7 @@
 
 
 interface TitleProps {
-  data: Partial<Element>;
+  data: TitleElement;
 }
 
 export function RenderTitle({ data }: TitleProps) {

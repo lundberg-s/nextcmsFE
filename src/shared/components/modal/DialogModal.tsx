@@ -22,6 +22,7 @@ interface DialogModalProps {
     icon?: string;
     variant?: any;
     disabled?: boolean;
+    className?: string;
   };
   props?: any;
   showFooter?: boolean;
@@ -105,6 +106,7 @@ export function DialogModal({
         icon={button?.icon ? iconElement : null}
         variant={button?.variant || "default"}
         disabled={button?.disabled}
+        className={button?.className}
       >
         {button?.label}
       </Button>

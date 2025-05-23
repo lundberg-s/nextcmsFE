@@ -23,6 +23,7 @@ export default function PageNavigation({ pages }: { pages: Page[] }) {
     button: {
       label: "Login",
       variant: "ghost",
+      className: "text-md"
     },
   };
 

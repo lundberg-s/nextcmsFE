@@ -10,12 +10,12 @@ interface ExperimentalProps {
 }
 
 export function Experimental({ block }: ExperimentalProps) {
-  const { content, config } = block;
+  const { content, style } = block;
   const { selectedBlock } = useCmsContext();
   const { updateBlock } = useBlock();
   const isSelected = selectedBlock?.id === block.id;
   const [targetPosition, setTargetPosition] = useState<string | null>(null);
-  const [selectedComponent, setSelectedComponent] = useState<Element | null>(null);
+  const [selectedComponent, setSelectedComponent] = useState<ContentElement | null>(null);
   const [showColumnColors, setShowColumnColors] = useState(false);
   // Function to handle container clicks
   const handleContainerClick = (position: "left" | "top" | "bottom" | "right") => {
@@ -34,7 +34,7 @@ export function Experimental({ block }: ExperimentalProps) {
           content: {
             ...content,
             [type]: {
-              ...(component as Element),
+              ...(component as ContentElement),
               position: position
             }
           }
@@ -52,7 +52,7 @@ const renderComponentAt = (position: string) => {
 
   // Find component with matching position
   const componentEntry = Object.entries(content).find(([_, comp]) =>
-    (comp as Element).position === position
+    (comp as ContentElement).position === position
   );
 
   if (!componentEntry && isSelected) return <div className="text-gray-400">Click to place component here</div>;
@@ -61,7 +61,7 @@ const renderComponentAt = (position: string) => {
   
   // Check if this specific component is the one that's selected
   const isThisComponentSelected = selectedComponent?.type === type && 
-    selectedComponent?.position === (component as Element)?.position;
+    selectedComponent?.position === (component as ContentElement)?.position;
 
   return (
     <div 
@@ -69,28 +69,30 @@ const renderComponentAt = (position: string) => {
                   transition-colors duration-200`} 
       onClick={(e) => {
         e.stopPropagation(); // Prevent triggering container click
-        setSelectedComponent(component as Element);
+        setSelectedComponent(component as ContentElement);
       }}
     >
       <ElementItem
         mode="render"
         key={type}
-        type={type as ElementType}
-        component={component as Element}
+        type={type as ContentType}
+        value={component as ContentElement}
         kind="content"
+        onChange={() => {}}
+        onRemove={() => {}}
       />
     </div>
   );
 };
 
   const colours = {
-    backgroundColor: config?.backgroundColor || "bg-background",
-    textColor: config?.textColor || "",
+    backgroundColor: style?.backgroundColor || "bg-background",
+    textColor: style?.textColor || "",
   };
 
-  const backgroundImage = config?.backgroundImage
+  const backgroundImage = style?.backgroundImage
     ? {
-      backgroundImage: `url(${config?.backgroundImage})`,
+      backgroundImage: `url(${style?.backgroundImage})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
     }

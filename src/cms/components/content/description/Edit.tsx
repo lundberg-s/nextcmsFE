@@ -5,7 +5,7 @@ import { Label } from '@/shared/ui/label'
 import { Textarea } from '@/shared/ui/textarea'
 
 interface EditDescriptionComponentProps {
-  data: Partial<Element>;
+  data: DescriptionElement;
   onChange: (key: string, value: string | string[]) => void;
 }
 
@@ -19,7 +19,7 @@ export function EditDescription({ data, onChange }: EditDescriptionComponentProp
       </div> */}
         <Label>Description</Label>
         <Textarea
-            value={data?.content || ""}
+            value={data?.description || ""}
             onChange={(e) => onChange("content", e.target.value)}
             placeholder="Enter description"
         />

@@ -3,7 +3,7 @@ import { Button } from "@/shared/ui/button";
 import { cn } from "@/cms/lib/utils";
 
 interface ButtonProps {
-  data: Partial<Element>;
+  data: ButtonElement;
 }
 
 export function RenderButton({ data }: ButtonProps) {
@@ -11,9 +11,8 @@ export function RenderButton({ data }: ButtonProps) {
     <Button
       variant={data.variant || "default"}
       size={data.size || "default"}
-      className={cn("w-fit", data.className)}
     >
-      {data.text || "Button"}
+      {data.button_text || "Button"}
     </Button>
   );
 }

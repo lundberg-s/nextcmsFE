@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { ElementItem } from "./ElementItem";
 
-interface FormValues {
+interface AddElementFormValues {
   elementType: ElementType;
 }
 
@@ -17,31 +17,42 @@ interface AddElementFormProps {
   onCancelCallback: () => void;
 }
 
-const CONFIG_OPTIONS = [
+const style_OPTIONS: Array<{
+  type: StyleType;
+  label: string;
+  description: string;
+  kind: "style";
+}> = [
   {
     type: "backgroundColor",
     label: "Background Color",
     description: "Set the background color using hex or color name",
-    kind: "config" as ElementKind,
+    kind: "style",
   },
   {
     type: "backgroundImage",
     label: "Background Image",
     description: "Add an image URL for the background",
-    kind: "config" as ElementKind,
+    kind: "style",
   },
   {
     type: "textColor",
     label: "Text Color",
     description: "Set the color for text elements",
-    kind: "config" as ElementKind,
+    kind: "style",
   },
   {
     type: "height",
     label: "Height",
     description: "Set the height of the block",
-    kind: "config" as ElementKind,
-  }
+    kind: "style",
+  },
+  {
+    type: "waveOverlay",
+    label: "Wave Overlay",
+    description: "Add a wave overlay to the block bottom",
+    kind: "style",
+  },
 ];
 
 const CONTENT_OPTIONS = [
@@ -54,6 +65,7 @@ const CONTENT_OPTIONS = [
   "carousel",
   "image",
   "text",
+  "features",
 ] as const;
 
 export function AddElementForm({
@@ -63,7 +75,7 @@ export function AddElementForm({
   onSubmitCallback,
   onCancelCallback,
 }: AddElementFormProps) {
-  const { register, handleSubmit, watch, setValue } = useForm<FormValues>({
+  const { register, handleSubmit, watch, setValue } = useForm<AddElementFormValues>({
     defaultValues: {
       elementType: kind === "content" ? "title" : "backgroundColor",
     },
@@ -76,7 +88,7 @@ export function AddElementForm({
 
   const onFormSubmit = () => {
     handleSubmit(() => {
-      formFn(selectedType as ElementType, kind, {
+      formFn(selectedType, kind, {
         onSuccess: () => {
           onSubmitCallback();
         },
@@ -113,23 +125,27 @@ export function AddElementForm({
               kind="content"
               isSelected={selectedType === type}
               onSelect={handleSelect}
+              onChange={() => {}}
+              onRemove={() => {}}
             />
           ))}
         </div>
       )}
 
-      {kind === "config" && (
+      {kind === "style" && (
         <div className="space-y-4">
-          {CONFIG_OPTIONS.map((config) => (
+          {style_OPTIONS.map((style) => (
             <ElementItem
               mode="preview"
-              key={config.type}
-              type={config.type as ElementType}
-              label={config.label}
-              description={config.description}
-              kind="config"
-              isSelected={selectedType === config.type}
+              key={style.type}
+              type={style.type}
+              label={style.label}
+              description={style.description}
+              kind="style"
+              isSelected={selectedType === style.type}
               onSelect={handleSelect}
+              onChange={() => {}} 
+              onRemove={() => {}}
             />
           ))}
         </div>

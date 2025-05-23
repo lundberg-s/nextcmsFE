@@ -5,7 +5,7 @@ import { Label } from "@/shared/ui/label";
 
 
 interface InputProps {
-  data: Partial<Element>;
+  data: InputElement;
   onChange: (key: string, value: string | string[]) => void;
 }
 
@@ -16,7 +16,6 @@ export function EditInput({ data }: InputProps) {
       <Input
         type={data.type || "text"}
         placeholder={data.placeholder || "Input placeholder"}
-        className={cn("max-w-sm", data.className)}
       />
     </>
   );

@@ -26,7 +26,7 @@ export const api = {
       list: (): Promise<Page[]> =>
         ssg.get<Page[]>(`${API_CMS_URL}/pages`),
       item: (slug: string): Promise<Page | null> =>
-        ssg.get<Page | null>(`${API_CMS_URL}/pages/${slug}`),
+        ssg.get<Page | null>(`${API_CMS_URL}/pages/slug/${slug}`),
     },
   },
 };

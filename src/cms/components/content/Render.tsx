@@ -1,34 +1,47 @@
-import { text } from "node:stream/consumers";
 import { Render } from ".";
 
-interface RenderContentItemProps {
-  type: ElementType;
-  component: Partial<Element>;
-  kind: ElementKind;
-}
+type RenderElementMap = {
+  title: TitleElement;
+  description: DescriptionElement;
+  button: ButtonElement;
+  input: InputElement;
+  separator: SeparatorElement;
+  card: CardElement;
+  carousel: CarouselElement;
+  image: ImageElement;
+  text: TextElement;
+  features: FeaturesElement;
+};
 
 const CONTENT_LIST = {
   title: Render.Title,
+  description: Render.Description,
   button: Render.Button,
   input: Render.Input,
-  desc: Render.Description,
   separator: Render.Separator,
   card: Render.Card,
   carousel: Render.Carousel,
   image: Render.Image,
   text: Render.Text,
+  features: Render.Features,
 } as const;
 
-export function RenderContentItem({
+interface RenderContentItemProps<T extends keyof typeof CONTENT_LIST> {
+  type: T;
+  value?: RenderElementMap[T];
+  kind: ElementKind;
+}
+
+export function RenderContentItem<T extends keyof typeof CONTENT_LIST>({
   type,
-  component: data,
-}: Omit<RenderContentItemProps, "type"> & { type: keyof typeof CONTENT_LIST | string }) {
+  value: data,
+}: RenderContentItemProps<T>) {
+  const resolvedData = data ?? ({} as RenderElementMap[T]);
 
-  const ContentItem = CONTENT_LIST[type as keyof typeof CONTENT_LIST];
+  const ContentItem = CONTENT_LIST[type] as React.ComponentType<{
+    data: RenderElementMap[T];
+  }>;
 
-  if (!ContentItem) {
-    return null;
-  }
 
-  return <ContentItem data={data} />;
+  return <ContentItem data={resolvedData} />;
 }

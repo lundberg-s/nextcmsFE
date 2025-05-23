@@ -6,7 +6,7 @@ import { SelectContent, SelectItem } from "@/shared/ui/select";
 import { Label } from "@/shared/ui/label";
 
 interface EditSeparatorComponentProps {
-  data: Partial<Element>;
+  data: SeparatorElement;
   onChange: (key: string, value: string) => void;
 }
 

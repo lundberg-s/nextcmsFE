@@ -1,11 +1,10 @@
-import { text } from "node:stream/consumers";
 import { Preview } from ".";
 
 interface PreviewContentItemProps {
   type: ElementType;
   kind: ElementKind;
-  isSelected: boolean;
-  onSelect: (type: ElementType) => void;
+  isSelected?: boolean;
+  onSelect?: (type: ElementType) => void;
 }
 
 const PREVIEW_LIST = {
@@ -18,6 +17,7 @@ const PREVIEW_LIST = {
   carousel: Preview.Carousel,
   image: Preview.Image,
   text: Preview.Text,
+  features: Preview.Features,
 } as const;
 
 export function PreviewContentItem({
@@ -44,7 +44,7 @@ export function PreviewContentItem({
         className="sr-only"
         value={type}
         checked={isSelected}
-        onChange={() => onSelect(type as ElementType)}
+        onChange={() => onSelect && onSelect(type as ElementType)}
       />
       <div className="mb-2">
         <PreviewComponent />

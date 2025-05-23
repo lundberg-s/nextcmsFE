@@ -1,44 +1,97 @@
 import { EditContentItem } from "@/cms/components/content/Edit";
-import { EditConfigItem } from "@/cms/components/config/Edit";
+import { EditstyleItem } from "@/cms/components/style/Edit";
 import { PreviewContentItem } from "@/cms/components/content/Preview";
-import { PreviewConfigItem } from "@/cms/components/config/Preview";
+import { PreviewstyleItem } from "@/cms/components/style/Preview";
 import { RenderContentItem } from "@/cms/components/content/Render";
+import React from "react";
 
-interface ElementItemProps {
-  type: ElementType;
-  kind: ElementKind;
+type Mode = "edit" | "preview" | "render";
 
+type BaseElementItemProps = {
   mode: "edit" | "preview" | "render";
-  label?: string;
-  description?: string;
-  component?: Partial<Element>;
-  value?: string;
-  onChange?: (type: ElementType, valueOrComponent: any, kind: ElementKind) => void;
-  onRemove?: (type: ElementType, kind: ElementKind) => void;
-  
+  onChange: (type: ElementType, value: any, kind: ElementKind) => void;
+  onRemove: (type: ElementType, kind: ElementKind) => void;
   isSelected?: boolean;
   onSelect?: (type: ElementType) => void;
-}
-
-const ELEMENT_ITEMS = {
-  edit: {
-    content: EditContentItem,
-    config: EditConfigItem
-  },
-  preview: {
-    content: PreviewContentItem,
-    config: PreviewConfigItem,
-  },
-  render: {
-    content: RenderContentItem,
-    config: () => null
-  }
+  label?: string;
+  description?: string;
 };
 
+type ContentElementItemProps = BaseElementItemProps & {
+  type: ContentType;
+  kind: "content";
+  value?: ContentElement;
+};
+
+type StyleElementItemProps = BaseElementItemProps & {
+  type: StyleType;
+  kind: "style";
+  value?: string;
+  title?: string;
+};
+
+type ElementItemProps = ContentElementItemProps | StyleElementItemProps;
+
+const EmptyComponent: React.FC = () => <></>;
+
+
 export function ElementItem(props: ElementItemProps) {
-  const { mode, kind } = props;
+  const {
+    kind,
+    mode,
+    type,
+    label,
+    description,
+    value,
+    onChange,
+    onRemove,
+    isSelected,
+    onSelect,
+  } = props;
 
-  const Item = ELEMENT_ITEMS[mode]?.[kind] as React.ComponentType<any> | null;
+  if (kind === "content") {
+    const Component =
+      mode === "edit"
+        ? EditContentItem
+        : mode === "preview"
+        ? PreviewContentItem
+        : RenderContentItem;
 
-  return Item ? <Item {...props} /> : null;
+    return (
+      <Component
+        kind="content"
+        type={type}
+        value={value} // ContentElement
+        onChange={onChange}
+        onRemove={onRemove}
+        isSelected={isSelected}
+        onSelect={onSelect}
+      />
+    );
+  }
+
+  if (kind === "style") {
+    const Component =
+      mode === "edit"
+        ? EditstyleItem
+        : mode === "preview"
+        ? PreviewstyleItem
+        : EmptyComponent;
+
+    return (
+      <Component
+        kind="style"
+        type={type}
+        label={label}
+        description={description}
+        value={value} // string
+        onChange={onChange}
+        onRemove={onRemove}
+        isSelected={isSelected}
+        onSelect={onSelect}
+      />
+    );
+  }
+
+  return null;
 }

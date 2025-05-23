@@ -1,12 +1,10 @@
 import React, { FormEvent, forwardRef } from "react";
-import DropdownSelect from "@/cms/components/dropdown/DropdownSelect";
 import InputField from "@/cms/components/text-input/InputField";
 import { SelectableList } from "../list/List";
 import LoadingSpinner from "@/shared/components/loading/LoadingSpinner";
 
 const FORM_FIELDS = {
   inputfield: InputField,
-  dropdown: DropdownSelect,
   list: SelectableList,
 } as const;
 
@@ -53,9 +51,6 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
     const fieldHandlers = {
       inputfield: (name: string, value: any) => {
         onChange?.(name, value.target?.value || value);
-      },
-      dropdown: (name: string, value: any) => {
-        onChange?.(name, value);
       },
       list: (name: string, value: any) => {
         onChange?.(name, value);
