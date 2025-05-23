@@ -58,19 +58,12 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
     };
 
     return (
-      <form id={id} ref={ref} onSubmit={onSubmit} onReset={onReset} className="space-y-4">
+      <form id={id} ref={ref} onSubmit={onSubmit} onReset={onReset} className="relative space-y-4">
         {config?.fields.map((field) => {
           const FormField = FORM_FIELDS[field.type];
           const handleFieldChange = (value: any) => {
             fieldHandlers[field.type](field.name, value);
           };
-
-          {
-            loading && (
-              <LoadingSpinner />
-            )
-          }
-
           return FormField ? (
             <div key={field.id} className="space-y-2">
               <FormField
@@ -82,7 +75,13 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
           ) : null;
         })}
         {children}
+        {loading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white/60 z-10">
+            <LoadingSpinner />
+          </div>
+        )}
       </form>
+
     );
   }
 );
