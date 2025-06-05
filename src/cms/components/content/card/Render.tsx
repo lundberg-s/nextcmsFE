@@ -1,6 +1,6 @@
 
 import { Card as UICard, CardHeader, CardTitle, CardContent } from "@/shared/ui/card";
-import { cn } from "@/cms/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 interface RenderCardProps {
   data: CardElement;

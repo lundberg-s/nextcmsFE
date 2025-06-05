@@ -1,6 +1,6 @@
 
 import { Button } from "@/shared/ui/button";
-import { cn } from "@/cms/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 interface ButtonProps {
   data: ButtonElement;

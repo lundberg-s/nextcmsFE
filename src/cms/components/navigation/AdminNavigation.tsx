@@ -1,12 +1,12 @@
 "use client";
 
-import { getIcon } from "@/cms/lib/utilities/GetIcon";
+import { getLucideIcon } from "@/cms/lib/utilities/getLucideIcon";
 import { useAuth } from "@/shared/lib/hooks/useAuth";
 import { useUser } from "@/shared/lib/hooks/useUser";
 
 export function AdminNavigation() {
 
-  const MenuIcon = getIcon("chevron-down");
+  const MenuIcon = getLucideIcon("chevron-down");
   const { logout } = useAuth();
   const { user } = useUser();
 

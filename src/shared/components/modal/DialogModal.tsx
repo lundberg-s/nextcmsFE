@@ -10,7 +10,7 @@ import {
   DialogTitle,
 } from "@/shared/ui/dialog";
 import { Button } from "@/shared/ui/button";
-import { getIcon } from "@/cms/lib/utilities/GetIcon";
+import { getLucideIcon } from "@/cms/lib/utilities/getLucideIcon";
 import { Trash2 } from "lucide-react";
 
 interface DialogModalProps {
@@ -94,7 +94,7 @@ export function DialogModal({
     ...rest,
   };
 
-  const iconElement = getIcon(button?.icon || "");
+  const iconElement = getLucideIcon(button?.icon || "");
 
   return (
     <>

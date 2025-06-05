@@ -1,11 +1,10 @@
 "use client";
 
-import { AppSidebar } from "@/cms/components/modals/Sidebar";
+import { AppSidebar } from "@/cms/components/sidebar/Sidebar";
 import { AdminNavigation } from "@/cms/components/navigation/AdminNavigation";
 import { SidebarProvider, SidebarTrigger } from "@/shared/ui/sidebar";
 import { ScrollArea } from "@/shared/ui/scroll-area";
 import { SidebarContentProvider } from "@/cms/lib/context/SidebarContext";
-import { BlockPreviewProvider } from "@/cms/lib/context/BlockPreviewContext";
 
 export default function AdminLayout({
   children,
@@ -14,7 +13,6 @@ export default function AdminLayout({
 }) {
   return (
     <>
-      <BlockPreviewProvider>
         <SidebarContentProvider>
           <SidebarProvider>
             <AdminNavigation />
@@ -22,7 +20,6 @@ export default function AdminLayout({
             <AppSidebar />
           </SidebarProvider>
         </SidebarContentProvider>
-      </BlockPreviewProvider>
     </>
   );
 }

@@ -1,6 +1,6 @@
 
 import { Separator } from "@/shared/ui/separator";
-import { cn } from "@/cms/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 interface SeparatorProps {
   data: SeparatorElement;

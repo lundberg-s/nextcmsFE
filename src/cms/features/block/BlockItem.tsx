@@ -4,11 +4,10 @@ import { DraggableAttributes } from "@dnd-kit/core";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { Hero } from "@/cms/components/blocks/Hero";
 import { Experimental } from "@/cms/components/blocks/Experimental";
-import { Features } from "@/cms/components/blocks/Features";
 import { DragHandle } from "@/shared/ui/drag-handle";
 import { Button } from "@/shared/ui/button";
 import { ConfirmationModal } from "@/cms/components/modals/ConfirmationModal";
-import { getIcon } from "@/cms/lib/utilities/GetIcon";
+import { getLucideIcon } from "@/cms/lib/utilities/getLucideIcon";
 
 interface BlockItemProps {
   block: Block;
@@ -30,7 +29,6 @@ export function BlockItem({
   const BLOCK_OPTIONS: { [key: string]: React.ElementType<{ block: Block }> } =
     {
       hero: Hero,
-      features: Features,
       experimental: Experimental,
     };
 
@@ -40,8 +38,8 @@ export function BlockItem({
     return null;
   }
 
-  const trashIcon = getIcon("trash");
-  const settingsIcon = getIcon("settings");
+  const trashIcon = getLucideIcon("trash");
+  const settingsIcon = getLucideIcon("settings");
 
   return (
     <div className="relative group">

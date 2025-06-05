@@ -1,4 +1,4 @@
-import SidebarItemCard from "@/cms/components/wrappers/SidebarItemCard";
+import SidebarItemCard from "@/cms/components/sidebar/SidebarItemCard";
 import { Edit } from ".";
 import { WaveOverlay } from "./WaveOverlay";
 interface EditStyleItemProps {

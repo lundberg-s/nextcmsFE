@@ -1,6 +1,6 @@
 
 import { Input } from "@/shared/ui/input";
-import { cn } from "@/cms/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { Label } from "@/shared/ui/label";
 
 

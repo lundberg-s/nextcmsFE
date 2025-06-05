@@ -1,4 +1,4 @@
-import SidebarItemCard from "@/cms/components/wrappers/SidebarItemCard";
+import SidebarItemCard from "@/cms/components/sidebar/SidebarItemCard";
 import { Edit } from ".";
 
 interface EditContentItemProps<T extends keyof typeof CONTENT_LIST> {

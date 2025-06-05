@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { cn } from "@/cms/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 interface ListRootProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;

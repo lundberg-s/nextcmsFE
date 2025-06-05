@@ -1,6 +1,6 @@
 import { Plus, PlusCircle, Settings, Trash2, ChevronDown, ChevronRight } from "lucide-react";
 
-export function getIcon (icon: string) {
+export function getLucideIcon (icon: string) {
 
     switch (icon) {
         case "plus":

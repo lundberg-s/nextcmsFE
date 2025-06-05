@@ -1,5 +1,5 @@
 import React from "react";
-import { getIcon } from "@/cms/lib/utilities/GetIcon";
+import { getLucideIcon } from "@/cms/lib/utilities/getLucideIcon";
 
 interface ExpandableSectionTitleProps {
   isOpen: boolean;
@@ -23,7 +23,7 @@ export function ExpandableSectionTitle({
         <span
           className={`transition-transform duration-200 ${isOpen ? "rotate-90" : ""}`}
         >
-          {getIcon("chevron-right")}
+          {getLucideIcon("chevron-right")}
         </span>
         {children}
       </div>

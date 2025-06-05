@@ -2,9 +2,9 @@ import React from "react";
 import { ConfirmationModal } from "../modals/ConfirmationModal";
 import { Button } from "../../../shared/ui/button";
 import { Trash2 } from "lucide-react";
-import { getIcon } from "@/cms/lib/utilities/GetIcon";
+import { getLucideIcon } from "@/cms/lib/utilities/getLucideIcon";
 import { ExpandableSection } from "@/shared/components/expandable/ExpandableSection";
-import { formatTypeToLabel } from "@/cms/lib/utilities/formatTypeToLabel";
+import { getLabelFromType } from "@/cms/lib/utilities/getLabelFromType";
 
 interface SidebarItemCardProps {
   onRemove: (type: ElementType, kind: ElementKind) => void;
@@ -27,11 +27,11 @@ export default function SidebarItemCard({
           <span
             className={`transition-transform duration-200 ${isOpen ? "rotate-90" : ""}`}
           >
-            {getIcon("chevron-right")}
+            {getLucideIcon("chevron-right")}
           </span>
 
           <p className="text-md font-medium">
-            {type ? formatTypeToLabel(type) : ""}
+            {type ? getLabelFromType(type) : ""}
           </p>
         </div>
         <ConfirmationModal
