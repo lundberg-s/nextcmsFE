@@ -33,9 +33,9 @@ export function PreviewContentItem({
 
   return (
     <label
-      className={`group relative p-8 rounded-lg border transition-colors flex flex-col justify-center items-center cursor-pointer ${
+      className={`group relative p-6 transition-colors flex flex-col justify-center items-center cursor-pointer ${
         isSelected 
-          ? "border-primary bg-primary/10" 
+          ? "bg-primary/10" 
           : "border-border hover:border-muted-foreground"
       }`}
     >
@@ -46,11 +46,11 @@ export function PreviewContentItem({
         checked={isSelected}
         onChange={() => onSelect && onSelect(type as ElementType)}
       />
-      <div className="mb-2">
+      <div className="border-primary/25 rounded-md border mb-2">
         <PreviewComponent />
       </div>
       <span className="text-sm font-medium absolute bottom-2">
-        {type}
+        {type.charAt(0).toUpperCase() + type.slice(1).toLowerCase()}
       </span>
       <div className={`absolute inset-0 bg-primary/5 opacity-0 ${
         !isSelected ? "group-hover:opacity-100" : ""

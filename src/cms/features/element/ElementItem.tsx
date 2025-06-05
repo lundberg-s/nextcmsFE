@@ -1,7 +1,7 @@
 import { EditContentItem } from "@/cms/components/content/Edit";
-import { EditstyleItem } from "@/cms/components/style/Edit";
+import { EditStyleItem } from "@/cms/components/style/Edit";
 import { PreviewContentItem } from "@/cms/components/content/Preview";
-import { PreviewstyleItem } from "@/cms/components/style/Preview";
+import { PreviewStyleItem } from "@/cms/components/style/Preview";
 import { RenderContentItem } from "@/cms/components/content/Render";
 import React from "react";
 
@@ -61,7 +61,7 @@ export function ElementItem(props: ElementItemProps) {
       <Component
         kind="content"
         type={type}
-        value={value} // ContentElement
+        value={value}
         onChange={onChange}
         onRemove={onRemove}
         isSelected={isSelected}
@@ -73,9 +73,9 @@ export function ElementItem(props: ElementItemProps) {
   if (kind === "style") {
     const Component =
       mode === "edit"
-        ? EditstyleItem
+        ? EditStyleItem
         : mode === "preview"
-        ? PreviewstyleItem
+        ? PreviewStyleItem
         : EmptyComponent;
 
     return (
@@ -84,7 +84,7 @@ export function ElementItem(props: ElementItemProps) {
         type={type}
         label={label}
         description={description}
-        value={value} // string
+        value={value}
         onChange={onChange}
         onRemove={onRemove}
         isSelected={isSelected}

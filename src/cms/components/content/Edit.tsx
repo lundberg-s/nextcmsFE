@@ -50,7 +50,7 @@ export function EditContentItem<T extends keyof typeof CONTENT_LIST>({
 
 if (!type) {
     console.error("Type is undefined");
-    return null; // Prevent rendering if type is undefined
+    return null;
   }
 
   const handleValueChange = (
@@ -70,7 +70,7 @@ if (!type) {
 
   if (!CONTENT_LIST[type]) {
     console.error(`Invalid type: ${type}`);
-    return null; // Prevent rendering if type is invalid
+    return null;
   }
 
   return (
@@ -80,7 +80,7 @@ if (!type) {
       kind={kind}
     >
       <ContentItem
-        data={data ?? ({} as ContentElementMap[T])} // Provide an empty object if `data` is undefined
+        data={data ?? ({} as ContentElementMap[T])}
         onChange={handleValueChange}
       />
     </SidebarItemCard>

@@ -1,5 +1,5 @@
 
-interface PreviewstyleItemProps {
+interface PreviewStyleItemProps {
   type: ElementType;
   label?: string;
   description?: string;
@@ -8,14 +8,14 @@ interface PreviewstyleItemProps {
   onSelect?: (type: ElementType) => void;
 }
 
-export function PreviewstyleItem({
+export function PreviewStyleItem({
   type,
   label,
   description,
   kind,
   isSelected,
   onSelect,
-}: PreviewstyleItemProps) {
+}: PreviewStyleItemProps) {
   return (
     <label
       key={type}

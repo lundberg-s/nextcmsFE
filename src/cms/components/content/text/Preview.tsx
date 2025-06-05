@@ -1,18 +1,8 @@
-import React from "react";
+import Image from "next/image";
+import TextPreview from "public/ELEMENT_TEXT_ICON.png"
 
 export function PreviewText() {
   return (
-    <div className="text-center space-y-4">
-      <h1 className="text-2xl font-bold">Preview Title</h1>
-      <p className="text-gray-600">This is a preview description.</p>
-      <div className="flex justify-center gap-4">
-        <button className="px-4 py-2 bg-blue-500 text-white rounded-md">
-          CTA 1
-        </button>
-        <button className="px-4 py-2 bg-gray-500 text-white rounded-md">
-          CTA 2
-        </button>
-      </div>
-    </div>
+    <Image src={TextPreview} alt="Title Preview" width={500} height={200} className="w-full rounded-md h-auto object-cover" />
   );
 }

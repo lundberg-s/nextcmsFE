@@ -4,6 +4,7 @@ import { Button } from "../../../shared/ui/button";
 import { Trash2 } from "lucide-react";
 import { getIcon } from "@/cms/lib/utilities/GetIcon";
 import { ExpandableSection } from "@/shared/components/expandable/ExpandableSection";
+import { formatTypeToLabel } from "@/cms/lib/utilities/formatTypeToLabel";
 
 interface SidebarItemCardProps {
   onRemove: (type: ElementType, kind: ElementKind) => void;
@@ -21,7 +22,7 @@ export default function SidebarItemCard({
   const [isOpen, setIsOpen] = React.useState(true);
   return (
     <div className="">
-      <div onClick={() => setIsOpen(!isOpen)} className="flex items-center justify-between border-b border-t p-2">
+      <div onClick={() => setIsOpen(!isOpen)} className="flex items-center justify-between border-b border-t p-2  cursor-pointer">
         <div className="flex items-center gap-4">
           <span
             className={`transition-transform duration-200 ${isOpen ? "rotate-90" : ""}`}
@@ -30,7 +31,7 @@ export default function SidebarItemCard({
           </span>
 
           <p className="text-md font-medium">
-            {type?.charAt(0).toUpperCase() + type?.slice(1)}
+            {type ? formatTypeToLabel(type) : ""}
           </p>
         </div>
         <ConfirmationModal

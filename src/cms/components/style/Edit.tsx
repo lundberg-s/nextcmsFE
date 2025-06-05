@@ -1,7 +1,7 @@
 import SidebarItemCard from "@/cms/components/wrappers/SidebarItemCard";
 import { Edit } from ".";
 import { WaveOverlay } from "./WaveOverlay";
-interface EditstyleItemProps {
+interface EditStyleItemProps {
   type: StyleType;
   value?: string;
   kind: ElementKind;
@@ -19,13 +19,13 @@ const STYLE_LIST = {
   backgroundOverlay: Edit.BackgroundOverlay,
 } as const;
 
-export function EditstyleItem({
+export function EditStyleItem({
   type,
   value,
   kind,
   onChange,
   onRemove,
-}: Omit<EditstyleItemProps, "type"> & {
+}: Omit<EditStyleItemProps, "type"> & {
   type: keyof typeof STYLE_LIST;
 }) {
   const handlePropChange = (value: string) => {

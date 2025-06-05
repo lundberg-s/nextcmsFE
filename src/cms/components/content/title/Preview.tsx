@@ -1,7 +1,8 @@
+import Image from "next/image";
+import TitlePreview from "public/ELEMENT_TITLE_ICON.png"
+
 export function PreviewTitle() {
   return (
-    <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-      Title
-    </h1>
+    <Image src={TitlePreview} alt="Title Preview" width={500} height={200} className="w-full rounded-md h-auto object-cover" />
   );
 }

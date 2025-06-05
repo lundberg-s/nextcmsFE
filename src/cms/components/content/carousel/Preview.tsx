@@ -1,9 +1,8 @@
-import { Carousel } from "@/shared/ui/carousel";
+import Image from "next/image";
+import CarouselPreview from "public/ELEMENT_CAROUSEL_ICON.png"
 
 export function PreviewCarousel() {
-    return (
-        <Carousel className="w-32 h-24 flex items-center justify-center text-sm">
-            Carousel
-        </Carousel>
-    );
+  return (
+    <Image src={CarouselPreview} alt="Title Preview" width={500} height={200} className="w-full rounded-md h-auto object-cover" />
+  );
 }
