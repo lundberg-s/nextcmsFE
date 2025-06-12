@@ -28,7 +28,7 @@ export default function PageNavigation({ pages }: { pages: Page[] }) {
   };
 
   return (
-    <div className="fixed bg-black bg-opacity-30 w-full text-white z-10 backdrop-blur-sm shadow-md">
+    <div className="fixed bg-black/30 w-full text-white z-10 backdrop-blur-sm shadow-md">
       <nav className="container mx-auto flex justify-between items-center p-3">
         <h1 className="text-xl font-bold">
           <Link href="/">
@@ -36,8 +36,8 @@ export default function PageNavigation({ pages }: { pages: Page[] }) {
           </Link>
         </h1>
 
-        <div className="flex items-center space-x-4">
-          <ul className="flex space-x-6 text-md font-normal pr-3">
+        <div className="flex items-center gap-4">
+          <ul className="flex space-x-6 text-md font-normal pr-4">
             {pages?.map((page) => (
               <li key={page.id}>
                 <Link href={page.slug}>

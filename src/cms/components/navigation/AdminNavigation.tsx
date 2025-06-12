@@ -11,7 +11,7 @@ export function AdminNavigation() {
   const { user } = useUser();
 
   return (
-    <nav className="fixed z-10 top-0 left-1/2 transform -translate-x-1/2 px-10 bg-white bg-opacity-70 backdrop-blur-sm rounded-b-lg">
+    <nav className="fixed z-10 top-0 left-1/2 transform -translate-x-1/2 px-10 bg-white/70 backdrop-blur-xs rounded-b-lg">
       <div className="flex items-center p-2 gap-10">
         <span className="text-sm font-semibold	text-black">
           Moderator: {user?.first_name}
