@@ -1,32 +1,31 @@
-import { client } from "./client";
-import { ssg } from "./ssg";
+import { client, ssg } from "@/shared/lib/services/apiService";
 
-
-const API_BASE_URL = "/api";
-const API_CMS_URL = "/api/cms";
+const CMS_URL = "cms";
+const USER_URL = "user";
 
 export const api = {
   auth: {
     login: (credentials: Credentials): Promise<void> =>
-      client.post(`${API_BASE_URL}/login/`, credentials),
+      client.post(`login/`, credentials),
 
     logout: (): Promise<void> =>
-      client.post(`${API_BASE_URL}/logout/`, {}),
+      client.post(`logout/`, {}),
 
     register: (userData: User): Promise<void> =>
-      client.post(`${API_BASE_URL}/register/`, userData),
+      client.post(`register/`, userData),
   },
 
   user: {
     get: (): Promise<any> =>
-      client.get(`${API_BASE_URL}/user/me/`),
+      client.get(`${USER_URL}/me/`),
   },
+  
   pages: {
     get: {
       list: (): Promise<Page[]> =>
-        ssg.get<Page[]>(`${API_CMS_URL}/pages`),
-      item: (slug: string): Promise<Page | null> =>
-        ssg.get<Page | null>(`${API_CMS_URL}/pages/slug/${slug}`),
+        ssg.get<Page[]>(`${CMS_URL}/pages`),
+      slug: (slug: string): Promise<Page | null> =>
+        ssg.get<Page | null>(`${CMS_URL}/pages/slug/${slug}`),
     },
   },
 };

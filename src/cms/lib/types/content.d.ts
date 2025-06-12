@@ -54,7 +54,6 @@ declare global {
     subtitle: string;
   }
 
-  // Input Elements
   interface InputElement extends BaseContentElement {
     type: "input";
     input?: string;
@@ -68,7 +67,6 @@ declare global {
     placeholder?: string;
   }
 
-  // Visual Elements
   interface ImageElement extends BaseContentElement {
     type: "image";
     src: string;
@@ -82,7 +80,6 @@ declare global {
     urls: string[];
   }
 
-  // UI Elements
   interface SeparatorElement extends BaseContentElement {
     type: "separator";
     separator: string;

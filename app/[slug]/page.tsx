@@ -12,7 +12,7 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const page = await api.pages.get.item(params.slug);
+  const page = await api.pages.get.slug(params.slug);
 
   if (!page) {
     notFound();

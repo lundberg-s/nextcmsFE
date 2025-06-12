@@ -5,7 +5,7 @@ import { api } from "@/shared/lib/api/api";
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const page = await api.pages.get.item("home"); 
+  const page = await api.pages.get.slug("home"); 
 
   if (!page) notFound();
 

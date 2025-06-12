@@ -1,8 +1,9 @@
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8000";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api/";
 const REFRESH_URL = process.env.NEXT_PUBLIC_REFRESH_URL || "http://localhost:8000/api/refresh/";
+const DEFAULT_REVALIDATE = 60;
 
 function buildUrl(url: string, absolute: boolean) {
-  return absolute ? url : `${BASE_URL}${url}`;
+  return absolute ? url : `${API_BASE_URL}${url}`;
 }
 
 function buildHeaders(customHeaders: HeadersInit = {}): HeadersInit {
@@ -76,3 +77,46 @@ export function createOptions(
     body: body ? JSON.stringify(body) : undefined,
   };
 }
+
+export const client = {
+  get: (url: string, headers?: HeadersInit) =>
+    fetchWithAuthRetry(url, {
+      method: "GET",
+      headers,
+    }),
+
+  post: (url: string, data: any, headers?: HeadersInit) =>
+    fetchWithAuthRetry(url, createOptions("POST", data, headers)),
+
+  put: (url: string, data: any, headers?: HeadersInit) =>
+    fetchWithAuthRetry(url, createOptions("PUT", data, headers)),
+
+  patch: (url: string, data: any, headers?: HeadersInit) =>
+    fetchWithAuthRetry(url, createOptions("PATCH", data, headers)),
+
+  delete: (url: string) =>
+    fetchWithAuthRetry(url, {
+      method: "DELETE",
+    }),
+};
+
+export const ssg = {
+  get: async <T>(
+    endpoint: string,
+    revalidate: number = DEFAULT_REVALIDATE,
+    options: RequestInit = {}
+  ): Promise<T> => {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      ...options,
+      method: "GET",
+      next: { revalidate },
+    });
+
+    if (!response.ok) {
+      if (response.status === 404) return null as unknown as T;
+      throw new Error(`Failed to fetch ${endpoint}`);
+    }
+
+    return response.json();
+  },
+};
