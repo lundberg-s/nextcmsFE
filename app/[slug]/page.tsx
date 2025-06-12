@@ -11,8 +11,10 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const page = await api.pages.get.slug(params.slug);
+type Params = Promise<{ slug: string }>
+
+export default async function Page({ params }: { params: Params }) {
+  const page = await api.pages.get.slug((await params).slug);
 
   if (!page) {
     notFound();
