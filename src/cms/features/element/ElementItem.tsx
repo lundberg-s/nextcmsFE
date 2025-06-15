@@ -26,8 +26,7 @@ type ContentElementItemProps = BaseElementItemProps & {
 type StyleElementItemProps = BaseElementItemProps & {
   type: StyleType;
   kind: "style";
-  value?: string;
-  title?: string;
+  value?: StyleElement;
 };
 
 type ElementItemProps = ContentElementItemProps | StyleElementItemProps;

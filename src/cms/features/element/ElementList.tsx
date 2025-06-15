@@ -32,7 +32,7 @@ export function ElementList({ setValue, watch, reset }: ElementListProps) {
     removestyle,
   } = useElement(setValue, watch, reset);
 
-  const style = (watch("style") as string);
+  const style = (watch("style") as Record<string, StyleElement>) || {};
   const content = (watch("content") as Record<string, ContentElement>) || {};
 
   const buttons = {
@@ -76,11 +76,11 @@ export function ElementList({ setValue, watch, reset }: ElementListProps) {
     onRemove: removeContent,
   };
 
-  const styleSection: SectionBase<string> = {
+  const styleSection: SectionBase<Record<string, StyleElement>> = {
     id: "style",
     title: "Style",
     kind: "style",
-    value: style,
+    value: style || {},
     onChange: updatestyle,
     onRemove: removestyle,
   };
@@ -128,6 +128,7 @@ export function ElementList({ setValue, watch, reset }: ElementListProps) {
                   <ElementItem
                     key={type}
                     mode="edit"
+                    label={section.title}
                     type={type as StyleType}
                     kind="style"
                     value={value}

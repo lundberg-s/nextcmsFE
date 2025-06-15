@@ -1,5 +1,5 @@
 export function getBlockHeight(style?: Block["style"]) {
   return {
-    minHeight: style?.height ? `${style.height}px` : "600px",
+    minHeight: style?.size?.height ? `${style.size.height}px` : "600px",
   };
 }

@@ -80,7 +80,7 @@ if (!type) {
       kind={kind}
     >
       <ContentItem
-        data={data ?? ({} as ContentElementMap[T])}
+        data={resolvedData}
         onChange={handleValueChange}
       />
     </SidebarItemCard>

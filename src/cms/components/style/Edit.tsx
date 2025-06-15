@@ -1,38 +1,55 @@
 import SidebarItemCard from "@/cms/components/sidebar/SidebarItemCard";
 import { Edit } from ".";
-import { WaveOverlay } from "./WaveOverlay";
-interface EditStyleItemProps {
-  type: StyleType;
-  value?: string;
+
+type StyleTypeKey = keyof typeof STYLE_LIST;
+
+type StyleElementMap = {
+  background: BackgroundStyleElement;
+  overlay: OverlayStyleElement;
+  size: SizeStyleElement;
+  text: TextStyleElement;
+}
+
+interface EditStyleItemProps <T extends StyleTypeKey>{
+  type: T;
+  value?: StyleElementMap[T]
   kind: ElementKind;
-  onChange: (type: StyleType, value: string, kind: ElementKind) => void;
+  onChange: (type: StyleType, value: StyleElementMap[T], kind: ElementKind) => void;
   onRemove: (type: ElementType, kind: ElementKind) => void;
 }
 
 const STYLE_LIST = {
-  backgroundColor: Edit.BackgroundColor,
-  backgroundImage: Edit.BackgroundImage,
-  textColor: Edit.TextColor,
-  layout: Edit.ContainerLayout,
-  height: Edit.Height,
-  waveOverlay: WaveOverlay,
-  backgroundOverlay: Edit.BackgroundOverlay,
+  background: Edit.Background,
+  overlay: Edit.Overlay,
+  size: Edit.Size,
+  text: Edit.Text,
 } as const;
 
-export function EditStyleItem({
+export function EditStyleItem<T extends keyof typeof STYLE_LIST>({
   type,
-  value,
+  value: data,
   kind,
   onChange,
   onRemove,
-}: Omit<EditStyleItemProps, "type"> & {
-  type: keyof typeof STYLE_LIST;
-}) {
-  const handlePropChange = (value: string) => {
-    onChange(type, value, kind);
+}: EditStyleItemProps<T>) {
+  const resolvedData = data ?? ({} as StyleElementMap[T]);
+
+  if (!type) {
+    console.error("Type is undefined");
+    return null;
+  }
+  
+  const handleDataChange = (
+    key: keyof StyleElementMap[T],
+    value: any
+  ) => {
+    onChange(type, { ...resolvedData, [key]: value } as StyleElementMap[T], kind);
   };
 
-  const StyleItem = STYLE_LIST[type];
+  const StyleItem = STYLE_LIST[type] as React.ComponentType<{
+    data: StyleElementMap[T];
+    onChange: (key: keyof StyleElementMap[T], value: any) => void;
+  }>;
 
   if (!StyleItem) {
     return null;
@@ -44,7 +61,10 @@ export function EditStyleItem({
       type={type}
       kind={kind}
     >
-      <StyleItem value={value} onChange={handlePropChange} />
+      <StyleItem
+        data={resolvedData}
+        onChange={handleDataChange}
+      />
     </SidebarItemCard>
   );
 }

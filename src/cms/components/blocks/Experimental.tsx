@@ -86,13 +86,13 @@ const renderComponentAt = (position: string) => {
 };
 
   const colours = {
-    backgroundColor: style?.backgroundColor || "bg-background",
-    textColor: style?.textColor || "",
+    backgroundColor: style?.background?.backgroundColor || "bg-background",
+    textColor: style?.text?.textColor || "",
   };
 
-  const backgroundImage = style?.backgroundImage
+  const backgroundImage = style?.background?.backgroundImage
     ? {
-      backgroundImage: `url(${style?.backgroundImage})`,
+      backgroundImage: `url(${style?.background.backgroundImage})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
     }

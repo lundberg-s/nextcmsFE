@@ -24,39 +24,27 @@ const style_OPTIONS: Array<{
   kind: "style";
 }> = [
   {
-    type: "backgroundColor",
-    label: "Background Color",
-    description: "Set the background color using hex or color name",
+    type: "background",
+    label: "Background",
+    description: "Set the background color or image",
     kind: "style",
   },
   {
-    type: "backgroundImage",
-    label: "Background Image",
-    description: "Add an image URL for the background",
+    type: "overlay",
+    label: "Overlay",
+    description: "Add an overlay with opacity and pattern",
     kind: "style",
   },
   {
-    type: "textColor",
-    label: "Text Color",
-    description: "Set the color for text elements",
+    type: "size",
+    label: "Size",
+    description: "Adjust the size of the element",
     kind: "style",
   },
   {
-    type: "height",
-    label: "Height",
-    description: "Set the height of the block",
-    kind: "style",
-  },
-  {
-    type: "waveOverlay",
-    label: "Wave Overlay",
-    description: "Add a wave overlay to the block bottom",
-    kind: "style",
-  },
-  {
-    type: "backgroundOverlay",
-    label: "Background Overlay",
-    description: "Add a background overlay to the block",
+    type: "text",
+    label: "Text",
+    description: "Customize text styles like color and font",
     kind: "style",
   },
 ];
@@ -82,9 +70,7 @@ export function AddElementForm({
   onCancelCallback,
 }: AddElementFormProps) {
   const { register, handleSubmit, watch, setValue } = useForm<AddElementFormValues>({
-    defaultValues: {
-      elementType: kind === "content" ? "title" : "backgroundColor",
-    },
+    defaultValues: {},
   });
   const selectedType = watch("elementType");
 

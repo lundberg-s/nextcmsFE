@@ -17,8 +17,8 @@ export function Hero({ block }: HeroProps) {
   const textColor = getBlockTextColor(style);
   const height = getBlockHeight(style);
   const backgroundImage = getBlockBackgroundImage(style);
-  const waveSVG = getBlockWaveOverlay(style?.waveOverlay);
-  const waveOverlay = getBlockWaveOverlayStyle(style?.waveOverlay, waveSVG);
+  const waveSVG = getBlockWaveOverlay(style?.overlay?.overlayPatternHeight);
+  const waveOverlay = getBlockWaveOverlayStyle(style?.overlay?.overlayPatternHeight, waveSVG);
 
   const imageWithText = Object.entries(content || {}).filter(
     ([type]) => type === "image" || type === "text"
@@ -46,7 +46,7 @@ export function Hero({ block }: HeroProps) {
       className={`w-full h-full flex items-center justify-center overflow-hidden`}
       style={{ ...textColor, ...backgroundColor, ...backgroundImage, ...height }}
     >
-    {style?.waveOverlay && (
+    {style?.overlay?.overlayPatternHeight && (
        <div
         style={waveOverlay}
       />

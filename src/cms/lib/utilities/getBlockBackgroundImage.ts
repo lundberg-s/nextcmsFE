@@ -1,11 +1,11 @@
 export function getBlockBackgroundImage(style?: Block["style"]) {
-  return style?.backgroundImage
+  return style?.background?.backgroundImage
     ? {
         backgroundImage: `${
-          style?.backgroundOverlay
-            ? `conic-gradient(rgba(0, 0, 255, 0.${style.backgroundOverlay}) 0 100%),`
+          style?.overlay?.overlayOpacity
+            ? `conic-gradient(rgba(0, 0, 255, 0.${style.overlay.overlayOpacity}) 0 100%),`
             : ""
-        }url(${style.backgroundImage})`,
+        }url(${style.background.backgroundImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }

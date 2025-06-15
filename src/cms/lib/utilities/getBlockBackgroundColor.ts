@@ -1,5 +1,6 @@
-export function getBlockBackgroundColor(style?: Block["style"]) {
-  return {
-    backgroundColor: style?.backgroundColor || ""
+  export function getBlockBackgroundColor(style?: Block["style"]) {
+    
+    return {
+      backgroundColor: style?.background?.backgroundColor || ""
+    }
   }
-}

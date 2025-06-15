@@ -8,10 +8,10 @@ interface FormHelpers {
   addstyle: (type: ElementType, kind: ElementKind) => void;
   updateContent: (
     type: ElementType,
-    content: Record<string, ContentElement>,
+    data: Record<string, ContentElement>,
     kind: ElementKind
   ) => void;
-  updatestyle: (type: ElementType, value: string, kind: ElementKind) => void;
+  updatestyle: (type: ElementType, data: Record<string, StyleElement>, kind: ElementKind) => void;
   removeContent: (type: ElementType, kind: ElementKind) => void;
   removestyle: (type: ElementType, kind: ElementKind) => void;
 
@@ -69,15 +69,14 @@ export function useElement(
     options?: { onSuccess?: () => void }
   ) => {
     if (kind === "style") {
-      const newstyle = {
-        [type]: "",
-      };
+      
+      const newstyle = {};
 
       setValue("style", {
         ...watch("style"),
-        ...newstyle,
+        [type]: newstyle,
       });
-      
+
       if (options?.onSuccess) {
         options.onSuccess();
       }
@@ -86,26 +85,26 @@ export function useElement(
 
   const updateContent = (
     type: ElementType,
-    content: Record<string, ContentElement>,
+    data: Record<string, ContentElement>,
     kind: ElementKind
   ) => {
     if (kind === "content") {
       setValue("content", {
         ...watch("content"),
-        [type]: content,
+        [type]: data,
       });
     }
   };
 
   const updatestyle = (
     type: ElementType,
-    value: string,
+    data: Record<string, StyleElement>,
     kind: ElementKind
   ) => {
     if (kind === "style") {
       setValue("style", {
         ...watch("style"),
-        [type]: value,
+        [type]: data,
       });
     }
   };

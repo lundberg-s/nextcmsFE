@@ -7,4 +7,4 @@ declare global {
   type ElementPair = ContentElement | StyleElement
 }
 
-export {}; /*  */
+export {};

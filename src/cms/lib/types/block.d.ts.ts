@@ -13,14 +13,11 @@ declare global {
     order: number;
     page: string;
     content: ContentElement;
-    style?: {
-      backgroundColor?: string;
-      backgroundImage?: string;
-      textColor?: string;
-      layout?: "left" | "right" | "center";
-      height?: number;
-      waveOverlay?: number;
-      backgroundOverlay?: boolean;
+    style: {
+      background?: BackgroundStyleElement;
+      overlay?: OverlayStyleElement;
+      size?: SizeStyleElement;
+      text?: TextStyleElement;
     };
   }
 }

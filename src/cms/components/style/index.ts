@@ -1,18 +1,13 @@
-import { BackgroundImage } from "./BackgroundImage";
-import { BackgroundColor } from "./BackgroundColor";
-import { TextColor } from "./TextColor";
-import { ContainerLayout } from "./ContainerLayout"
-import  { Height } from "./Height";
-import { WaveOverlay } from "./WaveOverlay";
-import { BackgroundOverlay } from "./BackgroundOverlay";
+
+import { Background } from "./background/Edit";
+import { Overlay } from "./overlay/Edit";
+import { Size } from "./size/Edit";
+import { Text } from "./text/Edit";
 
 
 export const Edit = {
-    BackgroundImage,
-    BackgroundColor,
-    TextColor,
-    ContainerLayout,
-    Height,
-    WaveOverlay,
-    BackgroundOverlay
+    Background,
+    Overlay,
+    Size,
+    Text,
     } as const;

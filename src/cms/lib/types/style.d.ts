@@ -1,51 +1,48 @@
 declare global {
     
     type StyleType =
-        | "backgroundColor"
-        | "backgroundImage"
-        | "backgroundOverlay"
-        | "textColor"
-        | "height"
-        | "layout"
-        | "waveOverlay";
+        | "background"
+        | "overlay"
+        | "size"
+        | "text";
     
     type StyleElement =
-        | BackgroundColorElement
-        | BackgroundImageElement
-        | TextColorElement
-        | HeightElement
-        | LayoutElement;
+        | BackgroundStyleElement
+        | OverlayStyleElement
+        | SizeStyleElement
+        | TextStyleElement;
 
     interface BasestyleElement {
         kind: "style";
         value: string;
     }
 
-    interface BackgroundColorElement extends BasestyleElement {
-        type: "backgroundColor";
+    interface BackgroundStyleElement extends BasestyleElement {
+        type: "background";
+        backgroundColor?: string;
+        backgroundImage?: string;
     }
 
-    interface BackgroundImageElement extends BasestyleElement {
-        type: "backgroundImage";
+    interface OverlayStyleElement extends BasestyleElement {
+        type: "overlay";
+        overlayOpacity?: string;
+        overlayColor?: string;
+        overlayPattern?: string;
+        overlayPatternHeight?: string;
     }
 
-    interface TextColorElement extends BasestyleElement {
-        type: "textColor";
+    interface SizeStyleElement extends BasestyleElement {
+        type: "size";
+        width?: string;
+        height?: string;
     }
 
-    interface HeightElement extends BasestyleElement {
-        type: "height";
-    }
-
-    interface LayoutElement extends BasestyleElement {
-        type: "layout";
-    }
-    interface WaveOverlayElement extends BasestyleElement {
-        type: "waveOverlay";
-    }
-
-    interface BackgroundOverlayElement extends BasestyleElement {
-        type: "backgroundOverlay";
+    interface TextStyleElement extends BasestyleElement {
+        type: "text";
+        textColor?: string;
+        fontSize?: string;
+        fontWeight?: string;
+        textAlign?: "left" | "center" | "right";
     }
 }
 
