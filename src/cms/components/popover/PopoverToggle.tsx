@@ -15,7 +15,7 @@ export function PopoverToggle({ values, onChange, trigger }: PopoverToggleProps)
       <PopoverTrigger asChild>
         {trigger}
       </PopoverTrigger>
-      <PopoverContent align="start" className="flex flex-col gap-2 w-48">
+      <PopoverContent align="start" className="flex flex-col gap-2 w-64">
         {values.map(({ label, value, key }) => (
           <div key={key} className="flex items-center justify-between">
             <Label htmlFor={key}>{label}</Label>
