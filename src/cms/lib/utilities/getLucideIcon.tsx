@@ -1,6 +1,6 @@
-import { Plus, PlusCircle, Settings, Trash2, ChevronDown, ChevronRight } from "lucide-react";
+import { Plus, PlusCircle, Settings, Settings2, Trash2, ChevronDown, ChevronRight } from "lucide-react";
 
-export function getLucideIcon (icon: string) {
+export function getLucideIcon(icon: string) {
 
     switch (icon) {
         case "plus":
@@ -11,6 +11,8 @@ export function getLucideIcon (icon: string) {
             return <Trash2 className="h-4 w-4" />;
         case "settings":
             return <Settings className="h-4 w-4" />;
+        case "settingstwo":
+            return <Settings2 className="h-4 w-4" />;
         case "chevron-down":
             return <ChevronDown className="h-4 w-4" />;
         case "chevron-right":

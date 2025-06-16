@@ -1,0 +1,21 @@
+{
+  "background": {
+    "type": "background",
+    "background": {
+      "backgroundColor": "#ffffff"
+    }
+  },
+  "text": {
+    "type": "text",
+    "textColor": "#000000",
+    "fontSize": 16
+  },
+  "overlay": {
+    "type": "overlay",
+    "opacity": 8
+  },
+  "size": {
+    "type": "size",
+    "height": 600
+  }
+}

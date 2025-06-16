@@ -5,12 +5,15 @@ import { Trash2 } from "lucide-react";
 import { getLucideIcon } from "@/cms/lib/utilities/getLucideIcon";
 import { ExpandableSection } from "@/shared/components/expandable/ExpandableSection";
 import { getLabelFromType } from "@/cms/lib/utilities/getLabelFromType";
+import { PopoverToggle } from "../popover/PopoverToggle";
 
 interface SidebarItemCardProps {
   onRemove: (type: ElementType, kind: ElementKind) => void;
   type: ElementType;
   kind: ElementKind;
   children: React.ReactNode;
+  visibleFields: Record<string, boolean>;
+  setVisibleFields: (fields: Record<string, boolean>) => void;
 }
 
 export default function SidebarItemCard({
@@ -18,12 +21,20 @@ export default function SidebarItemCard({
   onRemove,
   type,
   kind,
+  visibleFields,
+  setVisibleFields,
 }: SidebarItemCardProps) {
   const [isOpen, setIsOpen] = React.useState(true);
+
+  const [toggles, setToggles] = React.useState([
+    { key: "a", label: "Option A", value: true },
+    { key: "b", label: "Option B", value: false },
+  ]);
   return (
     <div className="">
       <div onClick={() => setIsOpen(!isOpen)} className="flex items-center justify-between border-b border-t p-2  cursor-pointer">
         <div className="flex items-center gap-4">
+
           <span
             className={`transition-transform duration-200 ${isOpen ? "rotate-90" : ""}`}
           >
@@ -34,18 +45,37 @@ export default function SidebarItemCard({
             {type ? getLabelFromType(type) : ""}
           </p>
         </div>
-        <ConfirmationModal
-          onConfirm={() => onRemove(type, kind)}
-          title="Are you sure you want to delete this component?"
-          description="This action cannot be undone."
-          confirmText="Delete"
-          cancelText="Cancel"
-          trigger={
-            <Button variant="ghost" size="sm">
-              <Trash2 className="w-4 h-4" />
-            </Button>
-          }
-        />
+        <div className="flex items-center gap-2">
+          <div onClick={(e) => e.stopPropagation()}>
+            <PopoverToggle
+              trigger={
+                <Button variant="ghost" size="sm">
+                  {getLucideIcon("settingstwo")}
+                </Button>
+              }
+              values={visibleFields}
+              onChange={(key, value) =>
+                setVisibleFields(visibleFields =>
+                  visibleFields.map(t => t.key === key ? { ...t, value } : t)
+                )
+              }
+            />
+          </div>
+          <div onClick={(e) => e.stopPropagation()}>
+            <ConfirmationModal
+              onConfirm={() => onRemove(type, kind)}
+              title="Are you sure you want to delete this component?"
+              description="This action cannot be undone."
+              confirmText="Delete"
+              cancelText="Cancel"
+              trigger={
+                <Button variant="ghost" size="sm">
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              }
+            />
+          </div>
+        </div>
       </div>
       <ExpandableSection isOpen={isOpen}>
         <div className="p-4">

@@ -1,5 +1,6 @@
 import SidebarItemCard from "@/cms/components/sidebar/SidebarItemCard";
 import { Edit } from ".";
+import { useState } from "react";
 
 type StyleTypeKey = keyof typeof STYLE_LIST;
 
@@ -9,6 +10,11 @@ type StyleElementMap = {
   size: SizeStyleElement;
   text: TextStyleElement;
 }
+
+type FieldVisibility = {
+  backgroundColor: boolean;
+  backgroundImage: boolean;
+};
 
 interface EditStyleItemProps <T extends StyleTypeKey>{
   type: T;
@@ -34,6 +40,25 @@ export function EditStyleItem<T extends keyof typeof STYLE_LIST>({
 }: EditStyleItemProps<T>) {
   const resolvedData = data ?? ({} as StyleElementMap[T]);
 
+const [visibleFields, setVisibleFields] = useState([
+  {
+    key: "backgroundColor",
+    label: "Background Color",
+    value:
+      type === "background" && "backgroundColor" in resolvedData
+        ? !!(resolvedData as BackgroundStyleElement).backgroundColor
+        : false,
+  },
+  {
+    key: "backgroundImage",
+    label: "Background Image",
+    value:
+      type === "background" && "backgroundImage" in resolvedData
+        ? !!(resolvedData as BackgroundStyleElement).backgroundImage
+        : false,
+  },
+]);
+
   if (!type) {
     console.error("Type is undefined");
     return null;
@@ -55,11 +80,14 @@ export function EditStyleItem<T extends keyof typeof STYLE_LIST>({
     return null;
   }
 
+    console.log("data", data);
   return (
     <SidebarItemCard
       onRemove={() => onRemove(type, kind)}
       type={type}
       kind={kind}
+      visibleFields={visibleFields}
+      setVisibleFields={setVisibleFields}
     >
       <StyleItem
         data={resolvedData}

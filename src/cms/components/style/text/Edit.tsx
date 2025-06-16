@@ -10,7 +10,7 @@ export function Text({
     data,
     onChange,
 }: EditStyleProps) {
-
+    
     const textColor = data.textColor;
     const setTextColor = (img: string) => onChange?.("textColor", img);
 
