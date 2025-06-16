@@ -20,6 +20,17 @@ export function Overlay({
     return (
         <div className="space-y-4">
             <LabeledField
+                label="Overlay Type"
+                type="dropdown"
+                options={[
+                    { label: "Curve", value: "curve" },
+                    { label: "Zigzag", value: "zigzag" },
+                    { label: "Multiple", value: "multiple" },
+                ]}
+                value={data.overlayPatternType || "curve"}
+                onChange={(value: string) => onChange?.("overlayPatternType", value)}
+            />
+            <LabeledField
                 label="Overlay Opacity"
                 type="slider"
                 min={0}

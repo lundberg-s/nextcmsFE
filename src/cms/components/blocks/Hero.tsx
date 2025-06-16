@@ -1,10 +1,5 @@
 import { ElementItem } from "@/cms/features/element/ElementItem";
-import { getBlockBackgroundImage } from "@/cms/lib/utilities/getBlockBackgroundImage";
-import { getBlockBackgroundColor } from "@/cms/lib/utilities/getBlockBackgroundColor";
-import { getBlockHeight } from "@/cms/lib/utilities/getBlockHeight";
-import { getBlockWaveOverlay } from "@/cms/lib/utilities/getBlockWaveOverlay";
-import { getBlockWaveOverlayStyle } from "@/cms/lib/utilities/getBlockWaveOverlayStyle";
-import { getBlockTextColor } from "@/cms/lib/utilities/getBlockTextColor";
+import { useBlockStyle } from "@/cms/lib/hooks/useBlockStyle";
 
 interface HeroProps {
   block: Block;
@@ -13,12 +8,14 @@ interface HeroProps {
 export function Hero({ block }: HeroProps) {
   const { content, style } = block;
 
-  const backgroundColor = getBlockBackgroundColor(style);
-  const textColor = getBlockTextColor(style);
-  const height = getBlockHeight(style);
-  const backgroundImage = getBlockBackgroundImage(style);
-  const waveSVG = getBlockWaveOverlay(style?.overlay?.overlayPatternHeight);
-  const waveOverlay = getBlockWaveOverlayStyle(style?.overlay?.overlayPatternHeight, waveSVG);
+  const {
+    backgroundColor,
+    textColor,
+    height,
+    backgroundImage,
+    waveOverlay,
+
+  } = useBlockStyle(style);
 
   const imageWithText = Object.entries(content || {}).filter(
     ([type]) => type === "image" || type === "text"
@@ -44,11 +41,11 @@ export function Hero({ block }: HeroProps) {
   return (
     <div
       className={`w-full h-full flex items-center justify-center overflow-hidden`}
-      style={{ ...textColor, ...backgroundColor, ...backgroundImage, ...height }}
+      style={{position: "relative", ...textColor, ...backgroundColor, ...backgroundImage, ...height }}
     >
     {style?.overlay?.overlayPatternHeight && (
        <div
-        style={waveOverlay}
+        style={{ ...waveOverlay } as React.CSSProperties}
       />
     )}
      

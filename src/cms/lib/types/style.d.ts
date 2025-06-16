@@ -29,6 +29,7 @@ declare global {
         overlayColor?: string;
         overlayPattern?: string;
         overlayPatternHeight?: string;
+        overlayPatternType?: "curve" | "zigzag" | "multiple";
     }
 
     interface SizeStyleElement extends BasestyleElement {
