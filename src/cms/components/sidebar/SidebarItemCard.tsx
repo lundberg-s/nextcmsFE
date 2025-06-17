@@ -12,8 +12,8 @@ interface SidebarItemCardProps {
   type: ElementType;
   kind: ElementKind;
   children: React.ReactNode;
-  visibleFields: Record<string, boolean>;
-  setVisibleFields: (fields: Record<string, boolean>) => void;
+  visibleFields?: Record<string, boolean>;
+  setVisibleFields?: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
 }
 
 export default function SidebarItemCard({
@@ -26,10 +26,12 @@ export default function SidebarItemCard({
 }: SidebarItemCardProps) {
   const [isOpen, setIsOpen] = React.useState(true);
 
-  const [toggles, setToggles] = React.useState([
-    { key: "a", label: "Option A", value: true },
-    { key: "b", label: "Option B", value: false },
-  ]);
+  const handleToggle = (key: string, value: boolean) => {
+    if (setVisibleFields) {
+      setVisibleFields(prev => ({ ...prev, [key]: value }));
+    }
+  };
+
   return (
     <div className="">
       <div onClick={() => setIsOpen(!isOpen)} className="flex items-center justify-between border-b border-t p-2  cursor-pointer">
@@ -53,12 +55,8 @@ export default function SidebarItemCard({
                   {getLucideIcon("settingstwo")}
                 </Button>
               }
-              values={visibleFields}
-              onChange={(key, value) =>
-                setVisibleFields(visibleFields =>
-                  visibleFields.map(t => t.key === key ? { ...t, value } : t)
-                )
-              }
+              value={visibleFields ?? {}}
+              onChange={handleToggle}
             />
           </div>
           <div onClick={(e) => e.stopPropagation()}>

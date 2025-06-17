@@ -1,21 +1,31 @@
 {
   "background": {
-    "type": "background",
-    "background": {
-      "backgroundColor": "#ffffff"
-    }
-  },
-  "text": {
-    "type": "text",
-    "textColor": "#000000",
-    "fontSize": 16
+    "defaults": {
+      "type": "background",
+        "backgroundColor": "#ffffff",
+        "backgroundImage": ""
+    },
+    "keys": ["backgroundColor", "backgroundImage"]
   },
   "overlay": {
-    "type": "overlay",
-    "opacity": 8
+    "defaults": {
+      "type": "overlay"
+    },
+    "keys": ["overlayOpacity", "overlayColor", "overlayPatternHeight"]
   },
   "size": {
-    "type": "size",
-    "height": 600
+    "defaults": {
+      "type": "size",
+      "height": 100
+    },
+    "keys": ["height"]
+  },
+  "text": {
+    "defaults": {
+      "type": "text",
+      "textColor": "#000000",
+      "fontSize": 16
+    },
+    "keys": ["textColor", "fontSize"]
   }
 }

@@ -71,7 +71,7 @@ export function useElement(
   ) => {
     if (kind === "style") {
       
-      const newstyle = styleDefaults[type as keyof typeof styleDefaults] ?? {};
+      const newstyle = styleDefaults[type as keyof typeof styleDefaults]?.defaults ?? {};
 
       setValue("style", {
         ...watch("style"),
