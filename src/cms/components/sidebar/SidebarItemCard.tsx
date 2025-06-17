@@ -48,17 +48,19 @@ export default function SidebarItemCard({
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <div onClick={(e) => e.stopPropagation()}>
-            <PopoverToggle
-              trigger={
-                <Button variant="ghost" size="sm">
-                  {getLucideIcon("settingstwo")}
-                </Button>
-              }
-              value={visibleFields ?? {}}
-              onChange={handleToggle}
-            />
-          </div>
+          {kind === "style" && (
+            <div onClick={(e) => e.stopPropagation()}>
+              <PopoverToggle
+                trigger={
+                  <Button variant="ghost" size="sm">
+                    {getLucideIcon("settingstwo")}
+                  </Button>
+                }
+                value={visibleFields ?? {}}
+                onChange={handleToggle}
+              />
+            </div>
+          )}
           <div onClick={(e) => e.stopPropagation()}>
             <ConfirmationModal
               onConfirm={() => onRemove(type, kind)}
