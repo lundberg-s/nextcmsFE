@@ -35,11 +35,6 @@ export function EditStyleItem<T extends StyleTypeKey>({
   onRemove,
 }: EditStyleItemProps<T>) {
 
-  if (!type) {
-    console.error("Style type is undefined.");
-    return null;
-  }
-
   const initialData = value ?? ({} as Partial<StyleElementMap[T]>);
   const keys = styleDefaults[type]?.keys ?? [];
 
@@ -73,6 +68,11 @@ export function EditStyleItem<T extends StyleTypeKey>({
 
   if (!StyleComponent) {
     console.warn(`No component found for style type "${type}"`);
+    return null;
+  }
+
+    if (!type) {
+    console.error("Style type is undefined.");
     return null;
   }
 
