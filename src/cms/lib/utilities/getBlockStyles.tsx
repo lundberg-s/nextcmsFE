@@ -1,4 +1,4 @@
-export function useBlockStyle(style: Block["style"] = {}) {
+export function getBlockStyles(style: Block["style"] = {}) {
   const backgroundColor = style?.background?.backgroundColor
     ? { backgroundColor: style.background.backgroundColor }
     : {};
@@ -25,7 +25,6 @@ export function useBlockStyle(style: Block["style"] = {}) {
       }
     : {};
 
-  // Overlay logic...
   const rawHeight = style?.overlay?.overlayPatternHeight;
   const overlayHeight =
     typeof rawHeight === "string" ? parseInt(rawHeight, 10) : rawHeight;

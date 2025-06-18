@@ -1,0 +1,30 @@
+{
+  "background": {
+    "defaults": {
+      "type": "background",
+        "backgroundColor": "white"
+    },
+    "keys": ["backgroundColor", "backgroundImage"]
+  },
+  "overlay": {
+    "defaults": {
+      "type": "overlay"
+    },
+    "keys": ["overlayOpacity", "overlayColor", "overlayPatternHeight"]
+  },
+  "size": {
+    "defaults": {
+      "type": "size",
+      "height": 600
+    },
+    "keys": ["height"]
+  },
+  "text": {
+    "defaults": {
+      "type": "text",
+      "textColor": "#000000",
+      "fontSize": 16
+    },
+    "keys": ["textColor", "fontSize"]
+  }
+}

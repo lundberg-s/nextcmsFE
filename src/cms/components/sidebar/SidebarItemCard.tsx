@@ -5,12 +5,15 @@ import { Trash2 } from "lucide-react";
 import { getLucideIcon } from "@/cms/lib/utilities/getLucideIcon";
 import { ExpandableSection } from "@/shared/components/expandable/ExpandableSection";
 import { getLabelFromType } from "@/cms/lib/utilities/getLabelFromType";
+import { PopoverToggle } from "../popover/PopoverToggle";
 
 interface SidebarItemCardProps {
   onRemove: (type: ElementType, kind: ElementKind) => void;
   type: ElementType;
   kind: ElementKind;
   children: React.ReactNode;
+  visibleFields?: Record<string, boolean>;
+  setVisibleFields?: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
 }
 
 export default function SidebarItemCard({
@@ -18,12 +21,22 @@ export default function SidebarItemCard({
   onRemove,
   type,
   kind,
+  visibleFields,
+  setVisibleFields,
 }: SidebarItemCardProps) {
   const [isOpen, setIsOpen] = React.useState(true);
+
+  const handleToggle = (key: string, value: boolean) => {
+    if (setVisibleFields) {
+      setVisibleFields(prev => ({ ...prev, [key]: value }));
+    }
+  };
+
   return (
     <div className="">
       <div onClick={() => setIsOpen(!isOpen)} className="flex items-center justify-between border-b border-t p-2  cursor-pointer">
         <div className="flex items-center gap-4">
+
           <span
             className={`transition-transform duration-200 ${isOpen ? "rotate-90" : ""}`}
           >
@@ -34,18 +47,35 @@ export default function SidebarItemCard({
             {type ? getLabelFromType(type) : ""}
           </p>
         </div>
-        <ConfirmationModal
-          onConfirm={() => onRemove(type, kind)}
-          title="Are you sure you want to delete this component?"
-          description="This action cannot be undone."
-          confirmText="Delete"
-          cancelText="Cancel"
-          trigger={
-            <Button variant="ghost" size="sm">
-              <Trash2 className="w-4 h-4" />
-            </Button>
-          }
-        />
+        <div className="flex items-center gap-2">
+          {kind === "style" && (
+            <div onClick={(e) => e.stopPropagation()}>
+              <PopoverToggle
+                trigger={
+                  <Button variant="ghost" size="sm">
+                    {getLucideIcon("settingstwo")}
+                  </Button>
+                }
+                value={visibleFields ?? {}}
+                onChange={handleToggle}
+              />
+            </div>
+          )}
+          <div onClick={(e) => e.stopPropagation()}>
+            <ConfirmationModal
+              onConfirm={() => onRemove(type, kind)}
+              title="Are you sure you want to delete this component?"
+              description="This action cannot be undone."
+              confirmText="Delete"
+              cancelText="Cancel"
+              trigger={
+                <Button variant="ghost" size="sm">
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              }
+            />
+          </div>
+        </div>
       </div>
       <ExpandableSection isOpen={isOpen}>
         <div className="p-4">
