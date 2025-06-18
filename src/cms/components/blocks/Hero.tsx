@@ -1,5 +1,5 @@
 import { ElementItem } from "@/cms/features/element/ElementItem";
-import { useBlockStyle } from "@/cms/lib/hooks/useBlockStyle";
+import { getBlockStyles } from "@/cms/lib/utilities/getBlockStyles";
 
 interface HeroProps {
   block: Block;
@@ -15,7 +15,7 @@ export function Hero({ block }: HeroProps) {
     backgroundImage,
     waveOverlay,
 
-  } = useBlockStyle(style);
+  } = getBlockStyles(style);
 
   const imageWithText = Object.entries(content || {}).filter(
     ([type]) => type === "image" || type === "text"

@@ -2,8 +2,7 @@
   "background": {
     "defaults": {
       "type": "background",
-        "backgroundColor": "#ffffff",
-        "backgroundImage": ""
+        "backgroundColor": "white"
     },
     "keys": ["backgroundColor", "backgroundImage"]
   },
@@ -16,7 +15,7 @@
   "size": {
     "defaults": {
       "type": "size",
-      "height": 100
+      "height": 600
     },
     "keys": ["height"]
   },

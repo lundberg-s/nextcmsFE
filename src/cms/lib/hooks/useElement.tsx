@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { isEqual } from "lodash";
 import { useCmsContext } from "@/cms/lib/context/CmsContext";
 import styleDefaults from "@/cms/components/style/defaults.json"
+import getFilteredElementValues from "../utilities/getFilteredElementValues";
 
 interface FormHelpers {
   addContent: (type: ElementType, kind: ElementKind) => void;
@@ -103,9 +104,10 @@ export function useElement(
     kind: ElementKind
   ) => {
     if (kind === "style") {
+      const filteredData = getFilteredElementValues(data);
       setValue("style", {
         ...watch("style"),
-        [type]: data,
+        [type]: filteredData,
       });
     }
   };
@@ -122,6 +124,7 @@ export function useElement(
   const removestyle = (type: ElementType, kind: ElementKind) => {
     if (kind === "style") {
       const currentstyles = watch("style") || {};
+      console.log("removestyle", type, currentstyles);
       const newstyle = { ...currentstyles };
       delete newstyle[type as keyof typeof newstyle];
       setValue("style", newstyle);
